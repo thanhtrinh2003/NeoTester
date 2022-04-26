@@ -1,0 +1,59 @@
+{
+	"Item 0":
+	{
+		"questionID": 0,
+		"QuestionType": 2,
+		"QuestionTopic": "binCDF",
+		"Question": "If X is B(~n, ~p), what is P(X<=~x)?\n\nNote:  If the conditions are met, use the Nomal Distribution as an approximation of the binomial distribution.\n",
+		"Variables": [
+		{
+			"VarName": "n",
+			"LowerBound": 5,
+			"UpperBound": 7,
+			"Step": 1
+		},
+		{
+			"VarName": "p",
+			"LowerBound": 0.2,
+			"UpperBound": 0.4,
+			"Step": 0.01
+		},
+		{
+			"VarName": "x",
+			"LowerBound": 2,
+			"UpperBound": 3,
+			"Step": 1
+		}],
+		"Equations": ["binCDF(~n, ~p, ~x)"],
+		"Answers": [" ~^~"]
+	},
+	"Item 1":
+	{
+		"questionID": 1,
+		"QuestionType": 2,
+		"QuestionTopic": "binCDF",
+		"Question": "If X is B(~n, ~p), what is P(X<~x)?\n\n\nNote:  If the conditions are met, use the Nomal Distribution as an approximation of the binomial distribution.\n",
+		"Variables": [
+		{
+			"VarName": "n",
+			"LowerBound": 5,
+			"UpperBound": 7,
+			"Step": 1
+		},
+		{
+			"VarName": "p",
+			"LowerBound": 0.2,
+			"UpperBound": 0.4,
+			"Step": 0.01
+		},
+		{
+			"VarName": "x",
+			"LowerBound": 2,
+			"UpperBound": 3,
+			"Step": 1
+		}],
+		"Equations": ["binCDF(~n, ~p, (~x-1))"],
+		"Answers": [" ~^~"]
+	}
+}
+	
