@@ -306,20 +306,8 @@ Future<List> downloadQuestion() async {
   }
 }
 
-
-//  Future<File> _downloadFile(String url, String filename) async {
-//     var httpClient = new HttpClient();
-//     try{
-//       var request = await httpClient.getUrl(Uri.parse(url));
-//       var response = await request.close();
-//       var bytes = await consolidateHttpClientResponseBytes(response);
-//       final dir = await getTemporaryDirectory();//(await getApplicationDocumentsDirectory()).path;
-//       File file = new File('${dir.path}/$filename');
-//       await file.writeAsBytes(bytes);
-//       print('downloaded file path = ${file.path}');
-//       downloadedPDFFile = file;
-//       return file;
-//     }catch(error){
-//       print('pdf downloading error = $error');
-//       return File('');
-//     }
+// Getting device type: return phone and tablet
+String getDeviceType() {
+  final data = MediaQueryData.fromWindow(WidgetsBinding.instance!.window);
+  return data.size.shortestSide < 600 ? 'phone' : 'tablet';
+}

@@ -15,6 +15,7 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'dart:collection';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart';
 
 //flutter run --no-sound-null-safety
 
@@ -113,6 +114,7 @@ void main() async {
   //ParseFileBase? varFile = data1[0].get<ParseFileBase>('File');
 
   //TODO: Add all parse needed including parser
+
   binomialCDF_parser();
   normalCDF_parser();
 
@@ -123,6 +125,13 @@ void main() async {
   questionNum = test_file.keys.length;
   currentQ = getQuestionInfo(test_file, cur);
   print(currentQ.getQuestion());
+
+  //checking devices is phone or tablets, so that we can block the rotation later
+  if (getDeviceType() == "phone") {
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  }
 }
 
 class MyApp extends StatelessWidget {
