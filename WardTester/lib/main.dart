@@ -37,7 +37,6 @@ const Set<String> courseList = {
   "AP CS A",
   "AP CS P",
   "AP Statistics",
-  "sdfsdf"
 };
 const unitList = {
   "AP CS A": [
@@ -48,6 +47,7 @@ const unitList = {
   "AP CS P": ["Unit 1 P", "Unit 2 P", "Unit 3 P"],
   "AP Statistics": ["Unit 1", "Unit 2", "Unit 3"]
 };
+
 var test_file; // current question test file
 var currentQ; // current question
 var t = 1;
@@ -66,13 +66,14 @@ Queue<int> questionOrder = new Queue<int>();
 //application Document Path
 
 void main() async {
-  //getting data from Back4App for the
-
-  //TODO: need to write the if else version, if equals then no need to download
-
-  //if version is eqauls then no need to check
   WidgetsFlutterBinding.ensureInitialized();
+  //setting up application directory
+  Directory appDocDir = await getApplicationDocumentsDirectory();
+  String appDocPath = appDocDir.path;
 
+  print("Path for this device: " + appDocPath);
+
+  //setting up back4app ID address
   final keyApplicationId = 'Jkk0zBewPQACbqAYHeL2C4rVFSvj1WXlTQtPRaQD';
   final keyClientKey = '9iTzK49uR12cJHM9qn3fiFsnVEYBqseYjZC18tqw';
   final keyParseServerUrl = 'https://parseapi.back4app.com';
@@ -80,28 +81,40 @@ void main() async {
   await Parse().initialize(keyApplicationId, keyParseServerUrl,
       clientKey: keyClientKey, autoSendSessionId: true);
 
+  //
+  QueryBuilder<ParseObject> version =
+      QueryBuilder<ParseObject>(ParseObject('JSON_Version'));
+  final ParseResponse versionResponse = await version.query();
+
+  List<ParseObject> versionList = versionResponse.results as List<ParseObject>;
+
+  //check if there is an existing file or not
+  final versionFile = File('$appDocPath/version.txt');
+  if (await versionFile.exists()) {
+    if (versionFile.readAsString() != versionList[0]["date"]) {
+      //TODO: replace and re download the file
+    }
+
+    // if not equal then download everything again, same as exist
+  } else {
+    // TODO: first time user : download the file
+    versionFile.writeAsString(versionList[0]["date"]);
+    //
+
+  }
+
   QueryBuilder<ParseObject> queryFile =
-      QueryBuilder<ParseObject>(ParseObject('JSON'));
+      QueryBuilder<ParseObject>(ParseObject('JSON_test'));
   final ParseResponse apiResponse = await queryFile.query();
 
   List<ParseObject> data1 = apiResponse.results as List<ParseObject>;
 
-  //device Application apth checking
-  Directory appDocDir = await getApplicationDocumentsDirectory();
-  String appDocPath = appDocDir.path;
+  //TODO: r url = Uri.parse(data1[0]["File"]["url"]);
 
-  var url = Uri.parse(data1[0]["File"]["url"]);
-  var response1 = await http.get(url);
-
-  print(response1);
-
-  var data = jsonDecode(response1.body);
-  print(data);
-
-  print(data.toString());
-
-  final file = File('$appDocPath/test.txt');
-  file.writeAsString(data.toString());
+  // var json_response = await http.get(url);
+  // var data = jsonDecode(json_response.body);
+  // final file = File('$appDocPath/test.txt');
+  // file.writeAsString(data.toString());
 
   //test
 

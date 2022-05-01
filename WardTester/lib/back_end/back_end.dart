@@ -67,9 +67,7 @@ Question getQuestionInfo(var data, int cur) {
                 variables[i]["UpperBound"].toDouble(),
                 variables[i]["Step"].toDouble());
             varSave[variables[i]["VarName"]] = current; // take the one use out
-            question += current
-                .toStringAsFixed(-log(variables[i]["Step"].toDouble()).toInt())
-                .toString();
+            question += current.toStringAsFixed(2).toString();
             int length = variables[i]["VarName"].length;
             currentID = currentID + length;
             break;
