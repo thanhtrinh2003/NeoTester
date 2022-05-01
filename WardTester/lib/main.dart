@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:convert';
@@ -11,6 +13,8 @@ import 'back_end/back_end.dart';
 import 'front_end/HomePage.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'dart:collection';
+import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
 
 //flutter run --no-sound-null-safety
 
@@ -58,8 +62,14 @@ var correctNum =
 Random random = new Random();
 Queue<int> questionOrder = new Queue<int>();
 
+//application Document Path
+
 void main() async {
   //getting data from Back4App for the
+
+  //TODO: need to write the if else version, if equals then no need to download
+
+  //if version is eqauls then no need to check
   WidgetsFlutterBinding.ensureInitialized();
 
   final keyApplicationId = 'Jkk0zBewPQACbqAYHeL2C4rVFSvj1WXlTQtPRaQD';
@@ -75,20 +85,32 @@ void main() async {
 
   List<ParseObject> data1 = apiResponse.results as List<ParseObject>;
 
-  print(data1);
+  //device Application apth checking
+  Directory appDocDir = await getApplicationDocumentsDirectory();
+  String appDocPath = appDocDir.path;
 
-  print(data1[0]["File"]["name"]);
-  print(data1[0]["File"]["url"]);
+  var url = Uri.parse(data1[0]["File"]["url"]);
+  var response1 = await http.get(url);
 
-  if (apiResponse.results != null) {
-    for (var o in apiResponse.results as List<ParseObject>) {
-      print(o.get<String>('Unit'));
-    }
-  }
+  print(response1);
 
-  ParseFileBase? varFile = data1[0].get<ParseFileBase>('File');
+  var data = jsonDecode(response1.body);
+  print(data);
 
-  print(varFile);
+  print(data.toString());
+
+  final file = File('$appDocPath/test.txt');
+  file.writeAsString(data.toString());
+
+  //test
+
+  // if (apiResponse.results != null) {
+  //   for (var o in apiResponse.results as List<ParseObject>) {
+  //     print(o.get<String>('Unit'));
+  //   }
+  // }
+
+  //ParseFileBase? varFile = data1[0].get<ParseFileBase>('File');
 
   //TODO: Add all parse needed including parser
   binomialCDF_parser();
