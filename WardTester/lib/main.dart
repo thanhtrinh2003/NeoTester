@@ -81,33 +81,75 @@ void main() async {
   await Parse().initialize(keyApplicationId, keyParseServerUrl,
       clientKey: keyClientKey, autoSendSessionId: true);
 
-  //
+  //setting up JSON File for verion file through Back4App Connection
   QueryBuilder<ParseObject> version =
       QueryBuilder<ParseObject>(ParseObject('JSON_Version'));
   final ParseResponse versionResponse = await version.query();
-
   List<ParseObject> versionList = versionResponse.results as List<ParseObject>;
 
-  //check if there is an existing file or not
+  //setting up JSON File for question file through Back4App Connection
+  QueryBuilder<ParseObject> jsonQuestion =
+      QueryBuilder<ParseObject>(ParseObject("JSON"));
+  final ParseResponse jsonResponse = await jsonQuestion.query();
+  List<ParseObject> questionList = jsonResponse.results as List<ParseObject>;
+
+  //check if there is an existing version file to download the questionFile or not
   final versionFile = File('$appDocPath/version.txt');
   if (await versionFile.exists()) {
     if (versionFile.readAsString() != versionList[0]["date"]) {
       //TODO: replace and re download the file
+      Queue courseList1 = new Queue<String>();
+      Queue unitList1 = new Queue<String>();
+      for (var o in jsonResponse.results as List<ParseObject>) {
+        String? currentCourse = o.get<String>('Course');
+        if (!courseList1.contains(currentCourse)) {
+          courseList1.add(currentCourse);
+        }
+
+        String? currentUnit = o.get<String>('Unit');
+        if (!unitList1.contains(currentUnit)) {
+          unitList1.add(currentUnit);
+        }
+      }
+      final courseFile = File('$appDocPath/course.txt');
+      await courseFile.delete();
+      courseFile.writeAsStringSync(courseList1.toString());
+
+      final unitFile = File('$appDocPath/Unit/unit.txt');
+      await unitFile.delete();
+      unitFile.writeAsStringSync(unitList1.toString());
+
+      versionFile.delete();
+      versionFile.writeAsString(versionList[0]["date"]);
     }
 
     // if not equal then download everything again, same as exist
   } else {
     // TODO: first time user : download the file
     versionFile.writeAsString(versionList[0]["date"]);
-    //
 
+    Queue courseList1 = new Queue<String>();
+    Queue unitList1 = new Queue<String>();
+    for (var o in jsonResponse.results as List<ParseObject>) {
+      String? currentCourse = o.get<String>('Course');
+      if (!courseList1.contains(currentCourse)) {
+        courseList1.add(currentCourse);
+      }
+
+      String? currentUnit = o.get<String>('Unit');
+      if (!unitList1.contains(currentUnit)) {
+        unitList1.add(currentUnit);
+      }
+    }
+    final courseFile = File('$appDocPath/course.txt');
+    courseFile.writeAsStringSync(courseList1.toString());
+
+    var directory = await Directory('$appDocPath/Unit').create(recursive: true);
+    print(directory.path);
+
+    final unitFile = File('$appDocPath/Unit/unit.txt');
+    unitFile.writeAsStringSync(unitList1.toString());
   }
-
-  QueryBuilder<ParseObject> queryFile =
-      QueryBuilder<ParseObject>(ParseObject('JSON_test'));
-  final ParseResponse apiResponse = await queryFile.query();
-
-  List<ParseObject> data1 = apiResponse.results as List<ParseObject>;
 
   //TODO: r url = Uri.parse(data1[0]["File"]["url"]);
 
@@ -116,18 +158,9 @@ void main() async {
   // final file = File('$appDocPath/test.txt');
   // file.writeAsString(data.toString());
 
-  //test
-
-  // if (apiResponse.results != null) {
-  //   for (var o in apiResponse.results as List<ParseObject>) {
-  //     print(o.get<String>('Unit'));
-  //   }
-  // }
-
   //ParseFileBase? varFile = data1[0].get<ParseFileBase>('File');
 
-  //TODO: Add all parse needed including parser
-
+  //TOD: Add all parse needed including parser
   binomialCDF_parser();
   normalCDF_parser();
 
