@@ -88,67 +88,80 @@ void main() async {
   List<ParseObject> versionList = versionResponse.results as List<ParseObject>;
 
   //setting up JSON File for question file through Back4App Connection
-  QueryBuilder<ParseObject> jsonQuestion =
+  QueryBuilder<ParseObject> jsonQuestionParse =
       QueryBuilder<ParseObject>(ParseObject("JSON"));
-  final ParseResponse jsonResponse = await jsonQuestion.query();
+  final ParseResponse jsonResponse = await jsonQuestionParse.query();
   List<ParseObject> questionList = jsonResponse.results as List<ParseObject>;
 
   //check if there is an existing version file to download the questionFile or not
   final versionFile = File('$appDocPath/version.txt');
-  if (await versionFile.exists()) {
-    if (versionFile.readAsString() != versionList[0]["date"]) {
-      //TODO: replace and re download the file
-      Queue courseList1 = new Queue<String>();
-      Queue unitList1 = new Queue<String>();
-      for (var o in jsonResponse.results as List<ParseObject>) {
-        String? currentCourse = o.get<String>('Course');
-        if (!courseList1.contains(currentCourse)) {
-          courseList1.add(currentCourse);
-        }
 
-        String? currentUnit = o.get<String>('Unit');
-        if (!unitList1.contains(currentUnit)) {
-          unitList1.add(currentUnit);
-        }
-      }
-      final courseFile = File('$appDocPath/course.txt');
-      await courseFile.delete();
-      courseFile.writeAsStringSync(courseList1.toString());
-
-      final unitFile = File('$appDocPath/Unit/unit.txt');
-      await unitFile.delete();
-      unitFile.writeAsStringSync(unitList1.toString());
-
-      versionFile.delete();
-      versionFile.writeAsString(versionList[0]["date"]);
-    }
-
-    // if not equal then download everything again, same as exist
-  } else {
-    // TODO: first time user : download the file
-    versionFile.writeAsString(versionList[0]["date"]);
-
+  if ((versionFile.existsSync() &&
+          versionFile.readAsStringSync() != versionList[0]["date"]) ||
+      !versionFile.existsSync()) {
+    //TODO: remember to change the below condition from == to != because it is not testing anymore
+    //variable for file save later
     Queue courseList1 = new Queue<String>();
-    Queue unitList1 = new Queue<String>();
+
+    //looping over all of the items to find the names for the course and potentially unnits
     for (var o in jsonResponse.results as List<ParseObject>) {
       String? currentCourse = o.get<String>('Course');
       if (!courseList1.contains(currentCourse)) {
         courseList1.add(currentCourse);
       }
+    }
 
-      String? currentUnit = o.get<String>('Unit');
-      if (!unitList1.contains(currentUnit)) {
-        unitList1.add(currentUnit);
+    Queue courseList2 = new Queue.from(courseList1);
+
+    //initialize file path
+    final courseFile = File('$appDocPath/course.txt');
+
+    // process Queue into approriate String in the formate of List for use later
+    String courseListFile = "[\"";
+    int courseListLength = courseList1.length;
+    for (int i = 0; i < courseListLength - 1; i++) {
+      courseListFile = courseListFile + courseList1.first + "\", \"";
+      courseList1.removeFirst();
+    }
+    courseListFile = courseListFile + courseList1.first + "\"]";
+    courseFile.writeAsStringSync(courseListFile);
+
+    //looping through course and add units into the corresponding directories
+    while (courseList2.isNotEmpty) {
+      jsonQuestionParse
+        ..whereArrayContainsAll('Course', [courseList2.first])
+        ..orderByAscending("Unit");
+      var unitResponse = await jsonQuestionParse.query();
+      Queue unitList1 = new Queue<String>();
+
+      if (unitResponse.success && unitResponse.results != null) {
+        for (var object in unitResponse.results as List<ParseObject>) {
+          unitList1.add(object.get<String>("Unit"));
+        }
+        String unitListFile = "[\"";
+        int unitListLength = unitList1.length;
+
+        for (int i = 0; i < unitListLength - 1; i++) {
+          unitListFile = unitListFile +
+              unitList1.first.substring(0, unitList1.first.indexOf('.')) +
+              "\", \"";
+          unitList1.removeFirst();
+        }
+        unitListFile = unitListFile +
+            unitList1.first.substring(0, unitList1.first.indexOf('.')) +
+            "\"]";
+
+        //String to pass in for the file is stored in unitList File
+        var direcwtory = await Directory('$appDocPath/' + courseList2.first)
+            .create(recursive: true);
+        var unitFile = File('$appDocPath/' + courseList2.first + "/unit.txt");
+        unitFile.writeAsStringSync(unitListFile);
+
+        courseList2.removeFirst();
       }
     }
-    final courseFile = File('$appDocPath/course.txt');
-    courseFile.writeAsStringSync(courseList1.toString());
 
-    var directory = await Directory('$appDocPath/Unit').create(recursive: true);
-    print(directory.path);
-
-    final unitFile = File('$appDocPath/Unit/unit.txt');
-    unitFile.writeAsStringSync(unitList1.toString());
+    versionFile.writeAsString(versionList[0]["date"]);
   }
 
   //TODO: r url = Uri.parse(data1[0]["File"]["url"]);
