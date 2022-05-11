@@ -91,7 +91,6 @@ void main() async {
   QueryBuilder<ParseObject> jsonQuestionParse =
       QueryBuilder<ParseObject>(ParseObject("JSON"));
   final ParseResponse jsonResponse = await jsonQuestionParse.query();
-  List<ParseObject> questionList = jsonResponse.results as List<ParseObject>;
 
   //check if there is an existing version file to download the questionFile or not
   final versionFile = File('$appDocPath/version.txt');
@@ -161,6 +160,23 @@ void main() async {
       }
     }
 
+    //downloading file to the correct directories
+    jsonQuestionParse = QueryBuilder<ParseObject>(ParseObject("JSON"));
+    final fileResponse = await jsonQuestionParse.query();
+
+    for (var o in fileResponse.results as List<ParseObject>) {
+      var url = Uri.parse(o["QuestionFile"]["url"]);
+      var json_response = await http.get(url);
+      var data = jsonDecode(json_response.body);
+      var file = File('$appDocPath/' +
+          o.get<String>("Course")! +
+          '/' +
+          o.get<String>("Unit")! +
+          '.txt');
+      file.writeAsStringSync(jsonEncode(data));
+    }
+
+    //print out version
     versionFile.writeAsString(versionList[0]["date"]);
   }
 
