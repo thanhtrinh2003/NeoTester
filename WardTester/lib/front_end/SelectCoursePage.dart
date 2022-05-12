@@ -3,6 +3,7 @@ import 'SelectUnitPage.dart';
 import '../main.dart';
 import '../back_end/back_end.dart';
 import "dart:io";
+import 'package:path_provider/path_provider.dart';
 
 class SelectCoursePage extends StatefulWidget {
   final Set<String>? courseList;
@@ -39,6 +40,8 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
               padding: const EdgeInsets.all(8),
               color: Color(0xFF2979FF),
               onPressed: () async {
+                //TODO: what is this list for ?
+                //shuffle the question order ?
                 var list = new List<dynamic>.generate(questionNum, (i) => i);
                 list = shuffle(list);
 
@@ -47,12 +50,20 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
                   questionOrder.add(list.elementAt(i));
                 }
 
+                //update unit list
+                Directory appDocDir = await getApplicationDocumentsDirectory();
+                String appDocPath = appDocDir.path;
+                var unitFile = File('$appDocPath/' +
+                    widget.courseList!.elementAt(index) +
+                    "/unit.txt");
+                String unitListContent = await unitFile.readAsString();
+                List<String> unitListNew = unitListContent.split(",");
+                unitList = unitListNew.toSet();
+
                 await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SelectUnitPage(
-                        unitList:
-                            unitList[widget.courseList!.elementAt(index)]),
+                    builder: (context) => SelectUnitPage(unitList: unitList),
                   ),
                 );
               },
