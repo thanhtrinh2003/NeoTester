@@ -33,20 +33,9 @@ var choice; // array of multiple choices value for question Type 0
 
 //new variables
 const String question_file = 'assets/test.json'; //data file
-const Set<String> courseList = {
-  "AP CS A",
-  "AP CS P",
-  "AP Statistics",
-};
-const unitList = {
-  "AP CS A": [
-    "Unit 1 -  One Variable",
-    "Unit 2 - Location in a Distribution",
-    "Unit 3 - Linear Regression"
-  ],
-  "AP CS P": ["Unit 1 P", "Unit 2 P", "Unit 3 P"],
-  "AP Statistics": ["Unit 1", "Unit 2", "Unit 3"]
-};
+var courseList;
+
+var unitList;
 
 var test_file; // current question test file
 var currentQ; // current question
@@ -70,6 +59,7 @@ void main() async {
   //setting up application directory
   Directory appDocDir = await getApplicationDocumentsDirectory();
   String appDocPath = appDocDir.path;
+  final courseFile = File('$appDocPath/course.txt');
 
   print("Path for this device: " + appDocPath);
 
@@ -110,20 +100,13 @@ void main() async {
       }
     }
 
+    //courseList2 isa duplicate of courseList1, in order to loop over and adjust
+    // the unit file.
     Queue courseList2 = new Queue.from(courseList1);
 
-    //initialize file path
-    final courseFile = File('$appDocPath/course.txt');
-
-    // process Queue into approriate String in the formate of List for use later
-    String courseListFile = "[\"";
-    int courseListLength = courseList1.length;
-    for (int i = 0; i < courseListLength - 1; i++) {
-      courseListFile = courseListFile + courseList1.first + "\", \"";
-      courseList1.removeFirst();
-    }
-    courseListFile = courseListFile + courseList1.first + "\"]";
-    courseFile.writeAsStringSync(courseListFile);
+    courseFile.writeAsStringSync(courseList1
+        .toString()
+        .substring(1, courseList1.toString().indexOf('}')));
 
     //looping through course and add units into the corresponding directories
     while (courseList2.isNotEmpty) {
@@ -137,21 +120,20 @@ void main() async {
         for (var object in unitResponse.results as List<ParseObject>) {
           unitList1.add(object.get<String>("Unit"));
         }
-        String unitListFile = "[\"";
+        String unitListFile = "";
         int unitListLength = unitList1.length;
 
         for (int i = 0; i < unitListLength - 1; i++) {
           unitListFile = unitListFile +
               unitList1.first.substring(0, unitList1.first.indexOf('.')) +
-              "\", \"";
+              ",";
           unitList1.removeFirst();
         }
         unitListFile = unitListFile +
-            unitList1.first.substring(0, unitList1.first.indexOf('.')) +
-            "\"]";
+            unitList1.first.substring(0, unitList1.first.indexOf('.'));
 
         //String to pass in for the file is stored in unitList File
-        var direcwtory = await Directory('$appDocPath/' + courseList2.first)
+        var directory = await Directory('$appDocPath/' + courseList2.first)
             .create(recursive: true);
         var unitFile = File('$appDocPath/' + courseList2.first + "/unit.txt");
         unitFile.writeAsStringSync(unitListFile);
@@ -180,14 +162,11 @@ void main() async {
     versionFile.writeAsString(versionList[0]["date"]);
   }
 
-  //TODO: r url = Uri.parse(data1[0]["File"]["url"]);
-
-  // var json_response = await http.get(url);
-  // var data = jsonDecode(json_response.body);
-  // final file = File('$appDocPath/test.txt');
-  // file.writeAsString(data.toString());
-
-  //ParseFileBase? varFile = data1[0].get<ParseFileBase>('File');
+  // update the course List in the form of set;
+  String courseListContent = await courseFile.readAsString();
+  List<String> courseListNew = courseListContent.split(", ");
+  var courseSet = courseListNew.toSet();
+  courseList = courseSet;
 
   //TOD: Add all parse needed including parser
   binomialCDF_parser();
