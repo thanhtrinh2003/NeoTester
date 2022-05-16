@@ -41,6 +41,7 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
               color: Color(0xFF2979FF),
               onPressed: () async {
                 //TODO: what is this list for ?
+
                 //shuffle the question order ?
                 var list = new List<dynamic>.generate(questionNum, (i) => i);
                 list = shuffle(list);
@@ -60,10 +61,14 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
                 List<String> unitListNew = unitListContent.split(",");
                 unitList = unitListNew.toSet();
 
+                //getting questions
+
                 await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SelectUnitPage(unitList: unitList),
+                    builder: (context) => SelectUnitPage(
+                        unitList: unitList,
+                        course: widget.courseList!.elementAt(index)),
                   ),
                 );
               },

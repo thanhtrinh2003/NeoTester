@@ -153,7 +153,9 @@ void main() async {
       var file = File('$appDocPath/' +
           o.get<String>("Course")! +
           '/' +
-          o.get<String>("Unit")! +
+          o
+              .get<String>("Unit")!
+              .substring(0, o.get<String>("Unit")!.indexOf('.')) +
           '.txt');
       file.writeAsStringSync(jsonEncode(data));
     }
@@ -174,11 +176,6 @@ void main() async {
 
   // run App
   runApp(MyApp());
-  final String response = await rootBundle.loadString(question_file);
-  test_file = json.decode(response);
-  questionNum = test_file.keys.length;
-  currentQ = getQuestionInfo(test_file, cur);
-  print(currentQ.getQuestion());
 
   //checking devices is phone or tablets, so that we can block the rotation later
   if (getDeviceType() == "phone") {

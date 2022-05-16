@@ -1,10 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../main.dart';
 import 'QuestionPage.dart';
+import 'package:path_provider/path_provider.dart';
+import "dart:io";
+import '../back_end/back_end.dart';
 
 class SelectUnitPage extends StatefulWidget {
   final unitList;
-  const SelectUnitPage({Key? key, this.unitList}) : super(key: key);
+  final course;
+  const SelectUnitPage({Key? key, this.unitList, this.course})
+      : super(key: key);
 
   @override
   _SelectUnitPageState createState() => _SelectUnitPageState();
@@ -37,6 +45,24 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
               padding: const EdgeInsets.all(8),
               color: Color(0xFF2979FF),
               onPressed: () async {
+                //update question List based on the selection
+
+                Directory appDocDir = await getApplicationDocumentsDirectory();
+                String appDocPath = appDocDir.path;
+                //question path file
+                var questionFile = File('$appDocPath/' +
+                    widget.course +
+                    '/' +
+                    widget.unitList!.elementAt(index) +
+                    '.txt');
+                String questionString = await questionFile.readAsString();
+                test_file = jsonDecode(questionString);
+                questionNum = test_file.keys.length;
+                currentQ = getQuestionInfo(test_file, cur);
+                print(currentQ.getQuestion());
+
+                print(questionFile);
+
                 await Navigator.push(
                   context,
                   MaterialPageRoute(
