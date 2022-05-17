@@ -26,7 +26,7 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
           backgroundColor: Color(0xFF2979FF),
           automaticallyImplyLeading: true,
           title: Text(
-            'Select Course',
+            'Select Unit',
             //
           ),
           actions: [],
@@ -38,38 +38,52 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
           padding: const EdgeInsets.all(8),
           itemCount: widget.unitList!.length,
           itemBuilder: (BuildContext context, int index) {
-            return RaisedButton(
-              child: Center(
-                  child: Text(widget.unitList!.elementAt(index),
-                      style: TextStyle(color: Colors.white, fontSize: 18))),
-              padding: const EdgeInsets.all(8),
-              color: Color(0xFF2979FF),
-              onPressed: () async {
-                //update question List based on the selection
+            return SizedBox(
+              height: MediaQuery.of(context).size.height * 0.05,
+              width: MediaQuery.of(context).size.width * 0.01,
+              child: RaisedButton(
+                child: Center(
+                    child: Text(widget.unitList!.elementAt(index),
+                        style: TextStyle(color: Colors.white, fontSize: 18))),
+                padding: const EdgeInsets.all(8),
+                color: Color(0xFF2979FF),
+                onPressed: () async {
+                  //update question List based on the selection
 
-                Directory appDocDir = await getApplicationDocumentsDirectory();
-                String appDocPath = appDocDir.path;
-                //question path file
-                var questionFile = File('$appDocPath/' +
-                    widget.course +
-                    '/' +
-                    widget.unitList!.elementAt(index) +
-                    '.txt');
-                String questionString = await questionFile.readAsString();
-                test_file = jsonDecode(questionString);
-                questionNum = test_file.keys.length;
-                currentQ = getQuestionInfo(test_file, cur);
-                print(currentQ.getQuestion());
+                  Directory appDocDir =
+                      await getApplicationDocumentsDirectory();
+                  String appDocPath = appDocDir.path;
+                  //question path file
+                  var questionFile = File('$appDocPath/' +
+                      widget.course +
+                      '/' +
+                      widget.unitList!.elementAt(index) +
+                      '.txt');
+                  String questionString = await questionFile.readAsString();
+                  test_file = jsonDecode(questionString);
+                  questionNum = test_file.keys.length;
+                  currentQ = getQuestionInfo(test_file, cur);
 
-                print(questionFile);
+                  var list = new List<dynamic>.generate(questionNum, (i) => i);
+                  list = shuffle(list);
 
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => QuestionPage(),
-                  ),
-                );
-              },
+                  for (int i = 0; i < questionNum; i++) {
+                    stdout.write("A: " + list.elementAt(i).toString());
+                    questionOrder.add(list.elementAt(i));
+                  }
+
+                  print(currentQ.getQuestion());
+
+                  print(questionFile);
+
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QuestionPage(),
+                    ),
+                  );
+                },
+              ),
             );
           },
           separatorBuilder: (BuildContext context, int index) {

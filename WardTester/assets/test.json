@@ -1,1 +1,805 @@
-{"Item 0":{"questionID":0,"QuestionType":2,"QuestionTopic":"Center","Question":"Measurements of ten pH levels gave the following readings:  4.5, 3.2, ~x2, 8.9, 8.7, 4.8, ~x3, 9.6, ~x1, 9.3. The median pH lavel of the sample is... ","Variables":[{"VarName":"x1","LowerBound":4.3,"UpperBound":5.5,"Step":0.1},{"VarName":"x2","LowerBound":5.5,"UpperBound":6.5,"Step":0.1},{"VarName":"x3","LowerBound":6.5,"UpperBound":8.5,"Step":0.1}],"Equations":["(~x2+~x3)/2"],"Answers":["~^~"]},"Item 1":{"questionID":1,"QuestionType":0,"QuestionTopic":"Center","Question":"The median age of five people in a car is 30 years. One of the people, whose age is 50 years, gets out of the car. The median age of the remaining four people in the car is:  ","Choices":["40 years. ","30 years. ","25 years.","less than 30 years.","Cannot be determined from the information given."],"Answer":4},"Item 2":{"questionID":2,"QuestionType":0,"QuestionTopic":"Center","Question":"The test average for the students in Mr. Jones' class is 86%. The test average for the students in Ms. Smith's class is 78%. What must be true about the average for all the students? ","Choices":["It must be 82%.","It must be larger than 82%.","It could be any number between 78% and 86%.","It must be larger than 80%.","It cannot be larger than 82%."],"Answer":2},"Item 3":{"questionID":3,"QuestionType":0,"QuestionTopic":"Center","Question":"You have a group of sticks with a mean of length 12 inches and a median of 13 inches. Unfortunetly, you just realized one of the sticks was measured incorrectly.  It had been marked as 17 inches long when in reality it was 20 inches long.  If you correct this mistake, then:","Choices":["The mean remains the same, but the median is increased.","The mean and median remain the same.","The median remains the same, but the mean is increased.","The mean and median are both increased.","We do not know how the mean and median are affected without further calculations, but the variance is increased."],"Answer":2},"Item 4":{"questionID":4,"QuestionType":1,"QuestionTopic":"Center","Question":"Name the 3 measures of center.","Answers":[["mean","       average"],["median"],["mode"]]},"Item 5":{"questionID":5,"QuestionType":1,"QuestionTopic":"Center","Question":"Which of the following is resistant to outliers? (mean or median)","Answers":[["median"]]},"Item 6":{"questionID":6,"QuestionType":1,"QuestionTopic":"Center","Question":"For the following histogram, what is the proper ordering of the mean, median, and mode? Note that the graph is NOT numerically precise-only the relative positions are important.  List them in order from 1 to 3.","Answers":[],"ImagePath":"stats.01.01.jpg"},"Item 7":{"questionID":7,"QuestionType":1,"QuestionTopic":"Freq Table","Question":"To make a histogram or an ogive you must first construct this.","Answers":[["frequency table"]]},"Item 8":{"questionID":8,"QuestionType":1,"QuestionTopic":"Freq Table","Question":"How many classes should a typical frequency table have? (give a lower bound and upper bound)","Answers":[["5"," 6"," five"," six"],["7"," 8"," 9"," 10"," seven"," eight"," nine"," ten"]]},"Item 9":{"questionID":9,"QuestionType":1,"QuestionTopic":"Freq Table","Question":"What are the five categories of a frequency table?","Answers":[["class"],["frequency","    frequnecy"],["relative frequency"],["cumulative frequency"],["relative cumulative frequency","    cumulative relative frequency"]]},"Item 10":{"questionID":10,"QuestionType":1,"QuestionTopic":"Graph Type","Question":"Which two types of charts or graphs are best used to display categorical data? ","Answers":[["pie chart"," pie"," piechart"," pie graph"],["bar"," bargraph"," bar plot"," bar graph"]]},"Item 11":{"questionID":11,"QuestionType":1,"QuestionTopic":"Graph Type","Question":"Which are the four most common ways to display a quantitative distribution?","Answers":[["dotplot","  dot plot","  dot","  dot-plot"],["histogram"],["boxplot","  box plot","  box","  box-plot"],["stemplot","  stem","  stem plot","  stem-plot"]]},"Item 12":{"questionID":12,"QuestionType":1,"QuestionTopic":"Graph Type","Question":"Which graph is best used to determine a given percentile?","Answers":[["ogive"," relative cumulative frequency"]]},"Item 13":{"questionID":13,"QuestionType":1,"QuestionTopic":"Graph Type","Question":"If you want to show changes over time, or seasonal variations which display should be used?","Answers":[["time plot","  time graph"]]},"Item 14":{"questionID":14,"QuestionType":1,"QuestionTopic":"Graph Type","Question":"If we wish to use a graphical distribution which shows outliers, which one should you use?","Answers":[["modified boxplot","  modified box plot","  modified box-plot"]]},"Item 15":{"questionID":15,"QuestionType":1,"QuestionTopic":"Graph Type","Question":"After collecting data, what is the first thing you should do with it?","Answers":[["plot the data","   plot it","   plot","   make a plot","   graph it","   graph the data"]]},"Item 16":{"questionID":16,"QuestionType":1,"QuestionTopic":"Graph Type","Question":"What is the clearest way to show association between categorical variables?","Answers":[["bar graph of conditional distributions","  bar graph of conditional distribution","  conditional distribution","  conditional distributions"]]},"Item 17":{"questionID":17,"QuestionType":2,"QuestionTopic":"Graphs","Question":"The following is an ogive representing scores of students on a recent test.  If ~n students took the test, how many of them scored between an 80 and 90?","Variables":[{"VarName":"n","LowerBound":25,"UpperBound":100,"Step":5}],"Equations":["~n*0.4"],"Answers":["~^~"],"ImagePath":"stats.01.06.jpg"},"Item 18":{"questionID":18,"QuestionType":2,"QuestionTopic":"Graphs","Question":"The following is an ogive representing scores of students on a recent test.  If ~n students took the test, how many of them scored between an 70 and 80?","Variables":[{"VarName":"n","LowerBound":25,"UpperBound":100,"Step":5}],"Equations":["~n*0.2"],"Answers":["~^~"],"ImagePath":"stats.01.06.jpg"},"Item 19":{"questionID":19,"QuestionType":2,"QuestionTopic":"Graphs","Question":"This histogram shows the number of texts sent per day by a random sample of adults.  Which class contains the ~p% percentile?  \n","Variables":[{"VarName":"p","LowerBound":10,"UpperBound":60,"Step":25}],"Equations":["3+~p/5","8+~p/5"],"Answers":["~^~-~^~"],"ImagePath":"stats.01.07.jpg"},"Item 20":{"questionID":20,"QuestionType":0,"QuestionTopic":"Graphs","Question":"The number of hours spent on homework in the last week was collected for a group of male and female students.  The boxplot on the top represent the female students while the one on the bottom represent male students.  Which of the following statements is INCORRECT?","Choices":["About 50% of the male students spent less than 5 hours on homework.","About 25% of female students spent less than 3 hours on homework. ","The median amount of time for female students was less than male students.","About 75% of males spent less than 6 hours on homework.","The male students have a larger interquartile range than the female students. "],"Answer":4,"ImagePath":"stats.01.18.jpg"},"Item 21":{"questionID":21,"QuestionType":1,"QuestionTopic":"Numerical Summaries","Question":"When describing a distribution with numbers, what are the two most common ways?","Answers":[["five-number summary","  five number summary","  5 number summary"],["mean and standard deviation","  mean & standard dev","  mean and standard dev","  mean & standard deviation","  mean and std dev","  mean & std dev"]]},"Item 22":{"questionID":22,"QuestionType":1,"QuestionTopic":"Numerical Summaries","Question":"If a distribution is skewed or has outliers, which numeric summary would you use?","Answers":[["five-number summary","  five number summary","  5-number summary"]]},"Item 23":{"questionID":23,"QuestionType":0,"QuestionTopic":"SOCS","Question":"What can you conclude given the modified boxplots shown?","Choices":["The top graph has a wider range than the bottom graph.","Both graphs have outliers.","75% of the data in the bottom graph as high or higher than the median of the top graph.","The top graph has fewer large values.","Any number less than 2 is an outlier in the bottom graph."],"Answer":2,"ImagePath":"stats.01.18.jpg"},"Item 24":{"questionID":24,"QuestionType":0,"QuestionTopic":"SOCS","Question":"You have taken three quizzes and received scores of 8, 9, and 10.  If you take one more quiz and score a 9, what happens to the mean?  ","Choices":["Mean stays the same","Mean decreases","Mean increases","Cannot be determined"],"Answer":0},"Item 25":{"questionID":25,"QuestionType":0,"QuestionTopic":"SOCS","Question":"You have taken three quizzes and received scores of 8, 9, and 10.  If you take one more quiz and score a 9, what happens to the standard deviation? \n","Choices":["Standard deviation stays the same","Standard deviation increases","Standard deviation decreases","Cannot be determined"],"Answer":2},"Item 26":{"questionID":26,"QuestionType":0,"QuestionTopic":"SOCS","Question":"You have taken three quizzes and received scores of 8, 9, and 10.  If you take one more quiz and score a 8, what happens to the standard deviation? \n","Choices":["Standard deviation stays the same","Standard deviation increases","Standard deviation decreases","Cannot be determined"],"Answer":1},"Item 27":{"questionID":27,"QuestionType":0,"QuestionTopic":"SOCS","Question":"You have taken three quizzes and received scores of 8, 9, and 10.  If you take one more quiz and score a 8, what happens to the mean?  ","Choices":["Mean stays the same","Mean decreases","Mean increases","Cannot be determined"],"Answer":1},"Item 28":{"questionID":28,"QuestionType":1,"QuestionTopic":"SOCS","Question":"To describe a distribution what are the four pieces you should discuss?","Answers":[["shape"],["outliers"," outlier"],["center"],["spread"," spred"]]},"Item 29":{"questionID":29,"QuestionType":1,"QuestionTopic":"SOCS","Question":"What are the three most common ways to describe the shape of a distribution?","Answers":[["symmetric","  symmetrical"],["skewed left","  left skewed"],["skewed right","  right skewed"]]},"Item 30":{"questionID":30,"QuestionType":1,"QuestionTopic":"SOCS","Question":"When all the classes of a distribution have the same number of observations how would you describe the shape?","Answers":[["uniform"]]},"Item 31":{"questionID":31,"QuestionType":1,"QuestionTopic":"SOCS","Question":"An individual data point which falls outside the overall pattern is called what?","Answers":[["outlier"]]},"Item 32":{"questionID":32,"QuestionType":1,"QuestionTopic":"SOCS","Question":"For the density curve shown, what is the best description of the shape?","Answers":[["Uniform"]],"ImagePath":"stats.01.05.jpg"},"Item 33":{"questionID":33,"QuestionType":1,"QuestionTopic":"SOCS","Question":"20 values are listed in the following stem-and-leaf plot:  The third quartile of the score distribution is equal to:","Answers":[["44.5"]],"ImagePath":"stats.01.02.jpg"},"Item 34":{"questionID":34,"QuestionType":1,"QuestionTopic":"SOCS","Question":"20 values are listed in the following stem-and-leaf plot:  The median of the score distribution is equal to:","Answers":[["29.5"]],"ImagePath":"stats.01.02.jpg"},"Item 35":{"questionID":35,"QuestionType":2,"QuestionTopic":"Spread","Question":"The distribution of number of points scored in last nights game has the following five number summary {~v0, ~v1, ~v2, ~v3, ~v4}.  You would have to score more than how many points to be considered an outlier?","Variables":[{"VarName":"v0","LowerBound":0,"UpperBound":4,"Step":1},{"VarName":"v1","LowerBound":5,"UpperBound":8,"Step":1},{"VarName":"v2","LowerBound":9,"UpperBound":12,"Step":1},{"VarName":"v3","LowerBound":13,"UpperBound":17,"Step":1},{"VarName":"v4","LowerBound":18,"UpperBound":20,"Step":1}],"Equations":["(~v3-~v1)*1.5+~v3"],"Answers":[" ~^~"]},"Item 36":{"questionID":36,"QuestionType":2,"QuestionTopic":"Spread","Question":"The distribution of temperatures on an average January day has the following five number summary {~v0, ~v1, ~v2, ~v3, ~v4}.  How cold would it have to be for the temperature to be considered an outlier?","Variables":[{"VarName":"v0","LowerBound":0,"UpperBound":4,"Step":1},{"VarName":"v1","LowerBound":5,"UpperBound":8,"Step":1},{"VarName":"v2","LowerBound":9,"UpperBound":12,"Step":1},{"VarName":"v3","LowerBound":13,"UpperBound":17,"Step":1},{"VarName":"v4","LowerBound":18,"UpperBound":20,"Step":1}],"Equations":["(~v3-~v1)*(-1.5)+~v1"],"Answers":[" ~^~"]},"Item 37":{"questionID":37,"QuestionType":2,"QuestionTopic":"Spread","Question":"The five-number summary for scores on a statistics exam is 11, ~q1, ~med, ~q3, 79.  In all, ~n students took the test. About how many had scores between ~q1 and ~q3? ","Variables":[{"VarName":"q1","LowerBound":15,"UpperBound":45,"Step":1},{"VarName":"q3","LowerBound":65,"UpperBound":75,"Step":1},{"VarName":"n","LowerBound":200,"UpperBound":600,"Step":4},{"VarName":"med","LowerBound":47,"UpperBound":63,"Step":1}],"Equations":["~n/2"],"Answers":["~^~"]},"Item 38":{"questionID":38,"QuestionType":2,"QuestionTopic":"Spread","Question":"The five-number summary for scores on a statistics exam is 11, ~q1, ~med, ~q3, 79.  In all, ~n students took the test. About how many had scores between ~med and ~q3? ","Variables":[{"VarName":"q1","LowerBound":15,"UpperBound":45,"Step":1},{"VarName":"q3","LowerBound":65,"UpperBound":75,"Step":1},{"VarName":"n","LowerBound":200,"UpperBound":600,"Step":4},{"VarName":"med","LowerBound":47,"UpperBound":63,"Step":1}],"Equations":["~n/4"],"Answers":["~^~"]},"Item 39":{"questionID":39,"QuestionType":2,"QuestionTopic":"Spread","Question":"The following list gives the five-number summary for the weights of women in a certain country.  Country A:  ~min, ~q1, ~med, ~q3, ~max.  About what percentage of Country A women weigh between ~q1 and ~max pounds?","Variables":[{"VarName":"q1","LowerBound":105,"UpperBound":115,"Step":1},{"VarName":"max","LowerBound":190,"UpperBound":210,"Step":1},{"VarName":"min","LowerBound":90,"UpperBound":100,"Step":1},{"VarName":"med","LowerBound":120,"UpperBound":130,"Step":1},{"VarName":"q3","LowerBound":135,"UpperBound":175,"Step":1}],"Equations":["(~q1/~q1)*75"],"Answers":["~^~"]},"Item 40":{"questionID":40,"QuestionType":2,"QuestionTopic":"Spread","Question":"The following list gives the five-number summary for the weights of women in a certain country.  Country A:  ~min, ~q1, ~med, ~q3, ~max.  About what percentage of Country A women weigh between ~q1 and ~q3 pounds?","Variables":[{"VarName":"q1","LowerBound":105,"UpperBound":115,"Step":1},{"VarName":"max","LowerBound":190,"UpperBound":210,"Step":1},{"VarName":"min","LowerBound":90,"UpperBound":100,"Step":1},{"VarName":"med","LowerBound":120,"UpperBound":130,"Step":1},{"VarName":"q3","LowerBound":135,"UpperBound":175,"Step":1}],"Equations":["~q1/~q1*50"],"Answers":["~^~"]},"Item 41":{"questionID":41,"QuestionType":0,"QuestionTopic":"Spread","Question":"Increasing the frequencies in the tails of a distribution will do what to the standard deviation? ","Choices":["Increase the standard deviation","Decrease the standard deviation","Keep the standard deviation the same","Cannot be determined"],"Answer":0},"Item 42":{"questionID":42,"QuestionType":0,"QuestionTopic":"Spread","Question":"Increasing the frequencies in the center of a distribution will do what to the standard deviation? ","Choices":["Increase the standard deviation","Decrease the standard deviation","Keep the standard deviation the same","Cannot be determined"],"Answer":1},"Item 43":{"questionID":43,"QuestionType":0,"QuestionTopic":"Spread","Question":"Of the following two measures of spread, which is non-resistant to outliers?","Choices":["Standard Deviation","Interquartile Range (IQR)"],"Answer":0},"Item 44":{"questionID":44,"QuestionType":1,"QuestionTopic":"Spread","Question":"What are the two most common measures of spread, or variability in a distribution centered about the mean?","Answers":[["standard deviation","  standard dev","  std dev"],["variance","  var"]]},"Item 45":{"questionID":45,"QuestionType":1,"QuestionTopic":"Spread","Question":"What are the two most common measures of spread, or variability, when using a boxplot?","Answers":[["range"],["IQR"," interquartile range"," inter-quartile range"]]},"Item 46":{"questionID":46,"QuestionType":1,"QuestionTopic":"Spread","Question":"The distance from the first quartile to the third quartile is called what?","Answers":[["IQR"," interquartile range"," inter-quartile range"]]},"Item 47":{"questionID":47,"QuestionType":1,"QuestionTopic":"Spread","Question":"If you are given the variance of a distribution how do you find the standard deviation?","Answers":[["square root","  square root it","  take the square root","  take square root","  raise it to the 1/2 power"]]},"Item 48":{"questionID":48,"QuestionType":0,"QuestionTopic":"Two Way Table","Question":"True or False:  Determining a conditional distribution for a two-way table consists of calculating percents for either a row or column.","Choices":["True","False"],"Answer":0},"Item 49":{"questionID":49,"QuestionType":1,"QuestionTopic":"Two Way Table","Question":"If you add up the rows and columns of a categorical distribution, what have you found?","Answers":[["marginal distribution"]]},"Item 50":{"questionID":50,"QuestionType":1,"QuestionTopic":"Two Way Table","Question":"To start to see association between two categorical variables you first make one of these.","Answers":[["two-way table","  two way table","  2-way table","  2 way table"]]},"Item 51":{"questionID":51,"QuestionType":0,"QuestionTopic":"Vocab","Question":"Is the following variable categorical or quantitative:  Letter Grades (A, B, C, D, F)\n","Choices":["Categorical","Quantitative"],"Answer":0},"Item 52":{"questionID":52,"QuestionType":0,"QuestionTopic":"Vocab","Question":"Is the following variable categorical or quantitative:  Class Average (Percentage)\n","Choices":["Categorical","Quantitative"],"Answer":1},"Item 53":{"questionID":53,"QuestionType":0,"QuestionTopic":"Vocab","Question":"Is the following variable categorical or quantitative:  Gender (Male=1 or Female=2)\n","Choices":["Categorical","Quantitative"],"Answer":0},"Item 54":{"questionID":54,"QuestionType":0,"QuestionTopic":"Vocab","Question":"Is the following variable categorical or quantitative:  Zip Code\n","Choices":["Categorical","Quantitative"],"Answer":0},"Item 55":{"questionID":55,"QuestionType":1,"QuestionTopic":"Vocab","Question":"What is the name of the thing that tells us what values a variable takes on and how often?","Answers":[["distribution"]]},"Item 56":{"questionID":56,"QuestionType":1,"QuestionTopic":"Vocab","Question":"A variable which is numeric and for which it makes sense to find an average is what type of variable?","Answers":[["quantitative","   quantitative variable"]]},"Item 57":{"questionID":57,"QuestionType":1,"QuestionTopic":"Vocab","Question":"A variable which is not numeric is what type of variable?","Answers":[["categorical","  categorical variable"]]},"Item 58":{"questionID":58,"QuestionType":1,"QuestionTopic":"Vocab","Question":"What is the adjective we use when a measure cannot be influenced by one observation point?","Answers":[["resistant"]]}}
+{
+	"Item 0":
+	{
+		"questionID": 0,
+		"QuestionType": 2,
+		"QuestionTopic": "Center",
+		"Question": "Measurements of ten pH levels gave the following readings:  4.5, 3.2, ~x2, 8.9, 8.7, 4.8, ~x3, 9.6, ~x1, 9.3. The median pH lavel of the sample is... ",
+		"Variables": [
+		{
+			"VarName": "x1",
+			"LowerBound": 4.3,
+			"UpperBound": 5.5,
+			"Step": 0.1
+		},
+		{
+			"VarName": "x2",
+			"LowerBound": 5.5,
+			"UpperBound": 6.5,
+			"Step": 0.1
+		},
+		{
+			"VarName": "x3",
+			"LowerBound": 6.5,
+			"UpperBound": 8.5,
+			"Step": 0.1
+		}],
+		"Equations": ["(~x2+~x3)/2"],
+		"Answers": ["~^~"]
+	},
+	"Item 1":
+	{
+		"questionID": 1,
+		"QuestionType": 0,
+		"QuestionTopic": "Center",
+		"Question": "The median age of five people in a car is 30 years. One of the people, whose age is 50 years, gets out of the car. The median age of the remaining four people in the car is:  ",
+		"Choices": ["40 years. ", "30 years. ", "25 years.", "less than 30 years.", "Cannot be determined from the information given."],
+		"Answer": 4
+	},
+	"Item 2":
+	{
+		"questionID": 2,
+		"QuestionType": 0,
+		"QuestionTopic": "Center",
+		"Question": "The test average for the students in Mr. Jones' class is 86%. The test average for the students in Ms. Smith's class is 78%. What must be true about the average for all the students? ",
+		"Choices": ["It must be 82%.", "It must be larger than 82%.", "It could be any number between 78% and 86%.", "It must be larger than 80%.", "It cannot be larger than 82%."],
+		"Answer": 2
+	},
+	"Item 3":
+	{
+		"questionID": 3,
+		"QuestionType": 0,
+		"QuestionTopic": "Center",
+		"Question": "You have a group of sticks with a mean of length 12 inches and a median of 13 inches. Unfortunetly, you just realized one of the sticks was measured incorrectly.  It had been marked as 17 inches long when in reality it was 20 inches long.  If you correct this mistake, then:",
+		"Choices": ["The mean remains the same, but the median is increased.", "The mean and median remain the same.", "The median remains the same, but the mean is increased.", "The mean and median are both increased.", "We do not know how the mean and median are affected without further calculations, but the variance is increased."],
+		"Answer": 2
+	},
+	"Item 4":
+	{
+		"questionID": 4,
+		"QuestionType": 1,
+		"QuestionTopic": "Center",
+		"Question": "Name the 3 measures of center.",
+		"Answers": [
+			["mean", "       average"],
+			["median"],
+			["mode"]
+		]
+	},
+	"Item 5":
+	{
+		"questionID": 5,
+		"QuestionType": 1,
+		"QuestionTopic": "Center",
+		"Question": "Which of the following is resistant to outliers? (mean or median)",
+		"Answers": [
+			["median"]
+		]
+	},
+	"Item 6":
+	{
+		"questionID": 6,
+		"QuestionType": 1,
+		"QuestionTopic": "Center",
+		"Question": "For the following histogram, what is the proper ordering of the mean, median, and mode? Note that the graph is NOT numerically precise-only the relative positions are important.  List them in order from 1 to 3.",
+		"Answers": [],
+		"ImagePath": "stats.01.01.jpg"
+	},
+	"Item 7":
+	{
+		"questionID": 7,
+		"QuestionType": 1,
+		"QuestionTopic": "Freq Table",
+		"Question": "To make a histogram or an ogive you must first construct this.",
+		"Answers": [
+			["frequency table"]
+		]
+	},
+	"Item 8":
+	{
+		"questionID": 8,
+		"QuestionType": 1,
+		"QuestionTopic": "Freq Table",
+		"Question": "How many classes should a typical frequency table have? (give a lower bound and upper bound)",
+		"Answers": [
+			["5", " 6", " five", " six"],
+			["7", " 8", " 9", " 10", " seven", " eight", " nine", " ten"]
+		]
+	},
+	"Item 9":
+	{
+		"questionID": 9,
+		"QuestionType": 1,
+		"QuestionTopic": "Freq Table",
+		"Question": "What are the five categories of a frequency table?",
+		"Answers": [
+			["class"],
+			["frequency", "    frequnecy"],
+			["relative frequency"],
+			["cumulative frequency"],
+			["relative cumulative frequency", "    cumulative relative frequency"]
+		]
+	},
+	"Item 10":
+	{
+		"questionID": 10,
+		"QuestionType": 1,
+		"QuestionTopic": "Graph Type",
+		"Question": "Which two types of charts or graphs are best used to display categorical data? ",
+		"Answers": [
+			["pie chart", " pie", " piechart", " pie graph"],
+			["bar", " bargraph", " bar plot", " bar graph"]
+		]
+	},
+	"Item 11":
+	{
+		"questionID": 11,
+		"QuestionType": 1,
+		"QuestionTopic": "Graph Type",
+		"Question": "Which are the four most common ways to display a quantitative distribution?",
+		"Answers": [
+			["dotplot", "  dot plot", "  dot", "  dot-plot"],
+			["histogram"],
+			["boxplot", "  box plot", "  box", "  box-plot"],
+			["stemplot", "  stem", "  stem plot", "  stem-plot"]
+		]
+	},
+	"Item 12":
+	{
+		"questionID": 12,
+		"QuestionType": 1,
+		"QuestionTopic": "Graph Type",
+		"Question": "Which graph is best used to determine a given percentile?",
+		"Answers": [
+			["ogive", " relative cumulative frequency"]
+		]
+	},
+	"Item 13":
+	{
+		"questionID": 13,
+		"QuestionType": 1,
+		"QuestionTopic": "Graph Type",
+		"Question": "If you want to show changes over time, or seasonal variations which display should be used?",
+		"Answers": [
+			["time plot", "  time graph"]
+		]
+	},
+	"Item 14":
+	{
+		"questionID": 14,
+		"QuestionType": 1,
+		"QuestionTopic": "Graph Type",
+		"Question": "If we wish to use a graphical distribution which shows outliers, which one should you use?",
+		"Answers": [
+			["modified boxplot", "  modified box plot", "  modified box-plot"]
+		]
+	},
+	"Item 15":
+	{
+		"questionID": 15,
+		"QuestionType": 1,
+		"QuestionTopic": "Graph Type",
+		"Question": "After collecting data, what is the first thing you should do with it?",
+		"Answers": [
+			["plot the data", "   plot it", "   plot", "   make a plot", "   graph it", "   graph the data"]
+		]
+	},
+	"Item 16":
+	{
+		"questionID": 16,
+		"QuestionType": 1,
+		"QuestionTopic": "Graph Type",
+		"Question": "What is the clearest way to show association between categorical variables?",
+		"Answers": [
+			["bar graph of conditional distributions", "  bar graph of conditional distribution", "  conditional distribution", "  conditional distributions"]
+		]
+	},
+	"Item 17":
+	{
+		"questionID": 17,
+		"QuestionType": 2,
+		"QuestionTopic": "Graphs",
+		"Question": "The following is an ogive representing scores of students on a recent test.  If ~n students took the test, how many of them scored between an 80 and 90?",
+		"Variables": [
+		{
+			"VarName": "n",
+			"LowerBound": 25,
+			"UpperBound": 100,
+			"Step": 5
+		}],
+		"Equations": ["~n*0.4"],
+		"Answers": ["~^~"],
+		"ImagePath": "stats.01.06.jpg"
+	},
+	"Item 18":
+	{
+		"questionID": 18,
+		"QuestionType": 2,
+		"QuestionTopic": "Graphs",
+		"Question": "The following is an ogive representing scores of students on a recent test.  If ~n students took the test, how many of them scored between an 70 and 80?",
+		"Variables": [
+		{
+			"VarName": "n",
+			"LowerBound": 25,
+			"UpperBound": 100,
+			"Step": 5
+		}],
+		"Equations": ["~n*0.2"],
+		"Answers": ["~^~"],
+		"ImagePath": "stats.01.06.jpg"
+	},
+	"Item 19":
+	{
+		"questionID": 19,
+		"QuestionType": 2,
+		"QuestionTopic": "Graphs",
+		"Question": "This histogram shows the number of texts sent per day by a random sample of adults.  Which class contains the ~p% percentile?  \n",
+		"Variables": [
+		{
+			"VarName": "p",
+			"LowerBound": 10,
+			"UpperBound": 60,
+			"Step": 25
+		}],
+		"Equations": ["3+~p/5", "8+~p/5"],
+		"Answers": ["~^~-~^~"],
+		"ImagePath": "stats.01.07.jpg"
+	},
+	"Item 20":
+	{
+		"questionID": 20,
+		"QuestionType": 0,
+		"QuestionTopic": "Graphs",
+		"Question": "The number of hours spent on homework in the last week was collected for a group of male and female students.  The boxplot on the top represent the female students while the one on the bottom represent male students.  Which of the following statements is INCORRECT?",
+		"Choices": ["About 50% of the male students spent less than 5 hours on homework.", "About 25% of female students spent less than 3 hours on homework. ", "The median amount of time for female students was less than male students.", "About 75% of males spent less than 6 hours on homework.", "The male students have a larger interquartile range than the female students. "],
+		"Answer": 4,
+		"ImagePath": "stats.01.18.jpg"
+	},
+	"Item 21":
+	{
+		"questionID": 21,
+		"QuestionType": 1,
+		"QuestionTopic": "Numerical Summaries",
+		"Question": "When describing a distribution with numbers, what are the two most common ways?",
+		"Answers": [
+			["five-number summary", "  five number summary", "  5 number summary"],
+			["mean and standard deviation", "  mean & standard dev", "  mean and standard dev", "  mean & standard deviation", "  mean and std dev", "  mean & std dev"]
+		]
+	},
+	"Item 22":
+	{
+		"questionID": 22,
+		"QuestionType": 1,
+		"QuestionTopic": "Numerical Summaries",
+		"Question": "If a distribution is skewed or has outliers, which numeric summary would you use?",
+		"Answers": [
+			["five-number summary", "  five number summary", "  5-number summary"]
+		]
+	},
+	"Item 23":
+	{
+		"questionID": 23,
+		"QuestionType": 0,
+		"QuestionTopic": "SOCS",
+		"Question": "What can you conclude given the modified boxplots shown?",
+		"Choices": ["The top graph has a wider range than the bottom graph.", "Both graphs have outliers.", "75% of the data in the bottom graph as high or higher than the median of the top graph.", "The top graph has fewer large values.", "Any number less than 2 is an outlier in the bottom graph."],
+		"Answer": 2,
+		"ImagePath": "stats.01.18.jpg"
+	},
+	"Item 24":
+	{
+		"questionID": 24,
+		"QuestionType": 0,
+		"QuestionTopic": "SOCS",
+		"Question": "You have taken three quizzes and received scores of 8, 9, and 10.  If you take one more quiz and score a 9, what happens to the mean?  ",
+		"Choices": ["Mean stays the same", "Mean decreases", "Mean increases", "Cannot be determined"],
+		"Answer": 0
+	},
+	"Item 25":
+	{
+		"questionID": 25,
+		"QuestionType": 0,
+		"QuestionTopic": "SOCS",
+		"Question": "You have taken three quizzes and received scores of 8, 9, and 10.  If you take one more quiz and score a 9, what happens to the standard deviation? \n",
+		"Choices": ["Standard deviation stays the same", "Standard deviation increases", "Standard deviation decreases", "Cannot be determined"],
+		"Answer": 2
+	},
+	"Item 26":
+	{
+		"questionID": 26,
+		"QuestionType": 0,
+		"QuestionTopic": "SOCS",
+		"Question": "You have taken three quizzes and received scores of 8, 9, and 10.  If you take one more quiz and score a 8, what happens to the standard deviation? \n",
+		"Choices": ["Standard deviation stays the same", "Standard deviation increases", "Standard deviation decreases", "Cannot be determined"],
+		"Answer": 1
+	},
+	"Item 27":
+	{
+		"questionID": 27,
+		"QuestionType": 0,
+		"QuestionTopic": "SOCS",
+		"Question": "You have taken three quizzes and received scores of 8, 9, and 10.  If you take one more quiz and score a 8, what happens to the mean?  ",
+		"Choices": ["Mean stays the same", "Mean decreases", "Mean increases", "Cannot be determined"],
+		"Answer": 1
+	},
+	"Item 28":
+	{
+		"questionID": 28,
+		"QuestionType": 1,
+		"QuestionTopic": "SOCS",
+		"Question": "To describe a distribution what are the four pieces you should discuss?",
+		"Answers": [
+			["shape"],
+			["outliers", " outlier"],
+			["center"],
+			["spread", " spred"]
+		]
+	},
+	"Item 29":
+	{
+		"questionID": 29,
+		"QuestionType": 1,
+		"QuestionTopic": "SOCS",
+		"Question": "What are the three most common ways to describe the shape of a distribution?",
+		"Answers": [
+			["symmetric", "  symmetrical"],
+			["skewed left", "  left skewed"],
+			["skewed right", "  right skewed"]
+		]
+	},
+	"Item 30":
+	{
+		"questionID": 30,
+		"QuestionType": 1,
+		"QuestionTopic": "SOCS",
+		"Question": "When all the classes of a distribution have the same number of observations how would you describe the shape?",
+		"Answers": [
+			["uniform"]
+		]
+	},
+	"Item 31":
+	{
+		"questionID": 31,
+		"QuestionType": 1,
+		"QuestionTopic": "SOCS",
+		"Question": "An individual data point which falls outside the overall pattern is called what?",
+		"Answers": [
+			["outlier"]
+		]
+	},
+	"Item 32":
+	{
+		"questionID": 32,
+		"QuestionType": 1,
+		"QuestionTopic": "SOCS",
+		"Question": "For the density curve shown, what is the best description of the shape?",
+		"Answers": [
+			["Uniform"]
+		],
+		"ImagePath": "stats.01.05.jpg"
+	},
+	"Item 33":
+	{
+		"questionID": 33,
+		"QuestionType": 1,
+		"QuestionTopic": "SOCS",
+		"Question": "20 values are listed in the following stem-and-leaf plot:  The third quartile of the score distribution is equal to:",
+		"Answers": [
+			["44.5"]
+		],
+		"ImagePath": "stats.01.02.jpg"
+	},
+	"Item 34":
+	{
+		"questionID": 34,
+		"QuestionType": 1,
+		"QuestionTopic": "SOCS",
+		"Question": "20 values are listed in the following stem-and-leaf plot:  The median of the score distribution is equal to:",
+		"Answers": [
+			["29.5"]
+		],
+		"ImagePath": "stats.01.02.jpg"
+	},
+	"Item 35":
+	{
+		"questionID": 35,
+		"QuestionType": 2,
+		"QuestionTopic": "Spread",
+		"Question": "The distribution of number of points scored in last nights game has the following five number summary {~v0, ~v1, ~v2, ~v3, ~v4}.  You would have to score more than how many points to be considered an outlier?",
+		"Variables": [
+		{
+			"VarName": "v0",
+			"LowerBound": 0,
+			"UpperBound": 4,
+			"Step": 1
+		},
+		{
+			"VarName": "v1",
+			"LowerBound": 5,
+			"UpperBound": 8,
+			"Step": 1
+		},
+		{
+			"VarName": "v2",
+			"LowerBound": 9,
+			"UpperBound": 12,
+			"Step": 1
+		},
+		{
+			"VarName": "v3",
+			"LowerBound": 13,
+			"UpperBound": 17,
+			"Step": 1
+		},
+		{
+			"VarName": "v4",
+			"LowerBound": 18,
+			"UpperBound": 20,
+			"Step": 1
+		}],
+		"Equations": ["(~v3-~v1)*1.5+~v3"],
+		"Answers": [" ~^~"]
+	},
+	"Item 36":
+	{
+		"questionID": 36,
+		"QuestionType": 2,
+		"QuestionTopic": "Spread",
+		"Question": "The distribution of temperatures on an average January day has the following five number summary {~v0, ~v1, ~v2, ~v3, ~v4}.  How cold would it have to be for the temperature to be considered an outlier?",
+		"Variables": [
+		{
+			"VarName": "v0",
+			"LowerBound": 0,
+			"UpperBound": 4,
+			"Step": 1
+		},
+		{
+			"VarName": "v1",
+			"LowerBound": 5,
+			"UpperBound": 8,
+			"Step": 1
+		},
+		{
+			"VarName": "v2",
+			"LowerBound": 9,
+			"UpperBound": 12,
+			"Step": 1
+		},
+		{
+			"VarName": "v3",
+			"LowerBound": 13,
+			"UpperBound": 17,
+			"Step": 1
+		},
+		{
+			"VarName": "v4",
+			"LowerBound": 18,
+			"UpperBound": 20,
+			"Step": 1
+		}],
+		"Equations": ["(~v3-~v1)*(-1.5)+~v1"],
+		"Answers": [" ~^~"]
+	},
+	"Item 37":
+	{
+		"questionID": 37,
+		"QuestionType": 2,
+		"QuestionTopic": "Spread",
+		"Question": "The five-number summary for scores on a statistics exam is 11, ~q1, ~med, ~q3, 79.  In all, ~n students took the test. About how many had scores between ~q1 and ~q3? ",
+		"Variables": [
+		{
+			"VarName": "q1",
+			"LowerBound": 15,
+			"UpperBound": 45,
+			"Step": 1
+		},
+		{
+			"VarName": "q3",
+			"LowerBound": 65,
+			"UpperBound": 75,
+			"Step": 1
+		},
+		{
+			"VarName": "n",
+			"LowerBound": 200,
+			"UpperBound": 600,
+			"Step": 4
+		},
+		{
+			"VarName": "med",
+			"LowerBound": 47,
+			"UpperBound": 63,
+			"Step": 1
+		}],
+		"Equations": ["~n/2"],
+		"Answers": ["~^~"]
+	},
+	"Item 38":
+	{
+		"questionID": 38,
+		"QuestionType": 2,
+		"QuestionTopic": "Spread",
+		"Question": "The five-number summary for scores on a statistics exam is 11, ~q1, ~med, ~q3, 79.  In all, ~n students took the test. About how many had scores between ~med and ~q3? ",
+		"Variables": [
+		{
+			"VarName": "q1",
+			"LowerBound": 15,
+			"UpperBound": 45,
+			"Step": 1
+		},
+		{
+			"VarName": "q3",
+			"LowerBound": 65,
+			"UpperBound": 75,
+			"Step": 1
+		},
+		{
+			"VarName": "n",
+			"LowerBound": 200,
+			"UpperBound": 600,
+			"Step": 4
+		},
+		{
+			"VarName": "med",
+			"LowerBound": 47,
+			"UpperBound": 63,
+			"Step": 1
+		}],
+		"Equations": ["~n/4"],
+		"Answers": ["~^~"]
+	},
+	"Item 39":
+	{
+		"questionID": 39,
+		"QuestionType": 2,
+		"QuestionTopic": "Spread",
+		"Question": "The following list gives the five-number summary for the weights of women in a certain country.  Country A:  ~min, ~q1, ~med, ~q3, ~max.  About what percentage of Country A women weigh between ~q1 and ~max pounds?",
+		"Variables": [
+		{
+			"VarName": "q1",
+			"LowerBound": 105,
+			"UpperBound": 115,
+			"Step": 1
+		},
+		{
+			"VarName": "max",
+			"LowerBound": 190,
+			"UpperBound": 210,
+			"Step": 1
+		},
+		{
+			"VarName": "min",
+			"LowerBound": 90,
+			"UpperBound": 100,
+			"Step": 1
+		},
+		{
+			"VarName": "med",
+			"LowerBound": 120,
+			"UpperBound": 130,
+			"Step": 1
+		},
+		{
+			"VarName": "q3",
+			"LowerBound": 135,
+			"UpperBound": 175,
+			"Step": 1
+		}],
+		"Equations": ["(~q1/~q1)*75"],
+		"Answers": ["~^~"]
+	},
+	"Item 40":
+	{
+		"questionID": 40,
+		"QuestionType": 2,
+		"QuestionTopic": "Spread",
+		"Question": "The following list gives the five-number summary for the weights of women in a certain country.  Country A:  ~min, ~q1, ~med, ~q3, ~max.  About what percentage of Country A women weigh between ~q1 and ~q3 pounds?",
+		"Variables": [
+		{
+			"VarName": "q1",
+			"LowerBound": 105,
+			"UpperBound": 115,
+			"Step": 1
+		},
+		{
+			"VarName": "max",
+			"LowerBound": 190,
+			"UpperBound": 210,
+			"Step": 1
+		},
+		{
+			"VarName": "min",
+			"LowerBound": 90,
+			"UpperBound": 100,
+			"Step": 1
+		},
+		{
+			"VarName": "med",
+			"LowerBound": 120,
+			"UpperBound": 130,
+			"Step": 1
+		},
+		{
+			"VarName": "q3",
+			"LowerBound": 135,
+			"UpperBound": 175,
+			"Step": 1
+		}],
+		"Equations": ["~q1/~q1*50"],
+		"Answers": ["~^~"]
+	},
+	"Item 41":
+	{
+		"questionID": 41,
+		"QuestionType": 0,
+		"QuestionTopic": "Spread",
+		"Question": "Increasing the frequencies in the tails of a distribution will do what to the standard deviation? ",
+		"Choices": ["Increase the standard deviation", "Decrease the standard deviation", "Keep the standard deviation the same", "Cannot be determined"],
+		"Answer": 0
+	},
+	"Item 42":
+	{
+		"questionID": 42,
+		"QuestionType": 0,
+		"QuestionTopic": "Spread",
+		"Question": "Increasing the frequencies in the center of a distribution will do what to the standard deviation? ",
+		"Choices": ["Increase the standard deviation", "Decrease the standard deviation", "Keep the standard deviation the same", "Cannot be determined"],
+		"Answer": 1
+	},
+	"Item 43":
+	{
+		"questionID": 43,
+		"QuestionType": 0,
+		"QuestionTopic": "Spread",
+		"Question": "Of the following two measures of spread, which is non-resistant to outliers?",
+		"Choices": ["Standard Deviation", "Interquartile Range (IQR)"],
+		"Answer": 0
+	},
+	"Item 44":
+	{
+		"questionID": 44,
+		"QuestionType": 1,
+		"QuestionTopic": "Spread",
+		"Question": "What are the two most common measures of spread, or variability in a distribution centered about the mean?",
+		"Answers": [
+			["standard deviation", "  standard dev", "  std dev"],
+			["variance", "  var"]
+		]
+	},
+	"Item 45":
+	{
+		"questionID": 45,
+		"QuestionType": 1,
+		"QuestionTopic": "Spread",
+		"Question": "What are the two most common measures of spread, or variability, when using a boxplot?",
+		"Answers": [
+			["range"],
+			["IQR", " interquartile range", " inter-quartile range"]
+		]
+	},
+	"Item 46":
+	{
+		"questionID": 46,
+		"QuestionType": 1,
+		"QuestionTopic": "Spread",
+		"Question": "The distance from the first quartile to the third quartile is called what?",
+		"Answers": [
+			["IQR", " interquartile range", " inter-quartile range"]
+		]
+	},
+	"Item 47":
+	{
+		"questionID": 47,
+		"QuestionType": 1,
+		"QuestionTopic": "Spread",
+		"Question": "If you are given the variance of a distribution how do you find the standard deviation?",
+		"Answers": [
+			["square root", "  square root it", "  take the square root", "  take square root", "  raise it to the 1/2 power"]
+		]
+	},
+	"Item 48":
+	{
+		"questionID": 48,
+		"QuestionType": 0,
+		"QuestionTopic": "Two Way Table",
+		"Question": "True or False:  Determining a conditional distribution for a two-way table consists of calculating percents for either a row or column.",
+		"Choices": ["True", "False"],
+		"Answer": 0
+	},
+	"Item 49":
+	{
+		"questionID": 49,
+		"QuestionType": 1,
+		"QuestionTopic": "Two Way Table",
+		"Question": "If you add up the rows and columns of a categorical distribution, what have you found?",
+		"Answers": [
+			["marginal distribution"]
+		]
+	},
+	"Item 50":
+	{
+		"questionID": 50,
+		"QuestionType": 1,
+		"QuestionTopic": "Two Way Table",
+		"Question": "To start to see association between two categorical variables you first make one of these.",
+		"Answers": [
+			["two-way table", "  two way table", "  2-way table", "  2 way table"]
+		]
+	},
+	"Item 51":
+	{
+		"questionID": 51,
+		"QuestionType": 0,
+		"QuestionTopic": "Vocab",
+		"Question": "Is the following variable categorical or quantitative:  Letter Grades (A, B, C, D, F)\n",
+		"Choices": ["Categorical", "Quantitative"],
+		"Answer": 0
+	},
+	"Item 52":
+	{
+		"questionID": 52,
+		"QuestionType": 0,
+		"QuestionTopic": "Vocab",
+		"Question": "Is the following variable categorical or quantitative:  Class Average (Percentage)\n",
+		"Choices": ["Categorical", "Quantitative"],
+		"Answer": 1
+	},
+	"Item 53":
+	{
+		"questionID": 53,
+		"QuestionType": 0,
+		"QuestionTopic": "Vocab",
+		"Question": "Is the following variable categorical or quantitative:  Gender (Male=1 or Female=2)\n",
+		"Choices": ["Categorical", "Quantitative"],
+		"Answer": 0
+	},
+	"Item 54":
+	{
+		"questionID": 54,
+		"QuestionType": 0,
+		"QuestionTopic": "Vocab",
+		"Question": "Is the following variable categorical or quantitative:  Zip Code\n",
+		"Choices": ["Categorical", "Quantitative"],
+		"Answer": 0
+	},
+	"Item 55":
+	{
+		"questionID": 55,
+		"QuestionType": 1,
+		"QuestionTopic": "Vocab",
+		"Question": "What is the name of the thing that tells us what values a variable takes on and how often?",
+		"Answers": [
+			["distribution"]
+		]
+	},
+	"Item 56":
+	{
+		"questionID": 56,
+		"QuestionType": 1,
+		"QuestionTopic": "Vocab",
+		"Question": "A variable which is numeric and for which it makes sense to find an average is what type of variable?",
+		"Answers": [
+			["quantitative", "   quantitative variable"]
+		]
+	},
+	"Item 57":
+	{
+		"questionID": 57,
+		"QuestionType": 1,
+		"QuestionTopic": "Vocab",
+		"Question": "A variable which is not numeric is what type of variable?",
+		"Answers": [
+			["categorical", "  categorical variable"]
+		]
+	},
+	"Item 58":
+	{
+		"questionID": 58,
+		"QuestionType": 1,
+		"QuestionTopic": "Vocab",
+		"Question": "What is the adjective we use when a measure cannot be influenced by one observation point?",
+		"Answers": [
+			["resistant"]
+		]
+	}
+}
