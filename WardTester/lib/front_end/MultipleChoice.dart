@@ -16,6 +16,9 @@ class _MultipleChoiceState extends State<MultipleChoice> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(
+          height: 10,
+        ),
         RichText(
             text: TextSpan(
                 style: DefaultTextStyle.of(context).style,

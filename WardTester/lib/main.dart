@@ -5,6 +5,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_downloader/image_downloader.dart';
 import 'dart:math';
 import 'dart:convert';
 import 'back_end/math_parser.dart';
@@ -34,9 +35,7 @@ var choice; // array of multiple choices value for question Type 0
 //new variables
 const String question_file = 'assets/test.json'; //data file
 var courseList;
-
 var unitList;
-
 var test_file; // current question test file
 var currentQ; // current question
 var t = 1;
@@ -71,9 +70,10 @@ void main() async {
   await Parse().initialize(keyApplicationId, keyParseServerUrl,
       clientKey: keyClientKey, autoSendSessionId: true);
 
-  //setting up JSON File for verion file through Back4App Connection
+  //setting up JSON File for VERSION JSON file through Back4App Connection
   QueryBuilder<ParseObject> version =
       QueryBuilder<ParseObject>(ParseObject('JSON_Version'));
+  version.whereEqualTo("dataType", "jsonFile");
   final ParseResponse versionResponse = await version.query();
   List<ParseObject> versionList = versionResponse.results as List<ParseObject>;
 
@@ -88,8 +88,6 @@ void main() async {
   if ((versionFile.existsSync() &&
           versionFile.readAsStringSync() != versionList[0]["date"]) ||
       !versionFile.existsSync()) {
-    //TODO: remember to change the below condition from == to != because it is not testing anymore
-    //variable for file save later
     Queue courseList1 = new Queue<String>();
 
     //looping over all of the items to find the names for the course and potentially unnits
@@ -162,6 +160,39 @@ void main() async {
 
     //print out version
     versionFile.writeAsString(versionList[0]["date"]);
+  }
+
+  //checking current version for image
+  version.whereEqualTo("dataType", "imageFile");
+  final ParseResponse imageVersionResponse = await version.query();
+  List<ParseObject> imageVersionList =
+      imageVersionResponse.results as List<ParseObject>;
+  final imageVersionFile = File('$appDocPath/imageVersion.txt');
+  if ((imageVersionFile.existsSync() &&
+          imageVersionFile.readAsStringSync() != imageVersionList[0]["date"]) ||
+      !imageVersionFile.existsSync()) {
+    //download file image
+
+    // add an image directory:
+    var imageDirectory =
+        await Directory('$appDocPath/Image').create(recursive: true);
+
+    //setting up Image File for question file through Back4App Connection
+    QueryBuilder<ParseObject> imageParse =
+        QueryBuilder<ParseObject>(ParseObject("Images"));
+    final ParseResponse imageResponse = await imageParse.query();
+
+    for (var o in imageResponse.results as List<ParseObject>) {
+      ParseFileBase? currentImageFile = o.get<ParseFileBase>('ImageFile');
+      if (currentImageFile == null) continue;
+      String? currentImageName = o.get<String>("FileName");
+      String? imageURL = currentImageFile["url"];
+
+      var localImage = downloadFileImage(imageURL!, currentImageName!);
+    }
+
+    // update the date in image version file
+    imageVersionFile.writeAsString(imageVersionList[0]["date"]);
   }
 
   // update the course List in the form of set;

@@ -35,7 +35,7 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
           itemBuilder: (BuildContext context, int index) {
             return SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
-              width: MediaQuery.of(context).size.width * 0.01,
+              width: MediaQuery.of(context).size.width * 0.1,
               child: RaisedButton(
                 child: Center(
                     child: Text(widget.courseList!.elementAt(index),

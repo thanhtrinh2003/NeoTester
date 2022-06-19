@@ -1,8 +1,10 @@
 import 'dart:collection';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:math_expressions/math_expressions.dart';
+import 'package:path_provider/path_provider.dart';
 import 'math_function.dart';
 import 'dart:convert';
 import 'math_parser.dart';
@@ -308,4 +310,21 @@ Future<List> downloadQuestion() async {
 String getDeviceType() {
   final data = MediaQueryData.fromWindow(WidgetsBinding.instance!.window);
   return data.size.shortestSide < 600 ? 'phone' : 'tablet';
+}
+
+//downloadFile and store it in a correct directories using Dio
+Future<File?> downloadFileImage(String url, String name) async {
+  final appStorage = await getApplicationDocumentsDirectory();
+  final file = File('${appStorage.path}/Image/$name');
+
+  final response = await Dio().get(url,
+      options: Options(
+        responseType: ResponseType.bytes,
+        followRedirects: false,
+        receiveTimeout: 0,
+      ));
+
+  final raf = file.openSync(mode: FileMode.write);
+  raf.writeFromSync(response.data);
+  await raf.close();
 }
