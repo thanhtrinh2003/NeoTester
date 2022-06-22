@@ -3,6 +3,8 @@ import '../main.dart';
 import '../back_end/back_end.dart';
 import 'QuestionPage.dart';
 import 'HomePage.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 class MultipleChoice extends StatefulWidget {
   const MultipleChoice({Key? key}) : super(key: key);
@@ -16,6 +18,9 @@ class _MultipleChoiceState extends State<MultipleChoice> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        currentQ.getImagePath() != ""
+            ? Image.asset(currentQ.getImagePath())
+            : SizedBox.shrink(),
         SizedBox(
           height: 10,
         ),
@@ -61,46 +66,46 @@ class _MultipleChoiceState extends State<MultipleChoice> {
         Container(
             alignment: Alignment.center,
             child: RaisedButton(
-              onPressed: () => {
-                if (stateButton == 1)
-                  {
-                    answerDisplay = checkMultipleChoice(currentQ.getChoice(),
-                        studentChoice, currentQ.getAnswer()),
-                    setState(() {
-                      if (answerDisplay == "This is correct!") {
-                        correctNum++;
-                        questionOrder.removeFirst();
-                      } else {
-                        questionOrder.add(questionOrder.first);
-                        questionOrder.removeFirst();
-                      }
-                      buttonQuestionText = "Next";
-                      stateButton = -stateButton;
-                    })
+              onPressed: () async {
+                Directory appDocDir = await getApplicationDocumentsDirectory();
+                String appDocPath = appDocDir.path;
+
+                if (stateButton == 1) {
+                  answerDisplay = checkMultipleChoice(currentQ.getChoice(),
+                      studentChoice, currentQ.getAnswer());
+                  setState(() {
+                    if (answerDisplay == "This is correct!") {
+                      correctNum++;
+                      questionOrder.removeFirst();
+                    } else {
+                      questionOrder.add(questionOrder.first);
+                      questionOrder.removeFirst();
+                    }
+                    buttonQuestionText = "Next";
+                    stateButton = -stateButton;
+                  });
+                } else {
+                  cur = cur + 1;
+                  answerDisplay = "";
+                  buttonQuestionText = "Submit";
+                  stateButton = -stateButton;
+                  if (questionOrder.isNotEmpty) {
+                    currentQ = getQuestionInfo(test_file, questionOrder.first);
+                    if (currentQ.getImagePath != "") {
+                      currentQ.setImagePath(
+                          "$appDocPath/Image/" + currentQ.getImagePath);
+                    }
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => QuestionPage()));
+                  } else {
+                    cur = 0;
+                    // we will change to
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomePage()));
                   }
-                else
-                  {
-                    cur = cur + 1,
-                    answerDisplay = "",
-                    buttonQuestionText = "Submit",
-                    stateButton = -stateButton,
-                    if (questionOrder.isNotEmpty)
-                      {
-                        currentQ =
-                            getQuestionInfo(test_file, questionOrder.first),
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => QuestionPage()))
-                      }
-                    else
-                      {
-                        cur = 0,
-                        // we will change to
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => HomePage()))
-                      }
-                  }
+                }
               },
               child: Text(buttonQuestionText),
             ))

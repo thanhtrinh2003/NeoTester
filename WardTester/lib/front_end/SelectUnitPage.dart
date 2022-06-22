@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../main.dart';
@@ -64,6 +63,15 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                   questionNum = test_file.keys.length;
                   currentQ = getQuestionInfo(test_file, cur);
 
+                  //add the deivice directories, if null no need to add
+                  print("before " + currentQ.getImagePath());
+                  if (currentQ.getImagePath() != "") {
+                    currentQ.setImagePath(
+                        '$appDocPath/Image/' + currentQ.getImagePath());
+                  }
+
+                  print("here " + currentQ.getImagePath());
+
                   var list = new List<dynamic>.generate(questionNum, (i) => i);
                   list = shuffle(list);
 
@@ -72,7 +80,7 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                     questionOrder.add(list.elementAt(i));
                   }
 
-                  print(currentQ.getQuestion());
+                  print(await currentQ.getQuestion());
 
                   print(questionFile);
 

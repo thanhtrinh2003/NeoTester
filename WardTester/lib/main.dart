@@ -5,7 +5,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_downloader/image_downloader.dart';
 import 'dart:math';
 import 'dart:convert';
 import 'back_end/math_parser.dart';
@@ -19,7 +18,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 
 //flutter run --no-sound-null-safety
-
 // variables
 const double pi = 3.1415926535897932;
 const double e = 2.718281828459045;
@@ -58,6 +56,7 @@ void main() async {
   //setting up application directory
   Directory appDocDir = await getApplicationDocumentsDirectory();
   String appDocPath = appDocDir.path;
+
   final courseFile = File('$appDocPath/course.txt');
 
   print("Path for this device: " + appDocPath);
@@ -171,8 +170,6 @@ void main() async {
   if ((imageVersionFile.existsSync() &&
           imageVersionFile.readAsStringSync() != imageVersionList[0]["date"]) ||
       !imageVersionFile.existsSync()) {
-    //download file image
-
     // add an image directory:
     var imageDirectory =
         await Directory('$appDocPath/Image').create(recursive: true);

@@ -3,6 +3,8 @@ import '../main.dart';
 import '../back_end/back_end.dart';
 import 'QuestionPage.dart';
 import 'HomePage.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 class RandomFRQ extends StatefulWidget {
   const RandomFRQ({Key? key}) : super(key: key);
@@ -16,6 +18,9 @@ class _RandomFRQState extends State<RandomFRQ> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
+      currentQ.getImagePath() != ""
+          ? Image.asset(currentQ.getImagePath())
+          : SizedBox.shrink(),
       RichText(
           text: TextSpan(
               style: DefaultTextStyle.of(context).style,
@@ -41,55 +46,53 @@ class _RandomFRQState extends State<RandomFRQ> {
       Container(
           alignment: Alignment.center,
           child: RaisedButton(
-            onPressed: () => {
-              if (stateButton == 1)
-                {
+            onPressed: () async {
+              Directory appDocDir = await getApplicationDocumentsDirectory();
+              String appDocPath = appDocDir.path;
+
+              if (stateButton == 1) {
+                //control the progress stats for the current question
+                setState(() {
+                  answerDisplay =
+                      checkAnswerRandomFRQ(myController, currentQ.getAnswer());
+                  if (answerDisplay == "This is correct!") {
+                    correctNum++;
+                    questionOrder.removeFirst();
+                  } else {
+                    questionOrder.add(questionOrder.first);
+                    questionOrder.removeFirst();
+                  }
+                });
+                //answerDisplay = checkAnswerFRQ(
+                //textListController, currentQ.getAnswer()),
+                if (answerDisplay != "Please input your answer!") {
                   setState(() {
-                    answerDisplay = checkAnswerRandomFRQ(
-                        myController, currentQ.getAnswer());
-                    if (answerDisplay == "This is correct!") {
-                      correctNum++;
-                      questionOrder.removeFirst();
-                    } else {
-                      questionOrder.add(questionOrder.first);
-                      questionOrder.removeFirst();
-                    }
-                  }),
-                  //answerDisplay = checkAnswerFRQ(
-                  //textListController, currentQ.getAnswer()),
-                  if (answerDisplay != "Please input your answer!")
-                    {
-                      setState(() {
-                        buttonQuestionText = "Next";
-                        stateButton = -stateButton;
-                      })
-                    }
-                }
-              else
-                {
-                  answerDisplay = "",
-                  cur = cur + 1,
-                  setState(() {
-                    buttonQuestionText = "Submit";
+                    buttonQuestionText = "Next";
                     stateButton = -stateButton;
-                  }),
-                  if (questionOrder.isNotEmpty)
-                    {
-                      currentQ =
-                          getQuestionInfo(test_file, questionOrder.first),
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => QuestionPage()))
-                    }
-                  else
-                    {
-                      cur = 0,
-                      // we will change to
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => HomePage()))
-                    }
+                  });
                 }
+              } else {
+                answerDisplay = "";
+                cur = cur + 1;
+                setState(() {
+                  buttonQuestionText = "Submit";
+                  stateButton = -stateButton;
+                });
+                if (questionOrder.isNotEmpty) {
+                  currentQ = getQuestionInfo(test_file, questionOrder.first);
+                  if (currentQ.getImagePath() != null) {
+                    currentQ.setImagePath(
+                        "$appDocPath/Image/" + currentQ.getImagePath());
+                  }
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => QuestionPage()));
+                } else {
+                  cur = 0;
+                  // we will change to
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomePage()));
+                }
+              }
             },
             child: Text(buttonQuestionText),
           ))

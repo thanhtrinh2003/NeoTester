@@ -39,6 +39,14 @@ class Question0 extends Question {
   List<dynamic> getChoice() {
     return choice;
   }
+
+  String getImagePath() {
+    return imagePath;
+  }
+
+  void setImagePath(String path) {
+    this.imagePath = path;
+  }
 }
 
 class Question1 extends Question {
@@ -68,6 +76,14 @@ class Question1 extends Question {
 
   String getTopic() {
     return topic;
+  }
+
+  String getImagePath() {
+    return imagePath;
+  }
+
+  void setImagePath(String path) {
+    this.imagePath = path;
   }
 }
 
@@ -114,5 +130,13 @@ class Question2 extends Question {
 
   String getTopic() {
     return topic;
+  }
+
+  String getImagePath() {
+    return imagePath;
+  }
+
+  void setImagePath(String path) {
+    this.imagePath = path;
   }
 }
