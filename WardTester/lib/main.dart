@@ -9,7 +9,7 @@ import 'dart:math';
 import 'dart:convert';
 import 'back_end/math_parser.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'back_end/back_end.dart';
+import 'back_end/utilities.dart';
 import 'front_end/HomePage.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'dart:collection';
@@ -47,7 +47,7 @@ var questionNum; // number of questions for the current lesson
 var correctNum =
     0; // number of questions that was answer correctly for the lessons
 Random random = new Random();
-Queue<int> questionOrder = new Queue<int>();
+Queue<int> questionOrder = new Queue<int>(); //current question order 
 
 //application Document Path
 
