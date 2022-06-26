@@ -13,6 +13,7 @@ import 'dart:async';
 import 'dart:io';
 import 'Question.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'Test.dart';
 
 Future<LinkedHashMap<String, dynamic>> readFile(String question_file) async {
   final String response = await rootBundle.loadString(question_file);
@@ -327,4 +328,40 @@ Future<File?> downloadFileImage(String url, String name) async {
   final raf = file.openSync(mode: FileMode.write);
   raf.writeFromSync(response.data);
   await raf.close();
+}
+
+//save the progress to the current file
+void saveProgress(var currentTest, var currentTestList) async {
+  //initialize file path
+  Directory appDocDir = await getApplicationDocumentsDirectory();
+  String appDocPath = appDocDir.path;
+  final progressFile = File('$appDocPath/progress.txt');
+
+  //add the new test progress into the current testList
+  currentTestList.add(currentTest);
+
+  //remove the two test with the same name
+  //TODO: think of a better efficient way
+  var seen = Set<String>();
+  List<Test> uniqueTest =
+      currentTestList.where((test) => seen.add(test.getName())).toList();
+  currentTestList = uniqueTest;
+
+  //log down the progress file
+  progressFile.writeAsStringSync(jsonEncode(currentTestList));
+}
+
+Future<Test> readProgress() async {
+  Directory appDocDir = await getApplicationDocumentsDirectory();
+  String appDocPath = appDocDir.path;
+  final progressFile = File('$appDocPath/progress.txt');
+
+  String progressString = progressFile.readAsStringSync();
+  var progressData = jsonDecode(progressString);
+
+
+  return
+  
+
+
 }
