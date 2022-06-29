@@ -351,7 +351,8 @@ void saveProgress(var currentTest, var currentTestList) async {
   progressFile.writeAsStringSync(jsonEncode(currentTestList));
 }
 
-Future<Test> readProgress() async {
+//read the progress from the file and update the test
+Future<List<Test>> readProgress() async {
   Directory appDocDir = await getApplicationDocumentsDirectory();
   String appDocPath = appDocDir.path;
   final progressFile = File('$appDocPath/progress.txt');
@@ -359,9 +360,6 @@ Future<Test> readProgress() async {
   String progressString = progressFile.readAsStringSync();
   var progressData = jsonDecode(progressString);
 
-
-  return
-  
-
-
+  List<Test> testList = List.from(progressData);
+  return testList;
 }

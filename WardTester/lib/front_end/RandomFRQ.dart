@@ -78,6 +78,7 @@ class _RandomFRQState extends State<RandomFRQ> {
                   buttonQuestionText = "Submit";
                   stateButton = -stateButton;
                 });
+                //Case: Still there is question
                 if (questionOrder.isNotEmpty) {
                   currentQ = getQuestionInfo(test_file, questionOrder.first);
                   if (currentQ.getImagePath() != null) {
@@ -86,9 +87,13 @@ class _RandomFRQState extends State<RandomFRQ> {
                   }
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => QuestionPage()));
-                } else {
+
+                  //update the progress file
+
+                }
+                //Case: No more question
+                else {
                   cur = 0;
-                  // we will change to
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => HomePage()));
                 }

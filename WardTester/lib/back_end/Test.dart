@@ -28,6 +28,10 @@ class Test {
         'totalAttempt': totalAttempt
       };
 
+  Queue<int> getQuestionOrder() {
+    return questionOrder;
+  }
+
   String getName() {
     return name;
   }

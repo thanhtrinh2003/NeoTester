@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:convert';
@@ -27,10 +26,9 @@ String eval = ""; // result of
 var data; //storing the current question file under the JASON format
 int cur = 0; // current question ID
 var q;
-
 var choice; // array of multiple choices value for question Type 0
 
-//new variables
+//variables
 const String question_file = 'assets/test.json'; //data file
 var courseList;
 var unitList;
@@ -46,20 +44,19 @@ var varSave =
 var questionNum; // number of questions for the current lesson
 var correctNum =
     0; // number of questions that was answer correctly for the lessons
+var testList; // current progress (containes many different test)
 Random random = new Random();
-Queue<int> questionOrder = new Queue<int>(); //current question order 
-
-//application Document Path
+Queue<int> questionOrder = new Queue<int>(); //current question order
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   //setting up application directory
   Directory appDocDir = await getApplicationDocumentsDirectory();
   String appDocPath = appDocDir.path;
 
   final courseFile = File('$appDocPath/course.txt');
-
-  print("Path for this device: " + appDocPath);
+  print("Path for this device: " + appDocPath); // printing our the directory
 
   //setting up back4app ID address
   final keyApplicationId = 'Jkk0zBewPQACbqAYHeL2C4rVFSvj1WXlTQtPRaQD';
@@ -100,7 +97,6 @@ void main() async {
     //courseList2 isa duplicate of courseList1, in order to loop over and adjust
     // the unit file.
     Queue courseList2 = new Queue.from(courseList1);
-
     courseFile.writeAsStringSync(courseList1
         .toString()
         .substring(1, courseList1.toString().indexOf('}')));
@@ -198,7 +194,19 @@ void main() async {
   var courseSet = courseListNew.toSet();
   courseList = courseSet;
 
-  //TOD: Add all parse needed including parser
+  //Read in the progress file
+  final progressFile = File('$appDocPath/progress.txt');
+
+  // update progress file (no need for first time)
+  if (progressFile.existsSync()) {
+    //read the progress file
+    testList = readProgress();
+  } else {
+    final progressFile = File('$appDocPath/progress.txt');
+    progressFile.create();
+  }
+
+  //TOD: Add all parse nxeeded including parser
   binomialCDF_parser();
   normalCDF_parser();
 

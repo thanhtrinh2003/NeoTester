@@ -6,6 +6,7 @@ import 'QuestionPage.dart';
 import 'package:path_provider/path_provider.dart';
 import "dart:io";
 import '../back_end/utilities.dart';
+import '../back_end/Test.dart';
 
 class SelectUnitPage extends StatefulWidget {
   final unitList;
@@ -47,12 +48,12 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                 padding: const EdgeInsets.all(8),
                 color: Color(0xFF2979FF),
                 onPressed: () async {
-                  //update question List based on the selection
-
+                  //pull out correspsonding question file after selection
                   Directory appDocDir =
                       await getApplicationDocumentsDirectory();
                   String appDocPath = appDocDir.path;
-                  //question path file
+
+                  //getting corresponding test file (consistings of questions)
                   var questionFile = File('$appDocPath/' +
                       widget.course +
                       '/' +
@@ -60,28 +61,38 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                       '.txt');
                   String questionString = await questionFile.readAsString();
                   test_file = jsonDecode(questionString);
+
+                  //take the ffirst question out
                   questionNum = test_file.keys.length;
                   currentQ = getQuestionInfo(test_file, cur);
 
                   //add the deivice directories, if null no need to add
-                  print("before " + currentQ.getImagePath());
                   if (currentQ.getImagePath() != "") {
                     currentQ.setImagePath(
                         '$appDocPath/Image/' + currentQ.getImagePath());
                   }
 
-                  print("here " + currentQ.getImagePath());
-
-                  var list = new List<dynamic>.generate(questionNum, (i) => i);
-                  list = shuffle(list);
-
-                  for (int i = 0; i < questionNum; i++) {
-                    stdout.write("A: " + list.elementAt(i).toString());
-                    questionOrder.add(list.elementAt(i));
+                  //question order taken from the testList
+                  if (testList != null) {
+                    //find the correct Test with the corresponding name --> take question Order
+                    Test findTest(String name) =>
+                        testList.firstWhere((test) => test.getName() == name);
+                    questionOrder = findTest(widget.unitList!.elementAt(index))
+                        .getQuestionOrder();
+                  } else {
+                    //create a random question order based on the number of question in the test
+                    var list =
+                        new List<dynamic>.generate(questionNum, (i) => i);
+                    list = shuffle(list);
+                    for (int i = 0; i < questionNum; i++) {
+                      questionOrder.add(list.elementAt(i));
+                    }
                   }
 
-                  print(await currentQ.getQuestion());
+                  // read the progress
 
+                  //TODO: delete this later
+                  print(await currentQ.getQuestion());
                   print(questionFile);
 
                   await Navigator.push(
