@@ -56,7 +56,7 @@ class _FRQState extends State<FRQ> {
                 style: DefaultTextStyle.of(context).style,
                 children: <TextSpan>[
               TextSpan(
-                  text: answerDisplay,
+                  text: resultDisplay,
                   style: TextStyle(fontSize: 12, color: Colors.black))
             ])),
         Container(
@@ -67,10 +67,10 @@ class _FRQState extends State<FRQ> {
                 String appDocPath = appDocDir.path;
 
                 if (stateButton == 1) {
-                  answerDisplay =
+                  resultDisplay =
                       checkAnswerFRQ(textListController, currentQ.getAnswer());
                   setState(() {
-                    if (answerDisplay == "This is correct!") {
+                    if (resultDisplay == "This is correct!") {
                       correctNum++;
                       questionOrder.removeFirst();
                     } else {
@@ -83,14 +83,19 @@ class _FRQState extends State<FRQ> {
                 } else {
                   cur = cur + 1;
                   buttonQuestionText = "Submit";
-                  answerDisplay = "";
+                  resultDisplay = "";
                   stateButton = -stateButton;
                   if (questionOrder.isNotEmpty) {
                     currentQ = getQuestionInfo(test_file, questionOrder.first);
+
+                    // Update Image Path
                     if (currentQ.getImagePath() != "") {
                       currentQ.setImagePath(
                           '$appDocPath/Image/' + currentQ.getImagePath());
                     }
+
+                    //save current file
+
                     Navigator.push(
                         context,
                         MaterialPageRoute(

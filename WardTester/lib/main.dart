@@ -9,6 +9,7 @@ import 'dart:convert';
 import 'back_end/math_parser.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'back_end/utilities.dart';
+import 'back_end/Test.dart';
 import 'front_end/HomePage.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'dart:collection';
@@ -32,19 +33,33 @@ var choice; // array of multiple choices value for question Type 0
 const String question_file = 'assets/test.json'; //data file
 var courseList;
 var unitList;
-var test_file; // current question test file
-var currentQ; // current question
+
+/// current question test file
+var test_file;
+
+/// current question
+var currentQ;
 var t = 1;
-var answerDisplay = " "; // send out if the answer is correct or not
-var buttonQuestionText = "Submit"; //button submit or next
-var stateButton = 1; // 1: submit, -1: next
-var studentChoice; //student answer for question Type 0
+
+//// send out if the answer is correct or not
+var resultDisplay = " ";
+
+///button submit or next
+var buttonQuestionText = "Submit";
+
+///1: submit, -1: next
+var stateButton = 1;
+
+///student answer for question Type 0
+var studentChoice;
+
 var varSave =
     new Map(); //saving current question variable value for the randomized FRQ
 var questionNum; // number of questions for the current lesson
 var correctNum =
     0; // number of questions that was answer correctly for the lessons
 var testList; // current progress (containes many different test)
+var currentTest; // current test (Test Object)
 Random random = new Random();
 Queue<int> questionOrder = new Queue<int>(); //current question order
 

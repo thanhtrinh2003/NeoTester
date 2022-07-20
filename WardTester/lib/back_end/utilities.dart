@@ -11,6 +11,7 @@ import 'math_parser.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async';
 import 'dart:io';
+import 'Test.dart';
 import 'Question.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'Test.dart';
@@ -358,8 +359,12 @@ Future<List<Test>> readProgress() async {
   final progressFile = File('$appDocPath/progress.txt');
 
   String progressString = progressFile.readAsStringSync();
-  var progressData = jsonDecode(progressString);
 
-  List<Test> testList = List.from(progressData);
-  return testList;
+  if (progressString.isNotEmpty) {
+    var progressData = jsonDecode(progressString);
+    List<Test> testList = List.from(progressData);
+    return testList;
+  }
+
+  return [];
 }

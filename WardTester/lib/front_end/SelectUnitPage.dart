@@ -5,6 +5,7 @@ import '../main.dart';
 import 'QuestionPage.dart';
 import 'package:path_provider/path_provider.dart';
 import "dart:io";
+import "dart:core";
 import '../back_end/utilities.dart';
 import '../back_end/Test.dart';
 
@@ -72,13 +73,41 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                         '$appDocPath/Image/' + currentQ.getImagePath());
                   }
 
-                  //question order taken from the testList
+                  ///If the test list is not null, find the test that matches the name
+                  /// - If there is not test, create one --> add into the testLis, save progress
+                  /// - If there is, that its questionOrder and paste it in our current question order
+                  ///If the test list is null, create a test --> add it into the testList
+
                   if (testList != null) {
+                    String currentTestName = widget.unitList!.elementAt(index);
+
                     //find the correct Test with the corresponding name --> take question Order
                     Test findTest(String name) =>
-                        testList.firstWhere((test) => test.getName() == name);
-                    questionOrder = findTest(widget.unitList!.elementAt(index))
-                        .getQuestionOrder();
+                        testList.firstWhere((test) => test.getName() == name,
+                            orElse: () => null);
+
+                    currentTest = findTest(currentTestName);
+
+                    if (currentTest == null) {
+                      //create a random question order based on the number of question in the test
+                      var list =
+                          new List<dynamic>.generate(questionNum, (i) => i);
+                      list = shuffle(list);
+                      for (int i = 0; i < questionNum; i++) {
+                        questionOrder.add(list.elementAt(i));
+                      }
+
+                      //create a new Test Object
+                      DateTime now = DateTime.now();
+                      currentTest = new Test(currentTestName, questionOrder,
+                          now, now, questionNum, 0);
+
+                      saveProgress(currentTest, testList);
+                    } else {
+                      questionOrder = currentTest.getQuestionOrder();
+                    }
+
+                    if (questionOrder != null) {}
                   } else {
                     //create a random question order based on the number of question in the test
                     var list =
@@ -87,9 +116,19 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                     for (int i = 0; i < questionNum; i++) {
                       questionOrder.add(list.elementAt(i));
                     }
-                  }
 
-                  // read the progress
+                    testList = List<Test>.empty(growable: true);
+
+                    //create a new Test Object
+
+                    String currentTestName = widget.unitList!.elementAt(index);
+
+                    DateTime now = DateTime.now();
+                    currentTest = new Test(currentTestName, questionOrder, now,
+                        now, questionNum, 0);
+
+                    saveProgress(currentTest, testList);
+                  }
 
                   //TODO: delete this later
                   print(await currentQ.getQuestion());

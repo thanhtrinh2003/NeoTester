@@ -40,7 +40,7 @@ class _RandomFRQState extends State<RandomFRQ> {
               style: DefaultTextStyle.of(context).style,
               children: <TextSpan>[
             TextSpan(
-                text: answerDisplay,
+                text: resultDisplay,
                 style: TextStyle(fontSize: 12, color: Colors.black))
           ])),
       Container(
@@ -53,9 +53,9 @@ class _RandomFRQState extends State<RandomFRQ> {
               if (stateButton == 1) {
                 //control the progress stats for the current question
                 setState(() {
-                  answerDisplay =
+                  resultDisplay =
                       checkAnswerRandomFRQ(myController, currentQ.getAnswer());
-                  if (answerDisplay == "This is correct!") {
+                  if (resultDisplay == "This is correct!") {
                     correctNum++;
                     questionOrder.removeFirst();
                   } else {
@@ -65,14 +65,14 @@ class _RandomFRQState extends State<RandomFRQ> {
                 });
                 //answerDisplay = checkAnswerFRQ(
                 //textListController, currentQ.getAnswer()),
-                if (answerDisplay != "Please input your answer!") {
+                if (resultDisplay != "Please input your answer!") {
                   setState(() {
                     buttonQuestionText = "Next";
                     stateButton = -stateButton;
                   });
                 }
               } else {
-                answerDisplay = "";
+                resultDisplay = "";
                 cur = cur + 1;
                 setState(() {
                   buttonQuestionText = "Submit";

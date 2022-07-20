@@ -41,7 +41,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                 child: Text(currentQ.getChoice()[index]),
                 onPressed: () => setState(() {
                       studentChoice = index;
-                      answerDisplay =
+                      resultDisplay =
                           "Answer is: " + currentQ.getChoice()[index];
                     }));
             // return TextField(
@@ -60,7 +60,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                 style: DefaultTextStyle.of(context).style,
                 children: <TextSpan>[
               TextSpan(
-                  text: answerDisplay,
+                  text: resultDisplay,
                   style: TextStyle(fontSize: 12, color: Colors.black))
             ])),
         Container(
@@ -71,13 +71,15 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                 String appDocPath = appDocDir.path;
 
                 if (stateButton == 1) {
-                  answerDisplay = checkMultipleChoice(currentQ.getChoice(),
+                  resultDisplay = checkMultipleChoice(currentQ.getChoice(),
                       studentChoice, currentQ.getAnswer());
                   setState(() {
-                    if (answerDisplay == "This is correct!") {
+                    if (resultDisplay == "This is correct!") {
                       correctNum++;
                       questionOrder.removeFirst();
                     } else {
+                      // question answer wrong, so add the same question back to the end of the queue
+                      // remove it at first
                       questionOrder.add(questionOrder.first);
                       questionOrder.removeFirst();
                     }
@@ -86,9 +88,10 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                   });
                 } else {
                   cur = cur + 1;
-                  answerDisplay = "";
+                  resultDisplay = "";
                   buttonQuestionText = "Submit";
                   stateButton = -stateButton;
+
                   if (questionOrder.isNotEmpty) {
                     currentQ = getQuestionInfo(test_file, questionOrder.first);
                     if (currentQ.getImagePath != "") {
@@ -102,6 +105,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                   } else {
                     cur = 0;
                     // we will change to
+
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomePage()));
                   }
