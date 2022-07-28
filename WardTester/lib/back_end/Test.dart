@@ -52,6 +52,10 @@ class Test {
   void setTimeEnd(var timeEnd) {
     this.timeEnd = timeEnd;
   }
+
+  void setQuestionOrder(var questionOrder) {
+    this.questionOrder = questionOrder;
+  }
 }
 
 Queue<int> turnStringToQueue(String listString) {
