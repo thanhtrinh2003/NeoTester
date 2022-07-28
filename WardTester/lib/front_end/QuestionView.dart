@@ -21,11 +21,14 @@ class _QuestionViewState extends State<QuestionView> {
     setState(() {
       t = currentQ.getType();
     });
-    return Center(
-        child: t == 0
-            ? MultipleChoice()
-            : t == 1
-                ? FRQ()
-                : RandomFRQ());
+    return Container(
+      child: SingleChildScrollView(
+          child: t == 0
+              ? MultipleChoice()
+              : t == 1
+                  ? FRQ()
+                  : RandomFRQ()),
+      alignment: Alignment.topCenter,
+    );
   }
 }

@@ -87,7 +87,8 @@ class _FRQState extends State<FRQ> {
                   stateButton = -stateButton;
                   if (questionOrder.isNotEmpty) {
                     currentQ = getQuestionInfo(test_file, questionOrder.first);
-
+                    print("Question: " + currentQ.getQuestion());
+                    print("Question: " + currentQ.getImagePath());
                     // Update Image Path
                     if (currentQ.getImagePath() != "") {
                       currentQ.setImagePath(

@@ -81,7 +81,9 @@ class _RandomFRQState extends State<RandomFRQ> {
                 //Case: Still there is question
                 if (questionOrder.isNotEmpty) {
                   currentQ = getQuestionInfo(test_file, questionOrder.first);
-                  if (currentQ.getImagePath() != null) {
+                  print("Question: " + currentQ.getQuestion());
+                  print("Question: " + currentQ.getImagePath());
+                  if (currentQ.getImagePath() != "") {
                     currentQ.setImagePath(
                         "$appDocPath/Image/" + currentQ.getImagePath());
                   }
