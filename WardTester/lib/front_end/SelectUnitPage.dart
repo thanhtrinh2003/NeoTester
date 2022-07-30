@@ -63,18 +63,11 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                   String questionString = await questionFile.readAsString();
                   test_file = jsonDecode(questionString);
 
-                  //take the ffirst question out
+                  //total number of question
                   questionNum = test_file.keys.length;
-                  currentQ = getQuestionInfo(test_file, cur);
-
-                  //add the deivice directories, if null no need to add
-                  if (currentQ.getImagePath() != "") {
-                    currentQ.setImagePath(
-                        '$appDocPath/Image/' + currentQ.getImagePath());
-                  }
 
                   ///If the test list is not null, find the test that matches the name
-                  /// - If there is not test, create one --> add into the testLis, save progress
+                  /// - If there is not test, create one --> add into the testList, save progress
                   /// - If there is, that its questionOrder and paste it in our current question order
                   ///If the test list is null, create a test --> add it into the testList
 
@@ -102,12 +95,28 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                       currentTest = new Test(currentTestName, questionOrder,
                           now, now, questionNum, 0);
 
+                      // set the first question
+                      currentQ =
+                          getQuestionInfo(test_file, questionOrder.first);
+
+                      //add the deivice directories for image , if null no need to add
+                      if (currentQ.getImagePath() != "") {
+                        currentQ.setImagePath(
+                            '$appDocPath/Image/' + currentQ.getImagePath());
+                      }
+
                       saveProgress(currentTest, testList);
                     } else {
                       questionOrder = currentTest.getQuestionOrder();
-                    }
+                      currentQ =
+                          getQuestionInfo(test_file, questionOrder.first);
 
-                    if (questionOrder != null) {}
+                      //add the deivice directories for image , if null no need to add
+                      if (currentQ.getImagePath() != "") {
+                        currentQ.setImagePath(
+                            '$appDocPath/Image/' + currentQ.getImagePath());
+                      }
+                    }
                   } else {
                     //create a random question order based on the number of question in the test
                     var list =
@@ -116,17 +125,22 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                     for (int i = 0; i < questionNum; i++) {
                       questionOrder.add(list.elementAt(i));
                     }
-
-                    testList = List<Test>.empty(growable: true);
+                    // set the first question
+                    currentQ = getQuestionInfo(test_file, questionOrder.first);
+                    //add the deivice directories for image , if null no need to add
+                    if (currentQ.getImagePath() != "") {
+                      currentQ.setImagePath(
+                          '$appDocPath/Image/' + currentQ.getImagePath());
+                    }
 
                     //create a new Test Object
-
                     String currentTestName = widget.unitList!.elementAt(index);
-
                     DateTime now = DateTime.now();
                     currentTest = new Test(currentTestName, questionOrder, now,
                         now, questionNum, 0);
 
+                    //update progress
+                    testList = List<Test>.empty(growable: true);
                     saveProgress(currentTest, testList);
                   }
 

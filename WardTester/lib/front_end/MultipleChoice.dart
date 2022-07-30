@@ -107,7 +107,9 @@ class _MultipleChoiceState extends State<MultipleChoice> {
 
                     //save the progress
                     currentTest.setQuestionOrder(questionOrder);
+                    saveProgress(currentTest, testList);
 
+                    //go to the next question page
                     Navigator.push(
                         context,
                         MaterialPageRoute(

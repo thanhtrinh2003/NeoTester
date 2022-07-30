@@ -81,17 +81,24 @@ class _RandomFRQState extends State<RandomFRQ> {
                 //Case: Still there is question
                 if (questionOrder.isNotEmpty) {
                   currentQ = getQuestionInfo(test_file, questionOrder.first);
+
+                  //TODO: delete this later
                   print("Question: " + currentQ.getQuestion());
                   print("Question: " + currentQ.getImagePath());
+
+                  //add the imagepath for next question display
                   if (currentQ.getImagePath() != "") {
                     currentQ.setImagePath(
                         "$appDocPath/Image/" + currentQ.getImagePath());
                   }
+
+                  //save the progress
+                  currentTest.setQuestionOrder(questionOrder);
+                  saveProgress(currentTest, testList);
+
+                  //go to the next question page
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => QuestionPage()));
-
-                  //update the progress file
-
                 }
                 //Case: No more question
                 else {
