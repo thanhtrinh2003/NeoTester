@@ -76,12 +76,12 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
 
                     //find the correct Test with the corresponding name --> take question Order
                     Test findTest(String name) =>
-                        testList.firstWhere((test) => test.getName() == name,
-                            orElse: () => null);
+                        testList.firstWhere((test) => (test.getName() == name),
+                            orElse: () => Test.nullOne());
 
                     currentTest = findTest(currentTestName);
 
-                    if (currentTest == null) {
+                    if (currentTest.getName() == "null") {
                       //create a random question order based on the number of question in the test
                       var list =
                           new List<dynamic>.generate(questionNum, (i) => i);

@@ -214,8 +214,10 @@ void main() async {
 
   // update progress file (no need for first time)
   if (progressFile.existsSync()) {
-    //read the progress file
-    testList = readProgress();
+    //read the progress file + change from Future<Test<List>> to Test<List>
+    readProgress().then((List<Test> value) {
+      testList = value;
+    });
   } else {
     final progressFile = File('$appDocPath/progress.txt');
     progressFile.create();

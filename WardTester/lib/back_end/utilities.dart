@@ -361,11 +361,10 @@ Future<List<Test>> readProgress() async {
   String progressString = progressFile.readAsStringSync();
 
   if (progressString.isNotEmpty) {
-    var progressData = jsonDecode(progressString);
-
-    //turn
-
-    List<Test> testList = List.from(progressData);
+    //turn data into a list of test (record of test progress)
+    var testObjsJson = jsonDecode(progressString) as List;
+    List<Test> testList =
+        testObjsJson.map((testJson) => Test.fromJson(testJson)).toList();
     return testList;
   }
 
