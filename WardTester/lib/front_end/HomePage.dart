@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
 import 'SelectCoursePage.dart';
+import 'ProgressPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -48,7 +49,22 @@ class HomePageState extends State<HomePage> {
                         );
                       },
                       color: Color(0xFF2979FF),
-                      child: Text("Start"),
+                      child: Text("Start Test"),
+                      textColor: Color(0xFFFAFAFA)),
+                ),
+                Align(
+                  alignment: AlignmentDirectional(0, -0.05),
+                  child: RaisedButton(
+                      onPressed: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProgressPage(),
+                          ),
+                        );
+                      },
+                      color: Color(0xFF2979FF),
+                      child: Text("Progress"),
                       textColor: Color(0xFFFAFAFA)),
                 ),
               ],

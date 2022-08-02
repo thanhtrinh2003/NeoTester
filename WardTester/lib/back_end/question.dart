@@ -8,6 +8,7 @@ abstract class Question {
   String getQuestion();
 }
 
+//Multiple Choice
 class Question0 extends Question {
   //variables
   var choice;
@@ -49,6 +50,7 @@ class Question0 extends Question {
   }
 }
 
+//FRQ
 class Question1 extends Question {
   //variables
 
@@ -87,6 +89,7 @@ class Question1 extends Question {
   }
 }
 
+// Randomized FRQ
 class Question2 extends Question {
   //variables
   var question;

@@ -64,6 +64,18 @@ class Test {
     return name;
   }
 
+  int getQuestionLeft() {
+    return questionOrder.length;
+  }
+
+  String getTimeStart() {
+    return timeStart.toString();
+  }
+
+  String getTimeEnd() {
+    return timeEnd.toString();
+  }
+
   void setTimeStart(var timeStart) {
     this.timeStart = timeStart;
   }

@@ -82,8 +82,9 @@ Question getQuestionInfo(var data, int cur) {
     }
 
     //start: put this in a while, every time get teh value and then save it into a list, and then paste it all in the answer
+    int i = 0;
 
-    for (int i = 0; i < equations.length; i++) {
+    for (i = 0; i < equations.length; i++) {
       String currentRawEquation = equations[
           i]; // take the current Equation, which contains the variable name
       String currentEquation = "";
@@ -112,20 +113,19 @@ Question getQuestionInfo(var data, int cur) {
       }
 
       ContextModel cm = ContextModel();
+      print(currentEquation);
       Expression exp = p.parse(currentEquation);
 
       String res =
           exp.evaluate(EvaluationType.REAL, cm).toStringAsFixed(3).toString();
 
       answerList.add(res);
-
-      break;
     }
 
     String curAnswer = ""; //answer including the value (already replace ~^~)
     var curValueID = 0; //current ID of the list answerList - storing the
 
-    int i = 0; //id processing for the answer String
+    i = 0; //id processing for the answer String
     while (i < answer.length) {
       if (i + 2 >= answer.length) {
         curAnswer = curAnswer + answer[i];
