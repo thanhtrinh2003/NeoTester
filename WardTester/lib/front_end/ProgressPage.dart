@@ -36,10 +36,21 @@ class _ProgressPageState extends State<ProgressPage> {
               //return the header
               return new Row(
                 children: <Widget>[
-                  Expanded(child: Text("Name")),
-                  Expanded(child: Text("Time Start")),
-                  Expanded(child: Text("Time End")),
-                  Expanded(child: Text("Question Left")),
+                  Expanded(
+                      child: Text("Name",
+                          textAlign: TextAlign.left, style: header)),
+                  Expanded(
+                      child: Text("Time Start",
+                          textAlign: TextAlign.left, style: header)),
+                  Expanded(
+                      child: Text("Time End",
+                          textAlign: TextAlign.left, style: header)),
+                  Expanded(
+                      child: Text("Question Left",
+                          textAlign: TextAlign.left, style: header)),
+                  Expanded(
+                      child: Text("Accuracy",
+                          textAlign: TextAlign.left, style: header)),
                 ],
               );
             } else {
@@ -57,6 +68,10 @@ class _ProgressPageState extends State<ProgressPage> {
                       Expanded(
                           child: Text(
                               testList[index].getQuestionLeft().toString())),
+                      Expanded(
+                          child: Text((testList[index].getTotalCorrect() /
+                                  testList[index].getTotalAttempt())
+                              .toString()))
                     ],
                   ));
             }
@@ -68,3 +83,11 @@ class _ProgressPageState extends State<ProgressPage> {
         ));
   }
 }
+
+// textAlign: TextAlign.center,
+//                     style: TextStyle(
+//                         fontWeight: FontWeight.bold,
+//                         color: Color(0xFF2979FF),
+//                         fontSize: 30.0)
+
+TextStyle header = new TextStyle(fontWeight: FontWeight.bold);

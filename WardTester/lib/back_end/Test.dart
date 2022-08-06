@@ -8,27 +8,23 @@ class Test {
   var timeEnd; //DateTime
   var totalNumQuestion; //int
   var totalAttempt; //int
-
-  var name_null = null; //String
-  var questionOrder_null = new Queue<int>(); //Queue<int>
-  var timeStart_null = DateTime.now(); //DateTime
-  var timeEnd_null = DateTime.now(); //DateTime
-  var totalNumQuestion_null = 0; //int
-  var totalAttempt_null = 0; //int
+  var totalCorrect = 0;
+  var testLength = 0;
 
   // test which hasnt done was not doing anything
-  // Test(var name, var questionOrder, var timeStart, var timeEnd,
-  //     var totalNumQuestion, var totalAttempt) {
-  //   this.name = name;
-  //   this.questionOrder = questionOrder;
-  //   this.timeStart = timeStart;
-  //   this.timeEnd = timeEnd;
-  //   this.totalNumQuestion = totalNumQuestion;
-  //   this.totalAttempt = totalAttempt;
-  // }
+  Test(var name, var questionOrder, var timeStart, var timeEnd,
+      var totalNumQuestion, var totalAttempt) {
+    this.name = name;
+    this.questionOrder = questionOrder;
+    this.timeStart = timeStart;
+    this.timeEnd = timeEnd;
+    this.totalNumQuestion = totalNumQuestion;
+    this.totalAttempt = totalAttempt;
+    testLength = questionOrder.length;
+  }
 
-  Test(this.name, this.questionOrder, this.timeStart, this.timeEnd,
-      this.totalNumQuestion, this.totalAttempt);
+  //Test(this.name, this.questionOrder, this.timeStart, this.timeEnd,
+  //    this.totalNumQuestion, this.totalAttempt);
 
   //Car.withoutABS(this.make, this.model, this.yearMade): this(make, model, yearMade, false);
 
@@ -64,6 +60,14 @@ class Test {
     return name;
   }
 
+  int getTotalCorrect() {
+    return totalCorrect;
+  }
+
+  int getTotalAttempt() {
+    return totalAttempt;
+  }
+
   int getQuestionLeft() {
     return questionOrder.length;
   }
@@ -73,7 +77,14 @@ class Test {
   }
 
   String getTimeEnd() {
+    if (timeStart == timeEnd) {
+      return "Not Finished";
+    }
     return timeEnd.toString();
+  }
+
+  int getTestLength() {
+    return testLength;
   }
 
   void setTimeStart(var timeStart) {
@@ -86,6 +97,14 @@ class Test {
 
   void setQuestionOrder(var questionOrder) {
     this.questionOrder = questionOrder;
+  }
+
+  void incrementCorrect() {
+    totalCorrect = totalCorrect + 1;
+  }
+
+  void incrementAttempt() {
+    totalAttempt = totalAttempt + 1;
   }
 }
 

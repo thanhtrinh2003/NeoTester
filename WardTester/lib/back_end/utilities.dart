@@ -215,7 +215,7 @@ String checkAnswerRandomFRQ(var a, var answer) {
       break;
     }
 
-    return "This is correct";
+    return "This is correct!";
   }
 }
 
@@ -369,4 +369,18 @@ Future<List<Test>> readProgress() async {
   }
 
   return [];
+}
+
+/// Import all Mathematics Parser by calling all of them.
+void importMathParser() {
+  binomialCDF_parser();
+  normalCDF_parser();
+  inverseNormalCDF_parser();
+  permutation_parser();
+  combination_parser();
+  binomialPDF_parser();
+  geometPDF_parser();
+  geometCDF_parser();
+  chiSquaredCDF_parser();
+  tDistCDF_parser();
 }

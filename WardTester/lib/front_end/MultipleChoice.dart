@@ -75,13 +75,17 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                       studentChoice, currentQ.getAnswer());
                   setState(() {
                     if (resultDisplay == "This is correct!") {
-                      correctNum++;
                       questionOrder.removeFirst();
+
+                      currentTest.incrementCorrect();
+                      currentTest.incrementAttempt();
                     } else {
                       // question answer wrong, so add the same question back to the end of the queue
                       // remove it at first
                       questionOrder.add(questionOrder.first);
                       questionOrder.removeFirst();
+
+                      currentTest.incrementAttempt();
                     }
                     buttonQuestionText = "Next";
                     stateButton = -stateButton;

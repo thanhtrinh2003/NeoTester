@@ -56,11 +56,15 @@ class _RandomFRQState extends State<RandomFRQ> {
                   resultDisplay =
                       checkAnswerRandomFRQ(myController, currentQ.getAnswer());
                   if (resultDisplay == "This is correct!") {
-                    correctNum++;
                     questionOrder.removeFirst();
+
+                    currentTest.incrementCorrect();
+                    currentTest.incrementAttempt();
                   } else {
                     questionOrder.add(questionOrder.first);
                     questionOrder.removeFirst();
+
+                    currentTest.incrementAttempt();
                   }
                 });
                 //answerDisplay = checkAnswerFRQ(

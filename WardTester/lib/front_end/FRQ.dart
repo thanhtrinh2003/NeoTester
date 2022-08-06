@@ -71,11 +71,15 @@ class _FRQState extends State<FRQ> {
                       checkAnswerFRQ(textListController, currentQ.getAnswer());
                   setState(() {
                     if (resultDisplay == "This is correct!") {
-                      correctNum++;
                       questionOrder.removeFirst();
+
+                      currentTest.incrementCorrect();
+                      currentTest.incrementAttempt();
                     } else {
                       questionOrder.add(questionOrder.first);
                       questionOrder.removeFirst();
+
+                      currentTest.incrementAttempt();
                     }
                     buttonQuestionText = "Next";
                     stateButton = -stateButton;

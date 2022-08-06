@@ -34,34 +34,46 @@ const String question_file = 'assets/test.json'; //data file
 var courseList;
 var unitList;
 
+const String correctString = "This is correct!";
+
 /// current question test file
 var test_file;
 
-/// current question
+/// a Question object that stores the current question of the test
 var currentQ;
+
+//TODO: check what this is
 var t = 1;
 
-//// send out if the answer is correct or not
+/// send out if the answer is correct or not
 var resultDisplay = " ";
 
 ///button submit or next
 var buttonQuestionText = "Submit";
 
-///1: submit, -1: next
+///1: submit (choosing an answer for a question)
+///-1: next (already submit, waiting for the next question)
 var stateButton = 1;
 
 ///student answer for question Type 0
 var studentChoice;
 
-var varSave =
-    new Map(); //saving current question variable value for the randomized FRQ
-var questionNum; // number of questions for the current lesson
-var correctNum =
-    0; // number of questions that was answer correctly for the lessons
-var testList; // current progress (containes many different test)
-var currentTest; // current test (Test Object)
-Random random = new Random();
+/// A map saving all the variable and its corresponding value
+var varSave = new Map();
+
+///Number of questions for the current test
+var questionNum;
+
+/// A list that keeps track of progress of all tests
+var testList;
+
+/// A Test object that keeps track of progress of the current test
+var currentTest;
+
+/// A queue that stores the remaining question index that is left in the current test
 Queue<int> questionOrder = new Queue<int>(); //current question order
+
+Random random = new Random();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -223,9 +235,7 @@ void main() async {
     progressFile.create();
   }
 
-  //TOD: Add all parse nxeeded including parser
-  binomialCDF_parser();
-  normalCDF_parser();
+  importMathParser();
 
   // run App
   runApp(MyApp());

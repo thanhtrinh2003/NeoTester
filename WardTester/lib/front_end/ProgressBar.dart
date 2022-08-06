@@ -18,7 +18,8 @@ class _ProgressBarState extends State<ProgressBar> {
             style: DefaultTextStyle.of(context).style,
             children: <TextSpan>[
               TextSpan(
-                text: "Total Number of Questions: " + questionNum.toString(),
+                text:
+                    "Total Number of Questions: " + currentTest.getTestLength(),
                 style: TextStyle(fontSize: 16, color: Colors.black),
               )
             ]),
@@ -28,7 +29,7 @@ class _ProgressBarState extends State<ProgressBar> {
             style: DefaultTextStyle.of(context).style,
             children: <TextSpan>[
               TextSpan(
-                text: "Number of Finished Questions: " + cur.toString(),
+                text: "Number of Attempts: " + currentTest.getTotalAttempt(),
                 style: TextStyle(fontSize: 16, color: Colors.black),
               )
             ]),
@@ -38,7 +39,8 @@ class _ProgressBarState extends State<ProgressBar> {
             style: DefaultTextStyle.of(context).style,
             children: <TextSpan>[
               TextSpan(
-                text: "Number of Correct Questions: " + correctNum.toString(),
+                text: "Number of Correct Questions: " +
+                    currentTest.getTotalCorrect(),
                 style: TextStyle(fontSize: 16, color: Colors.black),
               ),
             ]),
