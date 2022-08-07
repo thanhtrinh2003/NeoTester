@@ -59,5 +59,5 @@ void chiSquaredCDF_parser() {
 
 void tDistCDF_parser() {
   p.addFunction(
-      'binomcdf', (List<double> args) => tDistCDF(args[0], args[1], args[2]));
+      'tDistCDF', (List<double> args) => tDistCDF(args[0], args[1], args[2]));
 }
