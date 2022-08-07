@@ -8,8 +8,6 @@ class Test {
   var timeEnd; //DateTime
   var totalNumQuestion; //int
   var totalAttempt; //int
-  var totalCorrect = 0;
-  var testLength = 0;
 
   // test which hasnt done was not doing anything
   Test(var name, var questionOrder, var timeStart, var timeEnd,
@@ -20,7 +18,6 @@ class Test {
     this.timeEnd = timeEnd;
     this.totalNumQuestion = totalNumQuestion;
     this.totalAttempt = totalAttempt;
-    testLength = questionOrder.length;
   }
 
   //Test(this.name, this.questionOrder, this.timeStart, this.timeEnd,
@@ -60,8 +57,16 @@ class Test {
     return name;
   }
 
+  double getAccuracy() {
+    if (totalAttempt != 0) {
+      return this.getTotalCorrect() / totalAttempt;
+    } else {
+      return 0;
+    }
+  }
+
   int getTotalCorrect() {
-    return totalCorrect;
+    return totalNumQuestion - questionOrder.length;
   }
 
   int getTotalAttempt() {
@@ -70,6 +75,10 @@ class Test {
 
   int getQuestionLeft() {
     return questionOrder.length;
+  }
+
+  int getNumQuestion() {
+    return totalNumQuestion;
   }
 
   String getTimeStart() {
@@ -83,10 +92,6 @@ class Test {
     return timeEnd.toString();
   }
 
-  int getTestLength() {
-    return testLength;
-  }
-
   void setTimeStart(var timeStart) {
     this.timeStart = timeStart;
   }
@@ -97,10 +102,6 @@ class Test {
 
   void setQuestionOrder(var questionOrder) {
     this.questionOrder = questionOrder;
-  }
-
-  void incrementCorrect() {
-    totalCorrect = totalCorrect + 1;
   }
 
   void incrementAttempt() {

@@ -58,7 +58,6 @@ class _RandomFRQState extends State<RandomFRQ> {
                   if (resultDisplay == "This is correct!") {
                     questionOrder.removeFirst();
 
-                    currentTest.incrementCorrect();
                     currentTest.incrementAttempt();
                   } else {
                     questionOrder.add(questionOrder.first);
@@ -107,6 +106,11 @@ class _RandomFRQState extends State<RandomFRQ> {
                 //Case: No more question
                 else {
                   cur = 0;
+
+                  // set the end time for the test + save progress
+                  currentTest.setTimeEnd(DateTime.now());
+                  saveProgress(currentTest, testList);
+
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => HomePage()));
                 }

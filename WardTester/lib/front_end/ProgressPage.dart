@@ -69,9 +69,7 @@ class _ProgressPageState extends State<ProgressPage> {
                           child: Text(
                               testList[index].getQuestionLeft().toString())),
                       Expanded(
-                          child: Text((testList[index].getTotalCorrect() /
-                                  testList[index].getTotalAttempt())
-                              .toString()))
+                          child: Text(testList[index].getAccuracy().toString()))
                     ],
                   ));
             }

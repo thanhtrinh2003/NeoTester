@@ -77,7 +77,6 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                     if (resultDisplay == "This is correct!") {
                       questionOrder.removeFirst();
 
-                      currentTest.incrementCorrect();
                       currentTest.incrementAttempt();
                     } else {
                       // question answer wrong, so add the same question back to the end of the queue
@@ -120,7 +119,10 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                             builder: (context) => QuestionPage()));
                   } else {
                     cur = 0;
-                    // we will change to
+
+                    // set the end time for the test + save progress
+                    currentTest.setTimeEnd(DateTime.now());
+                    saveProgress(currentTest, testList);
 
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomePage()));
