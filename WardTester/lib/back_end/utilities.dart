@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:trying/back_end/non_math_parser.dart';
 import 'math_function.dart';
 import 'dart:convert';
 import 'math_parser.dart';
@@ -53,7 +54,7 @@ Question getQuestionInfo(var data, int cur) {
     List<String> answerList =
         []; //  for the different value for different equations
 
-    // adding the variables' randomized value to a list called VarSave
+    // Stage 1: Randomize value for different variables and save them to varSave
     int currentID = 0;
     while (currentID < questionRaw.length) {
       var currentChar = questionRaw[currentID];
@@ -81,14 +82,13 @@ Question getQuestionInfo(var data, int cur) {
       currentID++;
     }
 
-    //start: put this in a while, every time get teh value and then save it into a list, and then paste it all in the answer
     int i = 0;
-
     for (i = 0; i < equations.length; i++) {
+      //Stage 2: Start to replace variable with their corresponding variables
+
       String currentRawEquation = equations[
           i]; // take the current Equation, which contains the variable name
       String currentEquation = "";
-
       int curEqId =
           0; // use to process the String, to take out all of the String variable and replace with numerical value
 
@@ -112,14 +112,21 @@ Question getQuestionInfo(var data, int cur) {
         curEqId = curEqId + 1;
       }
 
-      ContextModel cm = ContextModel();
-      print(currentEquation);
-      Expression exp = p.parse(currentEquation);
+      //Stage 3: Evaluabte the equation
 
-      String res =
-          exp.evaluate(EvaluationType.REAL, cm).toStringAsFixed(3).toString();
+      if (currentEquation.substring(0, 2) != "!!") {
+        ContextModel cm = ContextModel();
+        print(currentEquation);
+        Expression exp = p.parse(currentEquation);
 
-      answerList.add(res);
+        String res =
+            exp.evaluate(EvaluationType.REAL, cm).toStringAsFixed(3).toString();
+
+        answerList.add(res);
+      } else {
+        String res = nonMathParser(currentEquation).toString();
+        answerList.add(res);
+      }
     }
 
     String curAnswer = ""; //answer including the value (already replace ~^~)
