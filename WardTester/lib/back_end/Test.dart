@@ -92,6 +92,10 @@ class Test {
     return timeEnd.toString();
   }
 
+  String toString() {
+    return this.name;
+  }
+
   void setTimeStart(var timeStart) {
     this.timeStart = timeStart;
   }

@@ -5,6 +5,7 @@ import 'QuestionPage.dart';
 import 'HomePage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
+import '../back_end/Test.dart';
 
 class FRQ extends StatefulWidget {
   const FRQ({Key? key}) : super(key: key);
@@ -102,7 +103,11 @@ class _FRQState extends State<FRQ> {
 
                     //save the progress
                     currentTest.setQuestionOrder(questionOrder);
-                    saveProgress(currentTest, testList);
+
+                    saveProgress(currentTest, testList)
+                        .then((List<Test> value) {
+                      testList = value;
+                    });
 
                     Navigator.push(
                         context,
@@ -113,7 +118,11 @@ class _FRQState extends State<FRQ> {
 
                     // set the end time for the test + save progress
                     currentTest.setTimeEnd(DateTime.now());
-                    saveProgress(currentTest, testList);
+
+                    saveProgress(currentTest, testList)
+                        .then((List<Test> value) {
+                      testList = value;
+                    });
 
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomePage()));

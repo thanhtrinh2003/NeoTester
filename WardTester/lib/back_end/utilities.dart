@@ -339,7 +339,7 @@ Future<File?> downloadFileImage(String url, String name) async {
 }
 
 //save the progress to the current file
-void saveProgress(var currentTest, var currentTestList) async {
+Future<List<Test>> saveProgress(var currentTest, var currentTestList) async {
   //initialize file path
   Directory appDocDir = await getApplicationDocumentsDirectory();
   String appDocPath = appDocDir.path;
@@ -353,10 +353,12 @@ void saveProgress(var currentTest, var currentTestList) async {
   var seen = Set<String>();
   List<Test> uniqueTest =
       currentTestList.where((test) => seen.add(test.getName())).toList();
-  currentTestList = uniqueTest;
+  //currentTestList = uniqueTest;
 
   //log down the progress file
-  progressFile.writeAsStringSync(jsonEncode(currentTestList));
+  progressFile.writeAsStringSync(jsonEncode(uniqueTest));
+
+  return uniqueTest;
 }
 
 //read the progress from the file and update the test

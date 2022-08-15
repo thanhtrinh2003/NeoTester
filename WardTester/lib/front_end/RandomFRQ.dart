@@ -5,6 +5,7 @@ import 'QuestionPage.dart';
 import 'HomePage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
+import '../back_end/Test.dart';
 
 class RandomFRQ extends StatefulWidget {
   const RandomFRQ({Key? key}) : super(key: key);
@@ -97,7 +98,9 @@ class _RandomFRQState extends State<RandomFRQ> {
 
                   //save the progress
                   currentTest.setQuestionOrder(questionOrder);
-                  saveProgress(currentTest, testList);
+                  saveProgress(currentTest, testList).then((List<Test> value) {
+                    testList = value;
+                  });
 
                   //go to the next question page
                   Navigator.push(context,
@@ -109,7 +112,10 @@ class _RandomFRQState extends State<RandomFRQ> {
 
                   // set the end time for the test + save progress
                   currentTest.setTimeEnd(DateTime.now());
-                  saveProgress(currentTest, testList);
+
+                  saveProgress(currentTest, testList).then((List<Test> value) {
+                    testList = value;
+                  });
 
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => HomePage()));

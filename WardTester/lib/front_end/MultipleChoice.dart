@@ -5,6 +5,7 @@ import 'QuestionPage.dart';
 import 'HomePage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
+import '../back_end/Test.dart';
 
 class MultipleChoice extends StatefulWidget {
   const MultipleChoice({Key? key}) : super(key: key);
@@ -76,14 +77,12 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                   setState(() {
                     if (resultDisplay == "This is correct!") {
                       questionOrder.removeFirst();
-
                       currentTest.incrementAttempt();
                     } else {
                       // question answer wrong, so add the same question back to the end of the queue
                       // remove it at first
                       questionOrder.add(questionOrder.first);
                       questionOrder.removeFirst();
-
                       currentTest.incrementAttempt();
                     }
                     buttonQuestionText = "Next";
@@ -110,7 +109,10 @@ class _MultipleChoiceState extends State<MultipleChoice> {
 
                     //save the progress
                     currentTest.setQuestionOrder(questionOrder);
-                    saveProgress(currentTest, testList);
+                    saveProgress(currentTest, testList)
+                        .then((List<Test> value) {
+                      testList = value;
+                    });
 
                     //go to the next question page
                     Navigator.push(
@@ -122,7 +124,10 @@ class _MultipleChoiceState extends State<MultipleChoice> {
 
                     // set the end time for the test + save progress
                     currentTest.setTimeEnd(DateTime.now());
-                    saveProgress(currentTest, testList);
+                    saveProgress(currentTest, testList)
+                        .then((List<Test> value) {
+                      testList = value;
+                    });
 
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomePage()));
