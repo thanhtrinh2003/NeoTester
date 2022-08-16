@@ -8,6 +8,7 @@ import "dart:io";
 import "dart:core";
 import '../back_end/utilities.dart';
 import '../back_end/Test.dart';
+import 'SelectCoursePage.dart';
 
 class SelectUnitPage extends StatefulWidget {
   final unitList;
@@ -29,6 +30,18 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
           title: Text(
             'Select Unit',
             //
+          ),
+          leading: BackButton(
+            color: Colors.white,
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      SelectCoursePage(courseList: courseList),
+                ),
+              );
+            },
           ),
           actions: [],
           centerTitle: true,

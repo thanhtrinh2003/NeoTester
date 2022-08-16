@@ -31,7 +31,11 @@ var choice; // array of multiple choices value for question Type 0
 
 //variables
 const String question_file = 'assets/test.json'; //data file
+
+/// stores course list for SelectCoursePage
 var courseList;
+
+/// stores unit list for SelectUnitPage
 var unitList;
 
 const String correctString = "This is correct!";
@@ -69,6 +73,12 @@ var testList;
 
 /// A Test object that keeps track of progress of the current test
 var currentTest;
+
+/// current chosen course after SelectCoursePage
+var currentCourse;
+
+/// current unit list according to the curren chosen course (currentCourse)
+var currentUnitList;
 
 /// A queue that stores the remaining question index that is left in the current test
 Queue<int> questionOrder = new Queue<int>(); //current question order

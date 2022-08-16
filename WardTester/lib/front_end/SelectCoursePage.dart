@@ -54,6 +54,10 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
                   List<String> unitListNew = unitListContent.split(",");
                   unitList = unitListNew.toSet();
 
+                  //update currentCourse and currentUnitList
+                  currentCourse = widget.courseList!.elementAt(index);
+                  currentUnitList = unitList;
+
                   //getting questions
 
                   await Navigator.push(

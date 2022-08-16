@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import "QuestionView.dart";
 import "ProgressBar.dart";
+import "SelectUnitPage.dart";
 import '../main.dart';
 
 class QuestionPage extends StatefulWidget {
@@ -23,14 +24,25 @@ class _QuestionPageState extends State<QuestionPage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.setName),
-          bottom: const TabBar(
-            tabs: <Widget>[
-              Tab(child: Text("Question")),
-              Tab(child: Text("Progress")),
-            ],
-          ),
-        ),
+            title: Text(widget.setName),
+            bottom: const TabBar(
+              tabs: <Widget>[
+                Tab(child: Text("Question")),
+                Tab(child: Text("Progress")),
+              ],
+            ),
+            leading: BackButton(
+              color: Colors.white,
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SelectUnitPage(
+                        unitList: currentUnitList, course: currentCourse),
+                  ),
+                );
+              },
+            )),
         body: const TabBarView(
           children: <Widget>[
             Center(
