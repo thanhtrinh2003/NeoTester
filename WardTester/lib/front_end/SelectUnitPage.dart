@@ -85,7 +85,9 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                   ///If the test list is null, create a test --> add it into the testList
 
                   if (testList != null) {
-                    String currentTestName = widget.unitList!.elementAt(index);
+                    String currentTestName = currentCourse +
+                        ": " +
+                        widget.unitList!.elementAt(index);
 
                     //find the correct Test with the corresponding name --> take question Order
                     Test findTest(String name) =>
@@ -147,7 +149,9 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                     }
 
                     //create a new Test Object
-                    String currentTestName = widget.unitList!.elementAt(index);
+                    String currentTestName = currentCourse +
+                        ": " +
+                        widget.unitList!.elementAt(index);
                     DateTime now = DateTime.now();
                     currentTest = new Test(currentTestName, questionOrder, now,
                         now, questionNum, 0);

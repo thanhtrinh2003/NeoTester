@@ -72,7 +72,8 @@ Question getQuestionInfo(var data, int cur) {
                 variables[i]["LowerBound"].toDouble(),
                 variables[i]["UpperBound"].toDouble(),
                 variables[i]["Step"].toDouble());
-            if (variables[i]["Step"].toDouble() == 1) {
+            if (variables[i]["Step"].toDouble() ==
+                variables[i]["Step"].toDouble().roundToDouble()) {
               varSave[variables[i]["VarName"]] = floor(current).toInt();
             } else {
               varSave[variables[i]["VarName"]] = double.parse(current
@@ -128,10 +129,13 @@ Question getQuestionInfo(var data, int cur) {
         print(currentEquation);
         Expression exp = p.parse(currentEquation);
 
-        String res =
-            exp.evaluate(EvaluationType.REAL, cm).toStringAsFixed(3).toString();
+        double res = exp.evaluate(EvaluationType.REAL, cm);
 
-        answerList.add(res);
+        if (res == res.roundToDouble()) {
+          answerList.add(res.toInt().toString());
+        } else {
+          answerList.add(res.toStringAsFixed(2));
+        }
       } else {
         String res = nonMathParser(currentEquation).toString();
         answerList.add(res);

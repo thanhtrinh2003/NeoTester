@@ -20,7 +20,7 @@ class _RandomFRQState extends State<RandomFRQ> {
   Widget build(BuildContext context) {
     return Column(children: [
       currentQ.getImagePath() != ""
-          ? Image.asset(currentQ.getImagePath())
+          ? Image.asset(currentQ.getImagePath(), scale: 0.8)
           : SizedBox.shrink(),
       RichText(
           text: TextSpan(

@@ -107,3 +107,27 @@ int floor(double a) {
 }
 
 double logBase(num x, num base) => log(x) / log(base);
+
+int binaryToDecimal(int a) {
+  return int.parse(a.toString(), radix: 2);
+}
+
+String binaryToHex(int a) {
+  return int.parse(a.toString(), radix: 2).toRadixString(16);
+}
+
+int decimalToBinary(int a) {
+  return int.parse(a.toRadixString(2));
+}
+
+String decimalToHex(int a) {
+  return a.toRadixString(16);
+}
+
+int hexToBinary(String a) {
+  return int.parse(int.parse(a, radix: 16).toRadixString(2));
+}
+
+int hexToDecimal(String a) {
+  return int.parse(a, radix: 16);
+}

@@ -20,7 +20,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
     return Column(
       children: [
         currentQ.getImagePath() != ""
-            ? Image.asset(currentQ.getImagePath())
+            ? Image.asset(currentQ.getImagePath(), scale: 0.8)
             : SizedBox.shrink(),
         SizedBox(
           height: 10,
