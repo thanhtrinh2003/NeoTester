@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:trying/back_end/non_math_parser.dart';
 import 'math_function.dart';
 import 'dart:convert';
+import 'math.dart';
 import 'math_parser.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async';
@@ -71,8 +72,16 @@ Question getQuestionInfo(var data, int cur) {
                 variables[i]["LowerBound"].toDouble(),
                 variables[i]["UpperBound"].toDouble(),
                 variables[i]["Step"].toDouble());
-            varSave[variables[i]["VarName"]] = current; // take the one use out
-            question += current.toStringAsFixed(2).toString();
+            if (variables[i]["Step"].toDouble() == 1) {
+              varSave[variables[i]["VarName"]] = floor(current).toInt();
+            } else {
+              varSave[variables[i]["VarName"]] = double.parse(current
+                  .toStringAsFixed(
+                      logBase(variables[i]["Step"].toDouble(), 0.1).toInt())
+                  .toString());
+            }
+
+            question += varSave[variables[i]["VarName"]].toString();
             int length = variables[i]["VarName"].length;
             currentID = currentID + length;
             break;

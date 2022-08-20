@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'SelectUnitPage.dart';
+import 'HomePage.dart';
 import '../main.dart';
 import '../back_end/utilities.dart';
 import "dart:io";
@@ -23,6 +24,17 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
           title: Text(
             'Select Course',
             //
+          ),
+          leading: BackButton(
+            color: Colors.white,
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomePage(),
+                ),
+              );
+            },
           ),
           actions: [],
           centerTitle: true,

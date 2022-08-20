@@ -118,9 +118,15 @@ void main() async {
   //check if there is an existing version file to download the questionFile or not
   final versionFile = File('$appDocPath/version.txt');
 
+  print(versionList[0]["date"]);
+  print(versionFile.readAsStringSync());
+  print(versionList[versionList.length - 1]["date"]);
+
   if ((versionFile.existsSync() &&
-          versionFile.readAsStringSync() != versionList[0]["date"]) ||
+          versionFile.readAsStringSync() !=
+              versionList[versionList.length - 1]["date"]) ||
       !versionFile.existsSync()) {
+    print("version is different!");
     Queue courseList1 = new Queue<String>();
 
     //looping over all of the items to find the names for the course and potentially unnits
@@ -191,7 +197,7 @@ void main() async {
     }
 
     //print out version
-    versionFile.writeAsString(versionList[0]["date"]);
+    versionFile.writeAsString(versionList[versionList.length - 1]["date"]);
   }
 
   //checking current version for image
@@ -201,7 +207,8 @@ void main() async {
       imageVersionResponse.results as List<ParseObject>;
   final imageVersionFile = File('$appDocPath/imageVersion.txt');
   if ((imageVersionFile.existsSync() &&
-          imageVersionFile.readAsStringSync() != imageVersionList[0]["date"]) ||
+          imageVersionFile.readAsStringSync() !=
+              imageVersionList[imageVersionList.length - 1]["date"]) ||
       !imageVersionFile.existsSync()) {
     // add an image directory:
     var imageDirectory =
@@ -222,7 +229,8 @@ void main() async {
     }
 
     // update the date in image version file
-    imageVersionFile.writeAsString(imageVersionList[0]["date"]);
+    imageVersionFile
+        .writeAsString(imageVersionList[imageVersionList.length]["date"]);
   }
 
   // update the course List in the form of set;

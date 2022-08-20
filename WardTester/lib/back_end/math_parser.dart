@@ -61,3 +61,7 @@ void tDistCDF_parser() {
   p.addFunction(
       'tDistCDF', (List<double> args) => tDistCDF(args[0], args[1], args[2]));
 }
+
+void floor_parser() {
+  p.addFunction('floor', (List<double> args) => floor(args[0]));
+}

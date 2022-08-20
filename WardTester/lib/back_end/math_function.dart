@@ -101,3 +101,9 @@ double generateRandomNoStep(double lb, double rb) {
   int randomNumber = random.nextInt(rbInt - lbInt + 1) + lbInt;
   return randomNumber.toDouble() / track;
 }
+
+int floor(double a) {
+  return a.floor();
+}
+
+double logBase(num x, num base) => log(x) / log(base);

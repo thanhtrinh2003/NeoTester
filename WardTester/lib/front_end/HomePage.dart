@@ -14,7 +14,11 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Color(0xFF2979FF), elevation: 4),
+      appBar: AppBar(
+        backgroundColor: Color(0xFF2979FF),
+        elevation: 4,
+        automaticallyImplyLeading: false,
+      ),
       backgroundColor: Color(0xFFF5F5F5),
       body: SafeArea(
         child: GestureDetector(
