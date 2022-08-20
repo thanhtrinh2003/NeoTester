@@ -1,4 +1,6 @@
-double nonMathParser(String equationString) {
+import 'math_function.dart';
+
+String nonMathParser(String equationString) {
   String equation = equationString.substring(2, equationString.length);
 
   //name of equation
@@ -9,9 +11,16 @@ double nonMathParser(String equationString) {
       equation.substring(equation.indexOf('('), equation.indexOf(')'));
   List<String> paraList = parameter.split(',');
 
-  if (name == "hexical") {
-    int hexicalNum = 1;
-  }
+  if (name == "binaryToHexadecimal") {
+    return binaryToHex(int.parse(paraList[0]));
+  } else if (name == "binaryToDecimal") {
+    // return binaryToDecimal(int.
+  } else if (name == "decimalToDecimal") {
+  } else if (name == "decimalToHexadecimal") {
+  } else if (name == "hexadecimalToDecimal") {
+  } else if (name == "hexadecimalToBinary") {
+  } else if (name == "subString") {
+  } else if (name == "indexOf") {}
 
-  return 0;
+  return '0';
 }

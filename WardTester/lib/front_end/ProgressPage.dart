@@ -85,7 +85,11 @@ class _ProgressPageState extends State<ProgressPage> {
                               textAlign: TextAlign.center),
                           flex: 1),
                       Expanded(
-                          child: Text(testList[index].getAccuracy().toString(),
+                          child: Text(
+                              testList[index]
+                                  .getAccuracy()
+                                  .toStringAsFixed(3)
+                                  .toString(),
                               textAlign: TextAlign.center),
                           flex: 1)
                     ],
