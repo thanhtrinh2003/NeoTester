@@ -92,6 +92,8 @@ Question getQuestionInfo(var data, int cur) {
       currentID++;
     }
 
+    print(varSave);
+
     int i = 0;
     for (i = 0; i < equations.length; i++) {
       //Stage 2: Start to replace variable with their corresponding variables
@@ -110,8 +112,8 @@ Question getQuestionInfo(var data, int cur) {
               curProcess = curProcess + currentRawEquation[curEqId + k + 1];
             }
             if (curProcess == varSave.keys.elementAt(j)) {
-              currentEquation = currentEquation +
-                  varSave[curProcess].toStringAsFixed(3).toString();
+              currentEquation =
+                  currentEquation + varSave[curProcess].toString();
               curEqId = curEqId + curProcess.length;
               break;
             }
@@ -123,8 +125,25 @@ Question getQuestionInfo(var data, int cur) {
       }
 
       //Stage 3: Evaluabte the equation
+      if (currentEquation.length > 2) {
+        if (currentEquation.substring(0, 2) == "!!") {
+          String res = nonMathParser(currentEquation).toString();
+          print(res);
+          answerList.add(res);
+        } else {
+          ContextModel cm = ContextModel();
+          print(currentEquation);
+          Expression exp = p.parse(currentEquation);
 
-      if (currentEquation.substring(0, 2) != "!!") {
+          double res = exp.evaluate(EvaluationType.REAL, cm);
+
+          if (res == res.roundToDouble()) {
+            answerList.add(res.toInt().toString());
+          } else {
+            answerList.add(res.toStringAsFixed(2));
+          }
+        }
+      } else {
         ContextModel cm = ContextModel();
         print(currentEquation);
         Expression exp = p.parse(currentEquation);
@@ -136,10 +155,26 @@ Question getQuestionInfo(var data, int cur) {
         } else {
           answerList.add(res.toStringAsFixed(2));
         }
-      } else {
-        String res = nonMathParser(currentEquation).toString();
-        answerList.add(res);
       }
+
+      // if ((currentEquation.substring(0, 2) != "!!") ||
+      //     (currentEquation.length <= 2)) {
+      //   ContextModel cm = ContextModel();
+      //   print(currentEquation);
+      //   Expression exp = p.parse(currentEquation);
+
+      //   double res = exp.evaluate(EvaluationType.REAL, cm);
+
+      //   if (res == res.roundToDouble()) {
+      //     answerList.add(res.toInt().toString());
+      //   } else {
+      //     answerList.add(res.toStringAsFixed(2));
+      //   }
+      // } else {
+      //   String res = nonMathParser(currentEquation).toString();
+      //   print(res);
+      //   answerList.add(res);
+      // }
     }
 
     String curAnswer = ""; //answer including the value (already replace ~^~)
