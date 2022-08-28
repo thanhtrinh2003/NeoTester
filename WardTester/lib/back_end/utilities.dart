@@ -156,25 +156,6 @@ Question getQuestionInfo(var data, int cur) {
           answerList.add(res.toStringAsFixed(2));
         }
       }
-
-      // if ((currentEquation.substring(0, 2) != "!!") ||
-      //     (currentEquation.length <= 2)) {
-      //   ContextModel cm = ContextModel();
-      //   print(currentEquation);
-      //   Expression exp = p.parse(currentEquation);
-
-      //   double res = exp.evaluate(EvaluationType.REAL, cm);
-
-      //   if (res == res.roundToDouble()) {
-      //     answerList.add(res.toInt().toString());
-      //   } else {
-      //     answerList.add(res.toStringAsFixed(2));
-      //   }
-      // } else {
-      //   String res = nonMathParser(currentEquation).toString();
-      //   print(res);
-      //   answerList.add(res);
-      // }
     }
 
     String curAnswer = ""; //answer including the value (already replace ~^~)
@@ -225,6 +206,10 @@ String checkAnswerRandomFRQ(var a, var answer) {
 
     var isNumAnswer = isNumeric(answer[0]);
     var isNumSubmit = isNumeric(submit[0]);
+
+    if (isNumAnswer != isNumSubmit) {
+      return "That is not the correct answer! The answer should be: " + answer;
+    }
 
     int i = 0;
 
@@ -430,8 +415,8 @@ Future<List<Test>> readProgress() async {
 
 /// Import all Mathematics Parser by calling all of them.
 void importMathParser() {
-  binomialCDF_parser();
   normalCDF_parser();
+  binomialCDF_parser();
   inverseNormalCDF_parser();
   permutation_parser();
   combination_parser();
@@ -440,4 +425,21 @@ void importMathParser() {
   geometCDF_parser();
   chiSquaredCDF_parser();
   tDistCDF_parser();
+  median_parser();
+  stddev_parser();
+  average_parser();
+  permutation_parser();
+  combination_parser();
+  min_parser();
+  max_parser();
+  floor_parser();
+  ceil_parser();
+  gcf_parser();
+  lcm_parser();
+  abs_parser();
+  sum_parser();
+  count_parser();
+  nthroot_parser();
+  pi_parser();
+  e_parser();
 }

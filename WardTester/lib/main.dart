@@ -253,7 +253,7 @@ void main() async {
     progressFile.create();
   }
 
-  importMathParser();
+  //importMathParser();
 
   // run App
   runApp(MyApp());

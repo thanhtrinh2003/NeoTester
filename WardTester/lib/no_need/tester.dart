@@ -34,7 +34,7 @@ void main() {
       'normalCDF(${cm.getExpression('mean')},${cm.getExpression('sd')},${cm.getExpression('lb')},${cm.getExpression('ub')}) = $res');
 
   //inverseNormalCDF
-  inverseNormalCDF_parser();
+  //inverseNormalCDF_parser();
   exp = p.parse('invNormCDF(mean, sd, pc)');
   print('invNormCDF(mean, sd, pc) = $exp');
   cm.bindVariable(mean, Number(0));
