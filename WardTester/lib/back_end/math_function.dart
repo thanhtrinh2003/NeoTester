@@ -5,18 +5,148 @@ import 'package:math_expressions/math_expressions.dart';
 import 'math.dart';
 import 'distuv.dart';
 
-//normal cdf
-double normCDF(double mean, double sd, double lb, double ub) {
+///returns the probabilty below or between the bounds in the normal distribution
+double normCDF(double ub,
+    {double lb = double.negativeInfinity, double mean = 0, double sd = 1}) {
   Normal n = Normal(mean, sd);
   return n.cdf(ub) - n.cdf(lb);
 }
 
-// inverse CDF
-double invNormCDF(double mean, double sd, double pc) {
+///returns the z value given the probability
+double invNormCDF(double pc, {double mean = 0, double sd = 1}) {
   return normalInv(pc) * sd + mean;
 }
 
-// factorial
+///returns the probabilty below or between the bounds in the student t distribution
+double tDistCDF(double ub, double df, {double lb = double.negativeInfinity}) {
+  StudentT t = StudentT(df);
+  return t.cdf(ub) - t.cdf(lb);
+}
+
+///returns the probabilty below or between the bounds in the chi-sqaured distribution
+double chiSquaredCDF(double degrees, double ub,
+    {double lb = double.negativeInfinity}) {
+  ChiSquared cs = ChiSquared(degrees);
+  return cs.cdf(ub) - cs.cdf(lb);
+}
+
+/// returns the probability of a given binomial event
+double binomialPDF(double trials, double prob, double k) {
+  return factorial(trials) /
+      (factorial(k) * factorial(k - trials)) *
+      pow(prob, k) *
+      pow(1 - prob, trials - k);
+}
+
+/// returns the probability of a range of binomial event
+double binomialCDF(double trials, double prob, double ub,
+    {double lb = double.negativeInfinity}) {
+  Binomial a = Binomial(trials, prob);
+  return a.cdf(ub) - a.cdf(lb);
+}
+
+///returns the probability of a given geometric event
+double geomPDF(double prob, double trials) {
+  return prob * pow(1 - prob, trials - 1);
+}
+
+///returns the probability of a range of geometric events
+double geomCDF(double prob, double ub, {double lb = double.negativeInfinity}) {
+  Geometric a = Geometric(prob);
+  return a.cdf(ub) - a.cdf(lb);
+}
+
+int median(List<double> a) {
+  var clonedList = <int>[];
+  for (int i = 0; i < a.length; i++) {
+    clonedList.add(a[i].toInt());
+  }
+
+  clonedList.sort((a, b) => a.compareTo(b));
+
+  int median;
+
+  int middle = clonedList.length ~/ 2;
+  if (clonedList.length % 2 == 1) {
+    median = clonedList[middle];
+  } else {
+    median = ((clonedList[middle - 1] + clonedList[middle]) / 2.0).round();
+  }
+
+  return median;
+}
+
+double stddev(List<double> a) {
+  double mean = average(a);
+  double sum = 0;
+  for (int i = 0; i < a.length; i++) {
+    sum = sum + (a[i] - mean) * (a[i] - mean);
+  }
+  return sqrt(sum / a.length);
+}
+
+double average(List<double> a) {
+  double sum = 0;
+  int count = 0;
+  for (int i = 0; i < a.length; i++) {
+    sum = sum + a[i];
+    count = count + 1;
+  }
+  return sum / count;
+}
+
+double min(List<double> a) {
+  double min = double.infinity;
+  for (int i = 0; i < a.length; i++) {
+    if (a[i] < min) {
+      min = a[i];
+    }
+  }
+  return min;
+}
+
+double max(List<double> a) {
+  double max = double.negativeInfinity;
+  for (int i = 0; i < a.length; i++) {
+    if (a[i] > max) {
+      max = a[i];
+    }
+  }
+  return max;
+}
+
+int floor(double a) {
+  return a.floor();
+}
+
+int ceil(double a) {
+  return (a.floor() + 1);
+}
+
+int gcf(int a, int b) {
+  return a.gcd(b);
+}
+
+double lcm(int a, int b) {
+  return a * b / gcf(a, b);
+}
+
+double abs(double a) {
+  return a >= 0 ? a : -a;
+}
+
+double sum(List a) {
+  double sum = 0;
+  for (int i = 0; i < a.length; i++) {
+    sum = sum + a[i];
+  }
+  return sum;
+}
+
+double nthroot(double number, double root) {
+  return pow(number, root).toDouble();
+}
+
 double factorial(double n) {
   double product = 1;
   if (n == 0) {
@@ -36,39 +166,6 @@ double permutation(double n, double r) {
 //combination
 double combination(double n, double r) {
   return factorial(n) / (factorial(r) * factorial(n - r));
-}
-
-//binomial
-double binomialPDF(double trials, double prob, double k) {
-  return factorial(trials) /
-      (factorial(k) * factorial(k - trials)) *
-      pow(prob, k) *
-      pow(1 - prob, trials - k);
-}
-
-double binomialCDF(double trials, double prob, double k) {
-  Binomial a = Binomial(trials, prob);
-  return a.cdf(k);
-}
-
-//geometric
-double geometPDF(double prob, double trials) {
-  return prob * pow(1 - prob, trials - 1);
-}
-
-double geometCDF(double prob, double trials) {
-  Geometric a = Geometric(prob);
-  return a.cdf(trials);
-}
-
-double chiSquaredCDF(double degrees, double lb, double ub) {
-  ChiSquared cs = ChiSquared(degrees);
-  return cs.cdf(ub) - cs.cdf(lb);
-}
-
-double tDistCDF(double df, double lb, double ub) {
-  StudentT t = StudentT(df);
-  return t.cdf(ub) - t.cdf(lb);
 }
 
 Random random = new Random();
@@ -100,10 +197,6 @@ double generateRandomNoStep(double lb, double rb) {
   int rbInt = rb.toInt();
   int randomNumber = random.nextInt(rbInt - lbInt + 1) + lbInt;
   return randomNumber.toDouble() / track;
-}
-
-int floor(double a) {
-  return a.floor();
 }
 
 double logBase(num x, num base) => log(x) / log(base);
