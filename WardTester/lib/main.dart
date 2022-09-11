@@ -32,7 +32,7 @@ var choice; // array of multiple choices value for question Type 0
 //variables
 const String question_file = 'assets/test.json'; //data file
 
-/// stores course list for SelectCoursePage
+/// stores course list for SelectCoursePage (format form )
 var courseList;
 
 /// stores unit list for SelectUnitPage
@@ -88,6 +88,60 @@ Random random = new Random();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  updateTestFile().then((Set<String> result) {
+    courseList = result;
+  });
+  updateImageFile();
+
+  //setting up application directory
+  Directory appDocDir = await getApplicationDocumentsDirectory();
+  String appDocPath = appDocDir.path;
+
+  //Read in the progress file
+  final progressFile = File('$appDocPath/progress.txt');
+
+  // update progress file (no need for first time)
+  if (progressFile.existsSync()) {
+    //read the progress file + change from Future<Test<List>> to Test<List>
+    readProgress().then((List<Test> value) {
+      testList = value;
+    });
+  } else {
+    final progressFile = File('$appDocPath/progress.txt');
+    progressFile.create();
+  }
+
+  importMathParser();
+
+  // run App
+  runApp(MyApp());
+
+  //checking devices is phone or tablets, so that we can block the rotation later
+  if (getDeviceType() == "phone") {
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  }
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      // Hide the debug banner
+      debugShowCheckedModeBanner: false,
+      title: 'MathTester',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => HomePage(),
+      },
+    );
+  }
+}
+
+void updateFile() async {
   //setting up application directory
   Directory appDocDir = await getApplicationDocumentsDirectory();
   String appDocPath = appDocDir.path;
@@ -251,34 +305,5 @@ void main() async {
   } else {
     final progressFile = File('$appDocPath/progress.txt');
     progressFile.create();
-  }
-
-  //importMathParser();
-
-  // run App
-  runApp(MyApp());
-
-  //checking devices is phone or tablets, so that we can block the rotation later
-  if (getDeviceType() == "phone") {
-    WidgetsFlutterBinding.ensureInitialized();
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  }
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      // Hide the debug banner
-      debugShowCheckedModeBanner: false,
-      title: 'MathTester',
-      initialRoute: '/',
-      routes: {
-        '/': (context) => HomePage(),
-      },
-    );
   }
 }
