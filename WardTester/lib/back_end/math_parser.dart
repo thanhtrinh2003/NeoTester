@@ -16,8 +16,6 @@ void normalCDF_parser() {
               : args.length == 2
                   ? normCDF(args[1], lb: args[0])
                   : normCDF(args[0]));
-
-  p.addFunction('normCDF', (List<double> args) => normCDF(args[0]));
 }
 
 void inverseNormalCDF_parser() {
@@ -122,7 +120,7 @@ void sum_parser() {
 }
 
 void count_parser() {
-  p.addFunction('sum', (List<double> args) => args.length);
+  p.addFunction('count', (List<double> args) => args.length);
 }
 
 void nthroot_parser() {

@@ -23,7 +23,7 @@ class _FRQState extends State<FRQ> {
     return Column(
       children: [
         currentQ.getImagePath() != ""
-            ? Image.asset(currentQ.getImagePath(), scale: 0.2)
+            ? Image.asset(currentQ.getImagePath(), scale: 0.8)
             : SizedBox.shrink(),
         SizedBox(
           height: 10,

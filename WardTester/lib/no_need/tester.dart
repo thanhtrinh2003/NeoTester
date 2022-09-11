@@ -21,8 +21,6 @@ void main() {
   //Context Model
   ContextModel cm = ContextModel();
 
-  //normalCDF
-  normalCDF_parser();
   Expression exp = p.parse('normalCDF(mean, sd, lb, ub)');
   print('normalCDF(mean, sd, lb, ub) = $exp');
   cm.bindVariable(mean, Number(0));
