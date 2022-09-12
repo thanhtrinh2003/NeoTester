@@ -351,7 +351,7 @@ Future<List> downloadQuestion() async {
 
 // Getting device type: return phone and tablet
 String getDeviceType() {
-  final data = MediaQueryData.fromWindow(WidgetsBinding.instance!.window);
+  final data = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
   return data.size.shortestSide < 600 ? 'phone' : 'tablet';
 }
 
@@ -393,6 +393,19 @@ Future<List<Test>> saveProgress(var currentTest, var currentTestList) async {
   progressFile.writeAsStringSync(jsonEncode(uniqueTest));
 
   return uniqueTest;
+}
+
+Future<bool> checkFirstTime() async {
+  Directory appDocDir = await getApplicationDocumentsDirectory();
+  String appDocPath = appDocDir.path;
+  final progressFile = File('$appDocPath/progress.txt');
+
+  if (progressFile.existsSync()) {
+    return false;
+  } else {
+    print("here");
+    return true;
+  }
 }
 
 //read the progress from the file and update the test
@@ -527,6 +540,8 @@ Future<Set<String>> updateTestFile() async {
   String courseListContent = await courseFile.readAsString();
   List<String> courseListNew = courseListContent.split(", ");
   var courseSet = courseListNew.toSet();
+
+  updateImageFile();
   return courseSet;
 }
 

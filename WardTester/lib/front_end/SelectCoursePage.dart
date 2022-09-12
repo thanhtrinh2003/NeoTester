@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'SelectUnitPage.dart';
 import 'HomePage.dart';
 import '../main.dart';
-import '../back_end/utilities.dart';
+import '../back_end/utils.dart';
 import "dart:io";
 import 'package:path_provider/path_provider.dart';
 
@@ -48,12 +48,14 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
             return SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
               width: MediaQuery.of(context).size.width * 0.1,
-              child: RaisedButton(
+              child: ElevatedButton(
                 child: Center(
                     child: Text(widget.courseList!.elementAt(index),
                         style: TextStyle(color: Colors.white, fontSize: 18))),
-                padding: const EdgeInsets.all(8),
-                color: Color(0xFF2979FF),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(8),
+                  primary: Color(0xFF2979FF),
+                ),
                 onPressed: () async {
                   //update unit list
                   Directory appDocDir =

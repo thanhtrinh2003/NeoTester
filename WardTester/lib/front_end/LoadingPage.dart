@@ -1,32 +1,36 @@
-// import 'package:flutter/material.dart';
-// import '../main.dart';
-// import 'SelectCoursePage.dart';
-// import 'ProgressPage.dart';
-// import 'package:flutter_spinkit/flutter_spinkit.dart';
-// import '../back_end/utilities.dart';
+import 'package:flutter/material.dart';
+import '../main.dart';
+import 'SelectCoursePage.dart';
+import 'ProgressPage.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import '../back_end/utils.dart';
+import 'HomePage.dart';
 
-// class HomePage extends StatefulWidget {
-//   const HomePage({Key? key}) : super(key: key);
+class LoadingPage extends StatefulWidget {
+  const LoadingPage({Key? key}) : super(key: key);
 
-//   @override
-//   HomePageState createState() => HomePageState();
-// }
+  @override
+  LoadingPageState createState() => LoadingPageState();
+}
 
-// class HomePageState extends State<HomePage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return FutureBuilder(
-//         future:
-//             updateTestFile(), // the function to get your data from firebase or firestore
-//         builder: (BuildContext context, AsyncSnapshot snap) {
-//           if (snap.data == null) {
-//             return Scaffold(
-//               backgroundColor: Colors.blue.shade600,
-//               body: Center(child: SpinKitCubeGrid),
-//             );
-//           } else {
-//             //return the widget that you want to display after loading
-//           }
-//         });
-//   }
-// }
+class LoadingPageState extends State<LoadingPage> {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future:
+            updateTestFile(), // the function to get your data from firebase or firestore
+        builder: (BuildContext context, AsyncSnapshot snap) {
+          if (snap.data == null) {
+            return Scaffold(
+              backgroundColor: Colors.blue.shade600,
+              body: Center(
+                  child: SpinKitCubeGrid(size: 140, color: Colors.white)),
+            );
+          } else {
+            courseList = snap.data;
+            return HomePage();
+            //return the widget that you want to display after loading
+          }
+        });
+  }
+}

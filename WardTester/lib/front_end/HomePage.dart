@@ -42,34 +42,40 @@ class HomePageState extends State<HomePage> {
                 ),
                 Align(
                   alignment: AlignmentDirectional(0, -0.05),
-                  child: RaisedButton(
-                      onPressed: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                SelectCoursePage(courseList: courseList),
-                          ),
-                        );
-                      },
-                      color: Color(0xFF2979FF),
-                      child: Text("Start Test"),
-                      textColor: Color(0xFFFAFAFA)),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              SelectCoursePage(courseList: courseList),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xFF2979FF),
+                    ),
+                    child: Text("Start Test",
+                        style: TextStyle(color: Color(0xFFFAFAFA))),
+                  ),
                 ),
                 Align(
                   alignment: AlignmentDirectional(0, -0.05),
-                  child: RaisedButton(
-                      onPressed: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProgressPage(),
-                          ),
-                        );
-                      },
-                      color: Color(0xFF2979FF),
-                      child: Text("Progress"),
-                      textColor: Color(0xFFFAFAFA)),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProgressPage(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xFF2979FF),
+                    ),
+                    child: Text("Progress",
+                        style: TextStyle(color: Color(0xFFFAFAFA))),
+                  ),
                 ),
               ],
             ),

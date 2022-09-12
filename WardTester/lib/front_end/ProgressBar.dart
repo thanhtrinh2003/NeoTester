@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
-import '../back_end/utilities.dart';
+import '../back_end/utils.dart';
 
 class ProgressBar extends StatefulWidget {
   const ProgressBar({Key? key}) : super(key: key);

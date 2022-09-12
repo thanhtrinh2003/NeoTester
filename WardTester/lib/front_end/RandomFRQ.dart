@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
-import '../back_end/utilities.dart';
+import '../back_end/utils.dart';
 import 'QuestionPage.dart';
 import 'HomePage.dart';
 import 'package:path_provider/path_provider.dart';
@@ -46,7 +46,7 @@ class _RandomFRQState extends State<RandomFRQ> {
           ])),
       Container(
           alignment: Alignment.center,
-          child: RaisedButton(
+          child: ElevatedButton(
             onPressed: () async {
               Directory appDocDir = await getApplicationDocumentsDirectory();
               String appDocPath = appDocDir.path;
