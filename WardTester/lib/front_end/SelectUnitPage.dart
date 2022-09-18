@@ -9,6 +9,7 @@ import "dart:core";
 import '../back_end/utils.dart';
 import '../back_end/Test.dart';
 import 'SelectCoursePage.dart';
+import 'dart:collection';
 
 class SelectUnitPage extends StatefulWidget {
   final unitList;
@@ -81,6 +82,8 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                   //total number of question
                   questionNum = test_file.keys.length;
 
+                  print("num: " + questionNum.toString());
+
                   ///If the test list is not null, find the test that matches the name
                   /// - If there is not test, create one --> add into the testList, save progress
                   /// - If there is, that its questionOrder and paste it in our current question order
@@ -100,6 +103,7 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
 
                     if (currentTest.getName() == "null") {
                       //create a random question order based on the number of question in the test
+                      questionOrder = new Queue();
                       var list =
                           new List<dynamic>.generate(questionNum, (i) => i);
                       list = shuffle(list);
