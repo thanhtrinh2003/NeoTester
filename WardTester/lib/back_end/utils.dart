@@ -69,18 +69,20 @@ Question getQuestionInfo(var data, int cur) {
             currentProcess = currentProcess + questionRaw[currentID + 1 + j];
           }
           if (variables[i]["VarName"] == currentProcess) {
-            double current = generateRandom(
-                variables[i]["LowerBound"].toDouble(),
-                variables[i]["UpperBound"].toDouble(),
-                variables[i]["Step"].toDouble());
-            if (variables[i]["Step"].toDouble() ==
-                variables[i]["Step"].toDouble().roundToDouble()) {
-              varSave[variables[i]["VarName"]] = floor(current).toInt();
-            } else {
-              varSave[variables[i]["VarName"]] = double.parse(current
-                  .toStringAsFixed(
-                      logBase(variables[i]["Step"].toDouble(), 0.1).toInt())
-                  .toString());
+            if (!varSave.containsKey(variables[i]["VarName"])) {
+              double current = generateRandom(
+                  variables[i]["LowerBound"].toDouble(),
+                  variables[i]["UpperBound"].toDouble(),
+                  variables[i]["Step"].toDouble());
+              if (variables[i]["Step"].toDouble() ==
+                  variables[i]["Step"].toDouble().roundToDouble()) {
+                varSave[variables[i]["VarName"]] = floor(current).toInt();
+              } else {
+                varSave[variables[i]["VarName"]] = double.parse(current
+                    .toStringAsFixed(
+                        logBase(variables[i]["Step"].toDouble(), 0.1).toInt())
+                    .toString());
+              }
             }
 
             question += varSave[variables[i]["VarName"]].toString();
@@ -213,7 +215,6 @@ String checkAnswerRandomFRQ(var a, var answer) {
     }
 
     int i = 0;
-
     while (answerID < answer.length) {
       i++;
 

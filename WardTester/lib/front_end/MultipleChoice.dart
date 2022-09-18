@@ -97,10 +97,6 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                   if (questionOrder.isNotEmpty) {
                     currentQ = getQuestionInfo(test_file, questionOrder.first);
 
-                    //TODO: delete this later
-                    print("Question: " + currentQ.getQuestion());
-                    print("Question: " + currentQ.getImagePath());
-
                     //add the imagepath for next question display
                     if (currentQ.getImagePath() != "") {
                       currentQ.setImagePath(
