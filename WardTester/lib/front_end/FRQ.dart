@@ -34,7 +34,7 @@ class _FRQState extends State<FRQ> {
                 children: <TextSpan>[
               TextSpan(
                   text: currentQ.getQuestion(),
-                  style: TextStyle(fontSize: 16, color: Colors.black))
+                  style: TextStyle(fontSize: 19, color: Colors.black))
             ])),
         ListView.separated(
           shrinkWrap: true,
@@ -58,7 +58,7 @@ class _FRQState extends State<FRQ> {
                 children: <TextSpan>[
               TextSpan(
                   text: resultDisplay,
-                  style: TextStyle(fontSize: 12, color: Colors.black))
+                  style: TextStyle(fontSize: 14, color: Colors.black))
             ])),
         Container(
             alignment: Alignment.center,
