@@ -47,79 +47,83 @@ class _RandomFRQState extends State<RandomFRQ> {
       Container(
           alignment: Alignment.center,
           child: ElevatedButton(
-            onPressed: () async {
-              Directory appDocDir = await getApplicationDocumentsDirectory();
-              String appDocPath = appDocDir.path;
+              onPressed: () async {
+                Directory appDocDir = await getApplicationDocumentsDirectory();
+                String appDocPath = appDocDir.path;
 
-              if (stateButton == 1) {
-                //control the progress stats for the current question
-                setState(() {
-                  resultDisplay =
-                      checkAnswerRandomFRQ(myController, currentQ.getAnswer());
-                  if (resultDisplay == "This is correct!") {
-                    questionOrder.removeFirst();
-
-                    currentTest.incrementAttempt();
-                  } else {
-                    questionOrder.add(questionOrder.first);
-                    questionOrder.removeFirst();
-
-                    currentTest.incrementAttempt();
-                  }
-                });
-                //answerDisplay = checkAnswerFRQ(
-                //textListController, currentQ.getAnswer()),
-                if (resultDisplay != "Please input your answer!") {
+                if (stateButton == 1) {
+                  //control the progress stats for the current question
                   setState(() {
-                    buttonQuestionText = "Next";
+                    resultDisplay = checkAnswerRandomFRQ(
+                        myController, currentQ.getAnswer());
+                    if (resultDisplay == "This is correct!") {
+                      questionOrder.removeFirst();
+
+                      currentTest.incrementAttempt();
+                    } else {
+                      questionOrder.add(questionOrder.first);
+                      questionOrder.removeFirst();
+
+                      currentTest.incrementAttempt();
+                    }
+                  });
+                  //answerDisplay = checkAnswerFRQ(
+                  //textListController, currentQ.getAnswer()),
+                  if (resultDisplay != "Please input your answer!") {
+                    setState(() {
+                      buttonQuestionText = "Next";
+                      stateButton = -stateButton;
+                    });
+                  }
+                } else {
+                  resultDisplay = "";
+                  cur = cur + 1;
+                  setState(() {
+                    buttonQuestionText = "Submit";
                     stateButton = -stateButton;
                   });
-                }
-              } else {
-                resultDisplay = "";
-                cur = cur + 1;
-                setState(() {
-                  buttonQuestionText = "Submit";
-                  stateButton = -stateButton;
-                });
-                //Case: Still there is question
-                if (questionOrder.isNotEmpty) {
-                  currentQ = getQuestionInfo(test_file, questionOrder.first);
+                  //Case: Still there is question
+                  if (questionOrder.isNotEmpty) {
+                    currentQ = getQuestionInfo(test_file, questionOrder.first);
 
-                  //add the imagepath for next question display
-                  if (currentQ.getImagePath() != "") {
-                    currentQ.setImagePath(
-                        "$appDocPath/Image/" + currentQ.getImagePath());
+                    //add the imagepath for next question display
+                    if (currentQ.getImagePath() != "") {
+                      currentQ.setImagePath(
+                          "$appDocPath/Image/" + currentQ.getImagePath());
+                    }
+
+                    //save the progress
+                    currentTest.setQuestionOrder(questionOrder);
+                    saveProgress(currentTest, testList)
+                        .then((List<Test> value) {
+                      testList = value;
+                    });
+
+                    //go to the next question page
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => QuestionPage()));
                   }
+                  //Case: No more question
+                  else {
+                    cur = 0;
 
-                  //save the progress
-                  currentTest.setQuestionOrder(questionOrder);
-                  saveProgress(currentTest, testList).then((List<Test> value) {
-                    testList = value;
-                  });
+                    // set the end time for the test + save progress
+                    currentTest.setTimeEnd(DateTime.now());
 
-                  //go to the next question page
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => QuestionPage()));
+                    saveProgress(currentTest, testList)
+                        .then((List<Test> value) {
+                      testList = value;
+                    });
+
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomePage()));
+                  }
                 }
-                //Case: No more question
-                else {
-                  cur = 0;
-
-                  // set the end time for the test + save progress
-                  currentTest.setTimeEnd(DateTime.now());
-
-                  saveProgress(currentTest, testList).then((List<Test> value) {
-                    testList = value;
-                  });
-
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
-                }
-              }
-            },
-            child: Text(buttonQuestionText),
-          ))
+              },
+              child: Text(buttonQuestionText),
+              style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF))))
     ]);
   }
 }

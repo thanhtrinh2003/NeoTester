@@ -24,6 +24,7 @@ class _QuestionPageState extends State<QuestionPage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+            backgroundColor: Color(0xFF2979FF),
             title: Text(widget.setName),
             bottom: const TabBar(
               tabs: <Widget>[

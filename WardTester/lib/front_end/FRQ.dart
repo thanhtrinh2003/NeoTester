@@ -63,71 +63,73 @@ class _FRQState extends State<FRQ> {
         Container(
             alignment: Alignment.center,
             child: ElevatedButton(
-              onPressed: () async {
-                Directory appDocDir = await getApplicationDocumentsDirectory();
-                String appDocPath = appDocDir.path;
+                onPressed: () async {
+                  Directory appDocDir =
+                      await getApplicationDocumentsDirectory();
+                  String appDocPath = appDocDir.path;
 
-                if (stateButton == 1) {
-                  resultDisplay =
-                      checkAnswerFRQ(textListController, currentQ.getAnswer());
-                  setState(() {
-                    if (resultDisplay == "This is correct!") {
-                      questionOrder.removeFirst();
+                  if (stateButton == 1) {
+                    resultDisplay = checkAnswerFRQ(
+                        textListController, currentQ.getAnswer());
+                    setState(() {
+                      if (resultDisplay == "This is correct!") {
+                        questionOrder.removeFirst();
 
-                      currentTest.incrementAttempt();
-                    } else {
-                      questionOrder.add(questionOrder.first);
-                      questionOrder.removeFirst();
+                        currentTest.incrementAttempt();
+                      } else {
+                        questionOrder.add(questionOrder.first);
+                        questionOrder.removeFirst();
 
-                      currentTest.incrementAttempt();
-                    }
-                    buttonQuestionText = "Next";
-                    stateButton = -stateButton;
-                  });
-                } else {
-                  cur = cur + 1;
-                  buttonQuestionText = "Submit";
-                  resultDisplay = "";
-                  stateButton = -stateButton;
-                  if (questionOrder.isNotEmpty) {
-                    currentQ = getQuestionInfo(test_file, questionOrder.first);
-
-                    //add the imagepath for next question display
-                    if (currentQ.getImagePath() != "") {
-                      currentQ.setImagePath(
-                          "$appDocPath/Image/" + currentQ.getImagePath());
-                    }
-
-                    //save the progress
-                    currentTest.setQuestionOrder(questionOrder);
-
-                    saveProgress(currentTest, testList)
-                        .then((List<Test> value) {
-                      testList = value;
+                        currentTest.incrementAttempt();
+                      }
+                      buttonQuestionText = "Next";
+                      stateButton = -stateButton;
                     });
-
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => QuestionPage()));
                   } else {
-                    cur = 0;
+                    cur = cur + 1;
+                    buttonQuestionText = "Submit";
+                    resultDisplay = "";
+                    stateButton = -stateButton;
+                    if (questionOrder.isNotEmpty) {
+                      currentQ =
+                          getQuestionInfo(test_file, questionOrder.first);
 
-                    // set the end time for the test + save progress
-                    currentTest.setTimeEnd(DateTime.now());
+                      //add the imagepath for next question display
+                      if (currentQ.getImagePath() != "") {
+                        currentQ.setImagePath(
+                            "$appDocPath/Image/" + currentQ.getImagePath());
+                      }
 
-                    saveProgress(currentTest, testList)
-                        .then((List<Test> value) {
-                      testList = value;
-                    });
+                      //save the progress
+                      currentTest.setQuestionOrder(questionOrder);
 
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
+                      saveProgress(currentTest, testList)
+                          .then((List<Test> value) {
+                        testList = value;
+                      });
+
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => QuestionPage()));
+                    } else {
+                      cur = 0;
+
+                      // set the end time for the test + save progress
+                      currentTest.setTimeEnd(DateTime.now());
+
+                      saveProgress(currentTest, testList)
+                          .then((List<Test> value) {
+                        testList = value;
+                      });
+
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => HomePage()));
+                    }
                   }
-                }
-              },
-              child: Text(buttonQuestionText),
-            ))
+                },
+                child: Text(buttonQuestionText),
+                style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF))))
       ],
     );
   }
