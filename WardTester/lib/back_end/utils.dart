@@ -267,6 +267,10 @@ String checkAnswerFRQ(var a, var answer) {
   var display;
   for (int i = 1; i <= a.length; i++) {
     var current = answer.elementAt(i - 1);
+    for (int k = 0; k < current.length; k++) {
+      current[k] = current[k].trim().toLowerCase();
+    }
+
     for (int j = 0; j < a.length; j++) {
       if (current.contains(a.elementAt(j).text.trim().toLowerCase())) {
         num = num - 1;
