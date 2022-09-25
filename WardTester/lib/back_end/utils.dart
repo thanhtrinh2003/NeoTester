@@ -184,28 +184,57 @@ Question getQuestionInfo(var data, int cur) {
         }
       }
     }
+
+    //TODO: delete later
     print("Answer is " + curAnswer);
+    print("Answer variable is: ");
+    print(answerList);
 
     //end: we will get the answer value, with all the Value and string in it already
 
-    return new Question2(
-        question, type, equations, curAnswer, varSave, topic, imagePath);
+    return new Question2(question, type, equations, curAnswer, answerList,
+        varSave, topic, imagePath);
   }
 }
 
+//submit
+//equation
+// String checkAnswerRandomFRQ_2(var equation, var answer, var submit) {
+//   equation = equation.trim().replaceAll(" ", "");
+//   answer = answer.trim().replaceAll(" ", "");
+//   submit = submit.trim().replaceAll(" ", "");
+
+//   // compare the non_numerical part of the submitted answer to equation
+//   int equationId = 0;
+//   while (equationId < equation.length) {
+//     if (equationId + 2 <
+//         eq) if (equation.subString(equationId, equationId + 3) == "~^~") {}
+//   }
+// }
+
 //a is a TextList Controller
 String checkAnswerRandomFRQ(var a, var answer) {
+  String test = "012";
+  print("test: " + test.substring(0, 3));
+
   if (a.text.trim().isEmpty) {
     return "Please input your answer!";
   } else {
     var submit = a.text.trim().replaceAll(" ", "");
     answer = answer.trim().replaceAll(" ", "");
 
+    print("debug");
+    print('answer: ' + answer);
+    print('submit: ' + submit);
+
     int answerID = 0; //used to process the string answer
     int submitID = 0; //used to process the string submit
 
     var currentAnswer = "";
     var currentSubmit = "";
+
+    print(answer[0]);
+    print(submit[0]);
 
     var isNumAnswer = isNumeric(answer[0]);
     var isNumSubmit = isNumeric(submit[0]);
