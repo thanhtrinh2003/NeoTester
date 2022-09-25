@@ -95,16 +95,18 @@ class Question2 extends Question {
   var question;
   var equation;
   var answer;
+  var answerVar; // variables to fill out answer formula
   var topic;
   var variable;
 
   //constructors
-  Question2(var question, var type, var equation, var answer, var variable,
-      var topic, var imagePath) {
+  Question2(var question, var type, var equation, var answer, var answerVar,
+      var variable, var topic, var imagePath) {
     this.question = question;
     this.type = type;
     this.equation = equation;
     this.answer = answer;
+    this.answerVar = answerVar;
     this.variable = variable;
     this.topic = topic;
     this.imagePath = imagePath;
@@ -129,6 +131,10 @@ class Question2 extends Question {
 
   String getAnswer() {
     return answer;
+  }
+
+  String getAnswerVar() {
+    return answerVar;
   }
 
   String getTopic() {
