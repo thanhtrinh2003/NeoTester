@@ -93,18 +93,20 @@ class Question1 extends Question {
 class Question2 extends Question {
   //variables
   var question;
-  var equation;
+  var equation; // equation to calculate variable to fill in answer equation
+  var answerEquation;
   var answer;
   var answerVar; // variables to fill out answer formula
   var topic;
   var variable;
 
   //constructors
-  Question2(var question, var type, var equation, var answer, var answerVar,
-      var variable, var topic, var imagePath) {
+  Question2(var question, var type, var equation, var answerEquation,
+      var answer, var answerVar, var variable, var topic, var imagePath) {
     this.question = question;
     this.type = type;
     this.equation = equation;
+    this.answerEquation = answerEquation;
     this.answer = answer;
     this.answerVar = answerVar;
     this.variable = variable;
@@ -129,11 +131,15 @@ class Question2 extends Question {
     return variable;
   }
 
+  String getAnswerEquation() {
+    return answerEquation;
+  }
+
   String getAnswer() {
     return answer;
   }
 
-  String getAnswerVar() {
+  List<String> getAnswerVar() {
     return answerVar;
   }
 

@@ -192,31 +192,111 @@ Question getQuestionInfo(var data, int cur) {
 
     //end: we will get the answer value, with all the Value and string in it already
 
-    return new Question2(question, type, equations, curAnswer, answerList,
-        varSave, topic, imagePath);
+    return new Question2(question, type, equations, answer, curAnswer,
+        answerList, varSave, topic, imagePath);
   }
 }
 
-//submit
-//equation
-// String checkAnswerRandomFRQ_2(var equation, var answer, var submit) {
+//submit: TextField string
+//equation: answerEquation
+// String checkAnswerRandomFRQ_2(
+//     var submit, var answer, var answerVar, var equation) {
 //   equation = equation.trim().replaceAll(" ", "");
 //   answer = answer.trim().replaceAll(" ", "");
-//   submit = submit.trim().replaceAll(" ", "");
+//   submit = submit.text.trim().replaceAll(" ", "");
+
+//   print(submit);
+//   print(answer);
+//   print(equation);
+
+//   List<double> valueList = [];
 
 //   // compare the non_numerical part of the submitted answer to equation
 //   int equationId = 0;
+//   int submitId = 0;
+
 //   while (equationId < equation.length) {
-//     if (equationId + 2 <
-//         eq) if (equation.subString(equationId, equationId + 3) == "~^~") {}
+//     if (equation.length - 1 - (equationId + 2) > 0) {
+//       if (equation.substring(equationId, equationId + 3) == "~^~") {
+//         equationId = equationId + 3;
+//         String currentNumericalValue = "";
+//         while (submit[submitId] != equation[equationId]) {
+//           currentNumericalValue = currentNumericalValue + submit[submitId];
+//           submitId++;
+//         }
+//         print("numberical value: " + currentNumericalValue);
+//         valueList.add(double.parse(currentNumericalValue));
+//       } else {
+//         if (equation[equationId] == submit[submitId]) {
+//           equationId++;
+//           submitId++;
+//         } else {
+//           return "That is not the correct answer! The answer should be: " +
+//               answer;
+//         }
+//       }
+//     } else if (equation.length - 1 - (equationId + 2) == 0) {
+//       if (equation.substring(equationId, equationId + 3) == "~^~") {
+//         equationId = equationId + 3;
+//         String currentNumericalValue = submit.substring(submitId);
+//         if (isNumeric(equation)) {
+//           valueList.add(double.parse(currentNumericalValue));
+//         } else {
+//           return "That is not the correct answer! The answer should be: " +
+//               answer;
+//         }
+//       } else {
+//         if (equation[equationId] == submit[submitId]) {
+//           equationId++;
+//           submitId++;
+//         } else {
+//           print(equation[equationId]);
+//           print(submit[submitId]);
+//           return "That is not the correct answer! The answer should be: " +
+//               answer;
+//         }
+//       }
+//     } else {
+//       if (equation[equationId] == submit[submitId]) {
+//         equationId++;
+//         submitId++;
+//       } else {
+//         print("here");
+//         print(equation[equationId]);
+//         print(answer[submitId]);
+//         return "That is not the correct answer! The answer should be: " +
+//             answer;
+//       }
+//     }
 //   }
+
+//   if (submitId < submit.length - 1) {
+//     print("diff");
+//     return "That is not the correct answer! The answer should be: " + answer;
+//   } else {
+//     int i = 0;
+//     for (int i = 0; i < answerVar.length; i++) {
+//       double currentAnswerVar = double.parse(answerVar[i]);
+//       print("var");
+//       print(currentAnswerVar);
+//       print(valueList[i]);
+//       print(currentAnswerVar.compareTo(valueList[i]));
+//       if (currentAnswerVar.compareTo(valueList[i]) == 0) {
+//         i++;
+//       } else {
+//         print(answerVar[i]);
+//         print(valueList[i]);
+//         return "That is not the correct answer! The answer should be: " +
+//             answer;
+//       }
+//     }
+//   }
+
+//   return "This is correct!";
 // }
 
 //a is a TextList Controller
 String checkAnswerRandomFRQ(var a, var answer) {
-  String test = "012";
-  print("test: " + test.substring(0, 3));
-
   if (a.text.trim().isEmpty) {
     return "Please input your answer!";
   } else {
@@ -272,7 +352,8 @@ String checkAnswerRandomFRQ(var a, var answer) {
         }
       } else {
         if ((double.parse(currentAnswer) - double.parse(currentSubmit)).abs() >=
-            1) {
+            0.1) {
+          print("here");
           return "That is not the correct answer! The answer should be: " +
               answer;
         }
@@ -284,6 +365,10 @@ String checkAnswerRandomFRQ(var a, var answer) {
       currentSubmit = "";
 
       break;
+    }
+
+    if (submitID < a.text.length) {
+      return "That is not the correct answer! The answer should be: " + answer;
     }
 
     return "This is correct!";
