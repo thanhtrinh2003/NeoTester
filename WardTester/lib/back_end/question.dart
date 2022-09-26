@@ -10,7 +10,7 @@ abstract class Question {
 
 //Multiple Choice
 class Question0 extends Question {
-  //variables
+  //veariables
   var choice;
 
   //constructors
