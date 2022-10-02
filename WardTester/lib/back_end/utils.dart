@@ -302,7 +302,6 @@ String checkAnswerRandomFRQ(var a, var answer) {
     var submit = a.text.trim().replaceAll(" ", "");
     answer = answer.trim().replaceAll(" ", "");
 
-    print("debug");
     print('answer: ' + answer);
     print('submit: ' + submit);
 
@@ -362,8 +361,6 @@ String checkAnswerRandomFRQ(var a, var answer) {
       isNumSubmit = turnTrueFalse(isNumSubmit);
       currentAnswer = "";
       currentSubmit = "";
-
-      break;
     }
 
     if (submitID < a.text.length) {
