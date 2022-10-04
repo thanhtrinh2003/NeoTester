@@ -300,6 +300,8 @@ String checkAnswerRandomFRQ(var a, var answer) {
     return "Please input your answer!";
   } else {
     var submit = a.text.trim().replaceAll(" ", "");
+
+    String formattedAnswer = answer;
     answer = answer.trim().replaceAll(" ", "");
 
     print('answer: ' + answer);
@@ -318,7 +320,8 @@ String checkAnswerRandomFRQ(var a, var answer) {
     var isNumSubmit = isNumeric(submit[0]);
 
     if (isNumAnswer != isNumSubmit) {
-      return "That is not the correct answer! The answer should be: " + answer;
+      return "That is not the correct answer! The answer should be: " +
+          formattedAnswer;
     }
 
     int i = 0;
@@ -343,17 +346,20 @@ String checkAnswerRandomFRQ(var a, var answer) {
         }
       }
 
+      print("current answer: " + currentAnswer);
+      print("current submit: " + currentSubmit);
+
       if (isNumAnswer == false) {
         if (currentAnswer != currentSubmit) {
           return "That is not the correct answer! The answer should be: " +
-              answer;
+              formattedAnswer;
         }
       } else {
         if ((double.parse(currentAnswer) - double.parse(currentSubmit)).abs() >=
             0.1) {
           print("here");
           return "That is not the correct answer! The answer should be: " +
-              answer;
+              formattedAnswer;
         }
       }
 
@@ -363,8 +369,13 @@ String checkAnswerRandomFRQ(var a, var answer) {
       currentSubmit = "";
     }
 
-    if (submitID < a.text.length) {
-      return "That is not the correct answer! The answer should be: " + answer;
+    print(submitID);
+    print(submit.length);
+
+    if (submitID < (submit.length - 1)) {
+      print("here");
+      return "That is not the correct answer! The answer should be: " +
+          formattedAnswer;
     }
 
     return "This is correct!";
