@@ -385,7 +385,12 @@ String checkAnswerRandomFRQ(var a, var answer) {
 // a is a TextListController
 String checkAnswerFRQ(var a, var answer) {
   int num = a.length;
-  var display;
+  var display = "The answer is not correct, it should be ";
+  for (int i = 0; i < a.length - 1; i++) {
+    display = display + answer.elementAt(i)[0] + ", ";
+  }
+  display = display + answer.elementAt(a.length - 1)[0];
+
   for (int i = 1; i <= a.length; i++) {
     var current = answer.elementAt(i - 1);
     for (int k = 0; k < current.length; k++) {
@@ -403,11 +408,6 @@ String checkAnswerFRQ(var a, var answer) {
   if (num == 0) {
     return "This is correct!";
   } else {
-    display = "The answer is not correct, it should be ";
-    for (int i = 0; i < a.length - 1; i++) {
-      display = display + answer.elementAt(i)[0] + ", ";
-    }
-    display = display + answer.elementAt(a.length - 1)[0];
     return display;
   }
 }
