@@ -31,7 +31,7 @@ String nonMathParser(String equationString) {
       return paraList[0]
           .substring(int.parse(paraList[1]), int.parse(paraList[2]));
     } else {
-      return paraList[0].substring(0, int.parse(paraList[1]));
+      return paraList[0].substring(int.parse(paraList[1]));
     }
   } else if (name == "indexOf") {
     return paraList[0].indexOf(paraList[1]).toString();
