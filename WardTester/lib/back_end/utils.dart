@@ -396,13 +396,14 @@ String checkAnswerFRQ(var a, var answer) {
   for (int i = 1; i <= a.length; i++) {
     var current = answer.elementAt(i - 1);
     for (int k = 0; k < current.length; k++) {
-      current[k] = current[k].trim().toLowerCase();
+      current[k] = current[k].trim().toLowerCase().replaceAll(" ", "");
     }
 
     for (int j = 0; j < a.length; j++) {
       print(current);
-      print(a.elementAt(j).text.trim().toLowerCase());
-      if (current.contains(a.elementAt(j).text.trim().toLowerCase())) {
+      print(a.elementAt(j).text.trim().toLowerCase().replaceAll(" ", ""));
+      if (current.contains(
+          a.elementAt(j).text.trim().toLowerCase().replaceAll(" ", ""))) {
         num = num - 1;
         break;
       }
