@@ -140,7 +140,7 @@ Question getQuestionInfo(var data, int cur) {
           if (res == res.roundToDouble()) {
             answerList.add(res.toInt().toString());
           } else {
-            answerList.add(res.toStringAsFixed(2));
+            answerList.add(res.toStringAsFixed(3));
           }
         }
       } else {
@@ -153,7 +153,7 @@ Question getQuestionInfo(var data, int cur) {
         if (res == res.roundToDouble()) {
           answerList.add(res.toInt().toString());
         } else {
-          answerList.add(res.toStringAsFixed(2));
+          answerList.add(res.toStringAsFixed(3));
         }
       }
     }
@@ -353,7 +353,7 @@ String checkAnswerRandomFRQ(var a, var answer) {
         }
       } else {
         if ((double.parse(currentAnswer) - double.parse(currentSubmit)).abs() >=
-            0.1) {
+            0.001) {
           print("here");
           return "That is not the correct answer! The answer should be: " +
               formattedAnswer;

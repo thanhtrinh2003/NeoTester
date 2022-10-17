@@ -34,10 +34,6 @@ class _ProgressPageState extends State<ProgressPage> {
                           textAlign: TextAlign.center, style: header),
                       flex: 2),
                   Expanded(
-                      child: Text("Time End",
-                          textAlign: TextAlign.center, style: header),
-                      flex: 1),
-                  Expanded(
                       child: Text("Question Left",
                           textAlign: TextAlign.center, style: header),
                       flex: 1),
@@ -64,10 +60,6 @@ class _ProgressPageState extends State<ProgressPage> {
                           child: Text(testList[index].getTimeStart(),
                               textAlign: TextAlign.center),
                           flex: 2),
-                      Expanded(
-                          child: Text(testList[index].getTimeEnd(),
-                              textAlign: TextAlign.center),
-                          flex: 1),
                       Expanded(
                           child: Text(
                               testList[index].getQuestionLeft().toString(),
