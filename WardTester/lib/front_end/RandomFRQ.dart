@@ -35,7 +35,7 @@ class _RandomFRQState extends State<RandomFRQ> {
           controller: myController,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            hintText: "Enter the answer",
+            hintText: "Enter the answer to 3 decimal places",
           )),
       RichText(
           text: TextSpan(
