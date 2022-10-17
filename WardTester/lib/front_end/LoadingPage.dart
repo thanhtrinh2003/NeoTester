@@ -27,7 +27,7 @@ class LoadingPageState extends State<LoadingPage> {
               body: Center(
                   child: SpinKitCubeGrid(size: 140, color: Colors.white)),
             );
-          } else if (studentName != "null") {
+          } else if (studentName != "") {
             courseList = snap.data;
             return HomePage();
             //return the widget that you want to display after loading

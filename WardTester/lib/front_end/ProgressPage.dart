@@ -20,7 +20,7 @@ class _ProgressPageState extends State<ProgressPage> {
           backgroundColor: Color(0xFF2979FF),
           automaticallyImplyLeading: true,
           title: Text(
-            'Progress Page',
+            'Progress Page - ' + studentName,
             //
           ),
           actions: [],
