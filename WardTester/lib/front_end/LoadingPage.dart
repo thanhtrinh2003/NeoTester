@@ -5,6 +5,7 @@ import 'ProgressPage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../back_end/utils.dart';
 import 'HomePage.dart';
+import 'NameSetPage.dart';
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({Key? key}) : super(key: key);
@@ -26,10 +27,12 @@ class LoadingPageState extends State<LoadingPage> {
               body: Center(
                   child: SpinKitCubeGrid(size: 140, color: Colors.white)),
             );
-          } else {
+          } else if (studentName != "null") {
             courseList = snap.data;
             return HomePage();
             //return the widget that you want to display after loading
+          } else {
+            return NameSetPage();
           }
         });
   }
