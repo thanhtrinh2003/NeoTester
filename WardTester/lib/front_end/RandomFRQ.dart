@@ -58,12 +58,10 @@ class _RandomFRQState extends State<RandomFRQ> {
                         myController, currentQ.getAnswer());
                     if (resultDisplay == "This is correct!") {
                       questionOrder.removeFirst();
-
                       currentTest.incrementAttempt();
                     } else {
                       questionOrder.add(questionOrder.first);
                       questionOrder.removeFirst();
-
                       currentTest.incrementAttempt();
                     }
                   });
@@ -111,7 +109,7 @@ class _RandomFRQState extends State<RandomFRQ> {
 
                     // set the end time for the test + save progress
                     currentTest.setTimeEnd(DateTime.now());
-
+                    currentTest.setQuestionOrder(questionOrder);
                     saveProgress(currentTest, testList)
                         .then((List<Test> value) {
                       testList = value;

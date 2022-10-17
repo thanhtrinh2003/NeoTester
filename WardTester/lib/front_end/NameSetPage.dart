@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'HomePage.dart';
+import 'package:path_provider/path_provider.dart';
 import '../main.dart';
 
 class NameSetPage extends StatefulWidget {
@@ -15,7 +18,7 @@ class NameSetPageState extends State<NameSetPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("WardTeser"),
+        title: Text("WardTester"),
         backgroundColor: Color(0xFF2979FF),
       ),
       backgroundColor: Color(0xFFF5F5F5),
@@ -49,11 +52,20 @@ class NameSetPageState extends State<NameSetPage> {
               child: ElevatedButton(
                   onPressed: () async {
                     studentName = myController.text;
-                    MaterialPageRoute(
-                      builder: (context) => HomePage(),
+                    Directory appDocDir =
+                        await getApplicationDocumentsDirectory();
+                    String appDocPath = appDocDir.path;
+                    final nameFile = File("$appDocPath/name.txt");
+                    nameFile.writeAsStringSync(studentName);
+
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(),
+                      ),
                     );
                   },
-                  child: Text(buttonQuestionText),
+                  child: Text("Submit"),
                   style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF))))
         ],
       ),

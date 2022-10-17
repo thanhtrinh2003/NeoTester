@@ -1,6 +1,5 @@
 import 'dart:collection';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:math_expressions/math_expressions.dart';
@@ -8,7 +7,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:trying/back_end/non_math_parser.dart';
 import 'math_function.dart';
 import 'dart:convert';
-import 'math.dart';
 import 'math_parser.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async';
@@ -16,7 +14,6 @@ import 'dart:io';
 import 'Test.dart';
 import 'Question.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
-import 'Test.dart';
 import 'package:http/http.dart' as http;
 
 Future<LinkedHashMap<String, dynamic>> readFile(String question_file) async {
@@ -672,22 +669,26 @@ Future<Set<String>> updateTestFile() async {
   List<String> courseListNew = courseListContent.split(", ");
   var courseSet = courseListNew.toSet();
 
-  updateImageFile();
+  loadImageFile();
   return courseSet;
 }
 
 /// Function called in the main file when first start the program
 /// Check if there is student name yet
-void checkName() async {
+Future<String> loadNameFile() async {
   Directory appDocDir = await getApplicationDocumentsDirectory();
   String appDocPath = appDocDir.path;
 
   final nameFile = File("$appDocPath/name.txt");
+  if (nameFile.existsSync()) {
+    return nameFile.readAsStringSync();
+  }
+  return "";
 }
 
 /// Funtion called in the main file when first start the program
 /// Check for new version of Image File and and nver worked for the new wokring places
-void updateImageFile() async {
+void loadImageFile() async {
   //setting up application directory
   Directory appDocDir = await getApplicationDocumentsDirectory();
   String appDocPath = appDocDir.path;

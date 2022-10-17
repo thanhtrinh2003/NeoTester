@@ -17,6 +17,11 @@ class LoadingPage extends StatefulWidget {
 class LoadingPageState extends State<LoadingPage> {
   @override
   Widget build(BuildContext context) {
+    loadNameFile().then((String value) {
+      studentName = value;
+      print("student: " + studentName);
+    });
+
     return FutureBuilder(
         future:
             updateTestFile(), // the function to get your data from firebase or firestore
@@ -27,12 +32,12 @@ class LoadingPageState extends State<LoadingPage> {
               body: Center(
                   child: SpinKitCubeGrid(size: 140, color: Colors.white)),
             );
-          } else if (studentName != "") {
+          } else if (studentName == "") {
+            courseList = snap.data;
+            return NameSetPage();
+          } else {
             courseList = snap.data;
             return HomePage();
-            //return the widget that you want to display after loading
-          } else {
-            return NameSetPage();
           }
         });
   }
