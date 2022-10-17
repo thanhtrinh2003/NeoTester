@@ -30,6 +30,7 @@ int cur = 0; // current question ID
 var q;
 var choice; // array of multiple choices value for question Type 0
 
+var a = 0;
 //variables
 const String question_file = 'assets/test.json'; //data file
 
