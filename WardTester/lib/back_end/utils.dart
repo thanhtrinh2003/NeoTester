@@ -676,7 +676,17 @@ Future<Set<String>> updateTestFile() async {
   return courseSet;
 }
 
-// return course name and current list name
+/// Function called in the main file when first start the program
+/// Check if there is student name yet
+void checkName() async {
+  Directory appDocDir = await getApplicationDocumentsDirectory();
+  String appDocPath = appDocDir.path;
+
+  final nameFile = File("$appDocPath/name.txt");
+}
+
+/// Funtion called in the main file when first start the program
+/// Check for new version of Image File and and nver worked for the new wokring places
 void updateImageFile() async {
   //setting up application directory
   Directory appDocDir = await getApplicationDocumentsDirectory();

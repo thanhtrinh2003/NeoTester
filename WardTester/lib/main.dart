@@ -90,7 +90,11 @@ var isOnline;
 /// variable to determine if it is first time or not
 var isFirstTime;
 
+///
 var initialPage;
+
+/// student name;
+var studentName = "";
 
 Random random = new Random();
 
