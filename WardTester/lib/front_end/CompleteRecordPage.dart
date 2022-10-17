@@ -5,21 +5,21 @@ import '../back_end/utils.dart';
 import "dart:io";
 import 'package:path_provider/path_provider.dart';
 
-class ProgressPage extends StatefulWidget {
-  const ProgressPage({Key? key}) : super(key: key);
+class CompleteRecordPage extends StatefulWidget {
+  const CompleteRecordPage({Key? key}) : super(key: key);
 
   @override
-  _ProgressPageState createState() => _ProgressPageState();
+  _CompleteRecordPageState createState() => _CompleteRecordPageState();
 }
 
-class _ProgressPageState extends State<ProgressPage> {
+class _CompleteRecordPageState extends State<CompleteRecordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xFFF5F5F5),
         body: ListView.separated(
           padding: const EdgeInsets.all(8),
-          itemCount: testList == null ? 1 : testList.length + 1,
+          itemCount: completeTestList == null ? 1 : completeTestList.length + 1,
           itemBuilder: (BuildContext context, int index) {
             if (index == 0) {
               //return the header
@@ -51,31 +51,33 @@ class _ProgressPageState extends State<ProgressPage> {
               index -= 1;
 
               //return row
-              var row = testList[index];
+              var row = completeTestList[index];
               return ListTile(
                   onTap: null,
                   title: Row(
                     children: <Widget>[
                       Expanded(
-                          child: Text(testList[index].getName(),
+                          child: Text(completeTestList[index].getName(),
                               textAlign: TextAlign.center),
                           flex: 3),
                       Expanded(
-                          child: Text(testList[index].getTimeStart(),
+                          child: Text(completeTestList[index].getTimeStart(),
                               textAlign: TextAlign.center),
                           flex: 2),
                       Expanded(
-                          child: Text(testList[index].getTimeEnd(),
+                          child: Text(completeTestList[index].getTimeEnd(),
                               textAlign: TextAlign.center),
                           flex: 1),
                       Expanded(
                           child: Text(
-                              testList[index].getQuestionLeft().toString(),
+                              completeTestList[index]
+                                  .getQuestionLeft()
+                                  .toString(),
                               textAlign: TextAlign.center),
                           flex: 1),
                       Expanded(
                           child: Text(
-                              testList[index]
+                              completeTestList[index]
                                   .getAccuracy()
                                   .toStringAsFixed(3)
                                   .toString(),

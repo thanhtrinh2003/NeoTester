@@ -529,10 +529,12 @@ Future<List<Test>> removeProgress(var currentTest, var currentTestList) async {
   Directory appDocDir = await getApplicationDocumentsDirectory();
   String appDocPath = appDocDir.path;
   final progressFile = File('$appDocPath/progress.txt');
-
+  print("removing");
+  print(currentTestList);
   currentTestList
       .removeWhere((element) => element.getName() == currentTest.getName());
 
+  print(currentTestList);
   progressFile.writeAsStringSync(jsonEncode(currentTestList));
 
   return currentTestList;

@@ -110,14 +110,15 @@ class _RandomFRQState extends State<RandomFRQ> {
                     // set the end time for the test + save progress
                     currentTest.setTimeEnd(DateTime.now());
                     currentTest.setQuestionOrder(questionOrder);
-                    saveProgress(currentTest, testList)
-                        .then((List<Test> value) {
-                      testList = value;
-                    });
 
                     saveCompleteTest(currentTest, completeTestList)
                         .then((List<Test> value) {
                       completeTestList = value;
+                    });
+
+                    removeProgress(currentTest, testList)
+                        .then((List<Test> value) {
+                      testList = value;
                     });
 
                     Navigator.push(context,

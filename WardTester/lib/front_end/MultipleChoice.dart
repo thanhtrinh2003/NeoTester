@@ -123,7 +123,14 @@ class _MultipleChoiceState extends State<MultipleChoice> {
 
                       // set the end time for the test + save progress
                       currentTest.setTimeEnd(DateTime.now());
-                      saveProgress(currentTest, testList)
+                      currentTest.setQuestionOrder(questionOrder);
+
+                      saveCompleteTest(currentTest, completeTestList)
+                          .then((List<Test> value) {
+                        completeTestList = value;
+                      });
+
+                      removeProgress(currentTest, testList)
                           .then((List<Test> value) {
                         testList = value;
                       });

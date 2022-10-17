@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../main.dart';
 import 'SelectCoursePage.dart';
 import 'ProgressPage.dart';
+import 'RecordPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -66,7 +67,7 @@ class HomePageState extends State<HomePage> {
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ProgressPage(),
+                          builder: (context) => RecordPage(),
                         ),
                       );
                     },

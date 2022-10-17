@@ -170,7 +170,7 @@ void main() async {
 
   // update completed test file (no need for first time)
   final completeRecordFile = File('$appDocPath/complete.txt');
-  if (progressFile.existsSync()) {
+  if (completeRecordFile.existsSync()) {
     loadCompleteTest().then((List<Test> value) {
       completeTestList = value;
     });

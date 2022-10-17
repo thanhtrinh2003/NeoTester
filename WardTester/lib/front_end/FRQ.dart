@@ -117,8 +117,14 @@ class _FRQState extends State<FRQ> {
 
                       // set the end time for the test + save progress
                       currentTest.setTimeEnd(DateTime.now());
+                      currentTest.setQuestionOrder(questionOrder);
 
-                      saveProgress(currentTest, testList)
+                      saveCompleteTest(currentTest, completeTestList)
+                          .then((List<Test> value) {
+                        completeTestList = value;
+                      });
+
+                      removeProgress(currentTest, testList)
                           .then((List<Test> value) {
                         testList = value;
                       });
