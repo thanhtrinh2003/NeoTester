@@ -31,6 +31,7 @@ class _RandomFRQState extends State<RandomFRQ> {
                 style: TextStyle(fontSize: 19, color: Colors.black))
           ])),
       TextField(
+          autofocus: true,
           controller: myController,
           decoration: InputDecoration(
             border: OutlineInputBorder(),

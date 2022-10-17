@@ -42,6 +42,7 @@ class _FRQState extends State<FRQ> {
           itemCount: currentQ.getAnswer().length,
           itemBuilder: (BuildContext context, int index) {
             return TextField(
+                autofocus: true,
                 controller: textListController?.elementAt(index),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
