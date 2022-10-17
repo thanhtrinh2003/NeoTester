@@ -500,7 +500,7 @@ Future<File?> downloadFileImage(String url, String name) async {
   await raf.close();
 }
 
-//save the progress to the current file
+/// Save the progress to the current file
 Future<List<Test>> saveProgress(var currentTest, var currentTestList) async {
   //initialize file path
   Directory appDocDir = await getApplicationDocumentsDirectory();
@@ -521,6 +521,35 @@ Future<List<Test>> saveProgress(var currentTest, var currentTestList) async {
   progressFile.writeAsStringSync(jsonEncode(uniqueTest));
 
   return uniqueTest;
+}
+
+///This function is used when a test is completed and needed to be remove from current test.
+Future<List<Test>> removeProgress(var currentTest, var currentTestList) async {
+  //initialize file path
+  Directory appDocDir = await getApplicationDocumentsDirectory();
+  String appDocPath = appDocDir.path;
+  final progressFile = File('$appDocPath/progress.txt');
+
+  currentTestList
+      .removeWhere((element) => element.getName() == currentTest.getName());
+
+  progressFile.writeAsStringSync(jsonEncode(currentTestList));
+
+  return currentTestList;
+}
+
+Future<List<Test>> saveCompleteTest(
+    var completeTest, var completeTestList) async {
+  //initialize file path
+  Directory appDocDir = await getApplicationDocumentsDirectory();
+  String appDocPath = appDocDir.path;
+  final completeFile = File('$appDocPath/complete.txt');
+
+  //add the new test progress into the current testList
+  completeTestList.add(completeTest);
+  completeFile.writeAsStringSync(jsonEncode(completeTestList));
+
+  return completeTestList;
 }
 
 Future<bool> checkFirstTime() async {
@@ -547,6 +576,25 @@ Future<List<Test>> readProgress() async {
   if (progressString.isNotEmpty) {
     //turn data into a list of test (record of test progress)
     var testObjsJson = jsonDecode(progressString) as List;
+    List<Test> testList =
+        testObjsJson.map((testJson) => Test.fromJson(testJson)).toList();
+    return testList;
+  }
+
+  return [];
+}
+
+//read the progress from the file and update the test
+Future<List<Test>> loadCompleteTest() async {
+  Directory appDocDir = await getApplicationDocumentsDirectory();
+  String appDocPath = appDocDir.path;
+  final completeRecordFile = File('$appDocPath/complete.txt');
+
+  String completeString = completeRecordFile.readAsStringSync();
+
+  if (completeString.isNotEmpty) {
+    //turn data into a list of test (record of test progress)
+    var testObjsJson = jsonDecode(completeString) as List;
     List<Test> testList =
         testObjsJson.map((testJson) => Test.fromJson(testJson)).toList();
     return testList;

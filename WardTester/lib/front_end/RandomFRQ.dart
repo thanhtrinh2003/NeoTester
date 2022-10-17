@@ -115,6 +115,11 @@ class _RandomFRQState extends State<RandomFRQ> {
                       testList = value;
                     });
 
+                    saveCompleteTest(currentTest, completeTestList)
+                        .then((List<Test> value) {
+                      completeTestList = value;
+                    });
+
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomePage()));
                   }

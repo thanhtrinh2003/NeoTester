@@ -72,6 +72,9 @@ var questionNum;
 /// A list that keeps track of progress of all tests
 var testList;
 
+/// a list that keeps track of progress of all comm=pleted test
+var completeTestList;
+
 /// A Test object that keeps track of progress of the current test
 var currentTest;
 
@@ -162,8 +165,17 @@ void main() async {
       testList = value;
     });
   } else {
-    final progressFile = File('$appDocPath/progress.txt');
     progressFile.create();
+  }
+
+  // update completed test file (no need for first time)
+  final completeRecordFile = File('$appDocPath/complete.txt');
+  if (progressFile.existsSync()) {
+    loadCompleteTest().then((List<Test> value) {
+      completeTestList = value;
+    });
+  } else {
+    completeRecordFile.create();
   }
 
   importMathParser();
