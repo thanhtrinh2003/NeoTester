@@ -115,12 +115,14 @@ class Test {
 
 Queue<int> turnStringToQueue(String listString) {
   //remove '{' and '}' from the String
-  listString = listString.substring(1, listString.length - 1);
-  final List<String> list = listString.split(', ');
   Queue<int> listInt = new Queue();
-  for (var a in list) {
-    print(a);
-    listInt.add(int.parse(a));
+  if (listString.length > 2) {
+    listString = listString.substring(1, listString.length - 1);
+    final List<String> list = listString.split(', ');
+    for (var a in list) {
+      print(a);
+      listInt.add(int.parse(a));
+    }
   }
   return listInt;
 }
