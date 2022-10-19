@@ -134,3 +134,7 @@ void pi_parser() {
 void e_parser() {
   p.addFunction('e', (List<double> args) => e);
 }
+
+void power_parser() {
+  p.addFunction('pow', (List<double> args) => pow(args[0], args[1]));
+}
