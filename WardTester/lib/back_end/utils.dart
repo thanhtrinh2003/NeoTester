@@ -819,4 +819,5 @@ void importMathParser() {
   nthroot_parser();
   pi_parser();
   //e_parser();
+  power_parser();
 }
