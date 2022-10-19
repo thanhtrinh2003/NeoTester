@@ -28,13 +28,13 @@ class _ProgressPageState extends State<ProgressPage> {
                   Expanded(
                       child: Text("Name",
                           textAlign: TextAlign.center, style: header),
-                      flex: 4),
+                      flex: 6),
                   Expanded(
                       child: Text(" Start",
                           textAlign: TextAlign.center, style: header),
                       flex: 2),
                   Expanded(
-                      child: Text("Ques Left",
+                      child: Text("Qs Left",
                           textAlign: TextAlign.center, style: header),
                       flex: 1),
                   Expanded(
@@ -49,42 +49,47 @@ class _ProgressPageState extends State<ProgressPage> {
               //return row
               var row = testList[index];
               return ListTile(
-                  onTap: null,
-                  title: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Text(
-                            testList[index].getName(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 10),
-                          ),
-                          flex: 4),
-                      Expanded(
-                          child: Text(
-                            testList[index].getTimeStart().substring(0, 10),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 10),
-                          ),
-                          flex: 2),
-                      Expanded(
-                          child: Text(
-                            testList[index].getQuestionLeft().toString(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 10),
-                          ),
-                          flex: 1),
-                      Expanded(
-                          child: Text(
-                            testList[index]
-                                .getAccuracy()
-                                .toStringAsFixed(3)
-                                .toString(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 10),
-                          ),
-                          flex: 1)
-                    ],
-                  ));
+                onTap: null,
+                title: Row(
+                  children: <Widget>[
+                    Expanded(
+                        child: Text(
+                          testList[index].getName(),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 9),
+                        ),
+                        flex: 6),
+                    Expanded(
+                        child: Text(
+                          testList[index].getTimeStart().substring(0, 10),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 9),
+                        ),
+                        flex: 2),
+                    Expanded(
+                        child: Text(
+                          testList[index].getQuestionLeft().toString(),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 9),
+                        ),
+                        flex: 1),
+                    Expanded(
+                        child: Text(
+                          testList[index]
+                              .getAccuracy()
+                              .toStringAsFixed(3)
+                              .toString(),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 9),
+                        ),
+                        flex: 1)
+                  ],
+                ),
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                dense: true,
+                visualDensity: VisualDensity(vertical: -4),
+              );
             }
             ;
           },
