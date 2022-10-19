@@ -28,21 +28,17 @@ class _CompleteRecordPageState extends State<CompleteRecordPage> {
                   Expanded(
                       child: Text("Name",
                           textAlign: TextAlign.center, style: header),
-                      flex: 3),
+                      flex: 4),
                   Expanded(
-                      child: Text("Time Start",
+                      child: Text("Start",
                           textAlign: TextAlign.center, style: header),
                       flex: 2),
                   Expanded(
-                      child: Text("Time End",
+                      child: Text("End",
                           textAlign: TextAlign.center, style: header),
-                      flex: 1),
+                      flex: 2),
                   Expanded(
-                      child: Text("Question Left",
-                          textAlign: TextAlign.center, style: header),
-                      flex: 1),
-                  Expanded(
-                      child: Text("Accuracy",
+                      child: Text("Acc",
                           textAlign: TextAlign.center, style: header),
                       flex: 1),
                 ],
@@ -57,31 +53,39 @@ class _CompleteRecordPageState extends State<CompleteRecordPage> {
                   title: Row(
                     children: <Widget>[
                       Expanded(
-                          child: Text(completeTestList[index].getName(),
-                              textAlign: TextAlign.center),
-                          flex: 3),
+                          child: Text(
+                            completeTestList[index].getName(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 10),
+                          ),
+                          flex: 4),
                       Expanded(
-                          child: Text(completeTestList[index].getTimeStart(),
-                              textAlign: TextAlign.center),
+                          child: Text(
+                            completeTestList[index]
+                                .getTimeStart()
+                                .substring(0, 10),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 10),
+                          ),
                           flex: 2),
                       Expanded(
-                          child: Text(completeTestList[index].getTimeEnd(),
-                              textAlign: TextAlign.center),
-                          flex: 1),
+                          child: Text(
+                            completeTestList[index]
+                                .getTimeEnd()
+                                .substring(0, 10),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 10),
+                          ),
+                          flex: 2),
                       Expanded(
                           child: Text(
-                              completeTestList[index]
-                                  .getQuestionLeft()
-                                  .toString(),
-                              textAlign: TextAlign.center),
-                          flex: 1),
-                      Expanded(
-                          child: Text(
-                              completeTestList[index]
-                                  .getAccuracy()
-                                  .toStringAsFixed(3)
-                                  .toString(),
-                              textAlign: TextAlign.center),
+                            completeTestList[index]
+                                .getAccuracy()
+                                .toStringAsFixed(3)
+                                .toString(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 10),
+                          ),
                           flex: 1)
                     ],
                   ));

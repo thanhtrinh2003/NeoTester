@@ -86,7 +86,7 @@ class Test {
   }
 
   String getTimeEnd() {
-    if (timeStart == timeEnd) {
+    if (questionOrder.length > 0) {
       return "Not Finished";
     }
     return timeEnd.toString();

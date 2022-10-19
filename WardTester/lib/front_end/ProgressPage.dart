@@ -28,17 +28,17 @@ class _ProgressPageState extends State<ProgressPage> {
                   Expanded(
                       child: Text("Name",
                           textAlign: TextAlign.center, style: header),
-                      flex: 3),
+                      flex: 4),
                   Expanded(
-                      child: Text("Time Start",
+                      child: Text(" Start",
                           textAlign: TextAlign.center, style: header),
                       flex: 2),
                   Expanded(
-                      child: Text("Question Left",
+                      child: Text("Ques Left",
                           textAlign: TextAlign.center, style: header),
                       flex: 1),
                   Expanded(
-                      child: Text("Accuracy",
+                      child: Text("Acc",
                           textAlign: TextAlign.center, style: header),
                       flex: 1),
                 ],
@@ -53,25 +53,35 @@ class _ProgressPageState extends State<ProgressPage> {
                   title: Row(
                     children: <Widget>[
                       Expanded(
-                          child: Text(testList[index].getName(),
-                              textAlign: TextAlign.center),
-                          flex: 3),
+                          child: Text(
+                            testList[index].getName(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 10),
+                          ),
+                          flex: 4),
                       Expanded(
-                          child: Text(testList[index].getTimeStart(),
-                              textAlign: TextAlign.center),
+                          child: Text(
+                            testList[index].getTimeStart().substring(0, 10),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 10),
+                          ),
                           flex: 2),
                       Expanded(
                           child: Text(
-                              testList[index].getQuestionLeft().toString(),
-                              textAlign: TextAlign.center),
+                            testList[index].getQuestionLeft().toString(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 10),
+                          ),
                           flex: 1),
                       Expanded(
                           child: Text(
-                              testList[index]
-                                  .getAccuracy()
-                                  .toStringAsFixed(3)
-                                  .toString(),
-                              textAlign: TextAlign.center),
+                            testList[index]
+                                .getAccuracy()
+                                .toStringAsFixed(3)
+                                .toString(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 10),
+                          ),
                           flex: 1)
                     ],
                   ));
