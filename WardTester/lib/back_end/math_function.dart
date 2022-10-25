@@ -6,26 +6,31 @@ import 'math.dart';
 import 'distuv.dart';
 
 ///returns the probabilty below or between the bounds in the normal distribution
-double normCDF(double ub,
-    {double lb = double.negativeInfinity, double mean = 0, double sd = 1}) {
+double normCDF(double mean, double sd, double lb, double ub) {
+  print("mean: ${mean} sd: $sd  lb: $lb  ub: $ub");
   Normal n = Normal(mean, sd);
   return n.cdf(ub) - n.cdf(lb);
 }
 
 ///returns the z value given the probability
-double invNormCDF(double pc, {double mean = 0, double sd = 1}) {
-  return normalInv(pc) * sd + mean;
+double invNormCDF(double mean, double sd, double area) {
+  return normalInv(area) * sd + mean;
 }
 
 ///returns the probabilty below or between the bounds in the student t distribution
-double tDistCDF(double ub, double df, {double lb = double.negativeInfinity}) {
+double tDistCDF(double df, double lb, double ub) {
   StudentT t = StudentT(df);
   return t.cdf(ub) - t.cdf(lb);
 }
 
+///returns the t value given the probability
+double invT(double df, double area) {
+  StudentT t = StudentT(df);
+  return t.invT(area);
+}
+
 ///returns the probabilty below or between the bounds in the chi-sqaured distribution
-double chiSquaredCDF(double degrees, double ub,
-    {double lb = double.negativeInfinity}) {
+double chiSquaredCDF(double degrees, double lb, double ub) {
   ChiSquared cs = ChiSquared(degrees);
   return cs.cdf(ub) - cs.cdf(lb);
 }
@@ -39,10 +44,9 @@ double binomialPDF(double trials, double prob, double k) {
 }
 
 /// returns the probability of a range of binomial event
-double binomialCDF(double trials, double prob, double ub,
-    {double lb = double.negativeInfinity}) {
+double binomialCDF(double trials, double prob, double lb, double ub) {
   Binomial a = Binomial(trials, prob);
-  return a.cdf(ub) - a.cdf(lb);
+  return a.cdf(ub) - a.cdf(lb - 1);
 }
 
 ///returns the probability of a given geometric event
@@ -51,9 +55,9 @@ double geomPDF(double prob, double trials) {
 }
 
 ///returns the probability of a range of geometric events
-double geomCDF(double prob, double ub, {double lb = double.negativeInfinity}) {
+double geomCDF(double prob, double lb, double ub) {
   Geometric a = Geometric(prob);
-  return a.cdf(ub) - a.cdf(lb);
+  return a.cdf(ub) - a.cdf(lb - 1);
 }
 
 int median(List<double> a) {

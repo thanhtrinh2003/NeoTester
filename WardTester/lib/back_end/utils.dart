@@ -699,6 +699,7 @@ Future<Set<String>> updateTestFile() async {
 
     for (var o in fileResponse.results as List<ParseObject>) {
       var url = Uri.parse(o["QuestionFile"]["url"]);
+      print(url);
       var json_response = await http.get(url);
       var data = jsonDecode(json_response.body);
       var file = File('$appDocPath/' +
@@ -804,6 +805,7 @@ void importMathParser() {
   geometCDF_parser();
   chiSquaredCDF_parser();
   tDistCDF_parser();
+  inverseTCDF_parser();
   median_parser();
   stddev_parser();
   average_parser();

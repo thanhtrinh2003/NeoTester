@@ -69,6 +69,10 @@ class StudentT extends ContinuousRV {
     return (q > 0.5) ? y : -y;
   }
 
+  double invT(double q) {
+    return ppf(q);
+  }
+
   @override
   double sample() {
     //TODO

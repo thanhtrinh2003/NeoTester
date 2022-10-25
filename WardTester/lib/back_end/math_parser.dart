@@ -7,37 +7,27 @@ import 'dart:math';
 Parser p = Parser();
 
 void normalCDF_parser() {
-  p.addFunction(
-      'normCDF',
-      (List<double> args) => args.length == 4
-          ? normCDF(args[1], lb: args[0], mean: args[2], sd: args[3])
-          : args.length == 3
-              ? normCDF(args[0], mean: args[1], sd: args[2])
-              : args.length == 2
-                  ? normCDF(args[1], lb: args[0])
-                  : normCDF(args[0]));
+  p.addFunction('normCDF',
+      (List<double> args) => normCDF(args[0], args[1], args[2], args[3]));
 }
 
 void inverseNormalCDF_parser() {
   p.addFunction(
-      'invNorm',
-      (List<double> args) => args.length == 1
-          ? invNormCDF(args[0])
-          : invNormCDF(args[0], mean: args[1], sd: args[2]));
-  ;
+      'invNorm', (List<double> args) => invNormCDF(args[0], args[1], args[2]));
+}
+
+void inverseTCDF_parser() {
+  p.addFunction('invT', (List<double> args) => invT(args[0], args[1]));
 }
 
 void tDistCDF_parser() {
   p.addFunction(
-      'tcdf', (List<double> args) => tDistCDF(args[1], args[2], lb: args[0]));
+      'tcdf', (List<double> args) => tDistCDF(args[1], args[2], args[0]));
 }
 
 void chiSquaredCDF_parser() {
-  p.addFunction(
-      'chicdf',
-      (List<double> args) => args.length == 2
-          ? chiSquaredCDF(args[1], args[2], lb: args[0])
-          : chiSquaredCDF(args[0], args[1]));
+  p.addFunction('chicdf',
+      (List<double> args) => chiSquaredCDF(args[0], args[1], args[2]));
 }
 
 void binomialPDF_parser() {
@@ -46,11 +36,8 @@ void binomialPDF_parser() {
 }
 
 void binomialCDF_parser() {
-  p.addFunction(
-      'binCDF',
-      (List<double> args) => args.length == 3
-          ? binomialCDF(args[0], args[1], args[2])
-          : binomialCDF(args[0], args[1], args[3], lb: args[2]));
+  p.addFunction('binCDF',
+      (List<double> args) => binomialCDF(args[0], args[1], args[2], args[3]));
 }
 
 void geometPDF_parser() {
@@ -59,10 +46,7 @@ void geometPDF_parser() {
 
 void geometCDF_parser() {
   p.addFunction(
-      'geomCDF',
-      (List<double> args) => args.length == 2
-          ? geomCDF(args[0], args[1])
-          : geomCDF(args[0], args[2], lb: args[1]));
+      'geomCDF', (List<double> args) => geomCDF(args[0], args[1], args[2]));
 }
 
 void median_parser() {

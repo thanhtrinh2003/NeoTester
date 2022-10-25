@@ -35,7 +35,7 @@ class Normal extends ContinuousRV {
 
   double cdf(double x) {
     final double inner = 1 + math.erf((x - mu) / (sigma * math.sqrt(2)));
-    return inner.abs() / 2;
+    return inner.abs() / 2.0;
   }
 
   double ppf(double q) => math.normalInv(q);
