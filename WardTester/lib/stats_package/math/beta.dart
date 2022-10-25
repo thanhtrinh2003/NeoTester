@@ -33,6 +33,7 @@ double beta(double a, double b) {
 /// The incomplete beta function.
 /// See: https://en.wikipedia.org/wiki/Beta_function#Incomplete_beta_function
 double ibeta(double a, double b, double x) {
+  print("a: $a    b: $b   x: $x");
   return ibetaReg(a, b, x) * beta(a, b);
 }
 

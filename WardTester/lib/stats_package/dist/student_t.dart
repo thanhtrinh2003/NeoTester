@@ -29,7 +29,7 @@ class StudentT extends ContinuousRV {
         _pdfConst = math.gamma((df + 1) / 2) /
             (math.sqrt(df * math.pi) * math.gamma(df / 2)),
         _pdfExp = -(df + 1) / 2,
-        _halfDf = df / 2 {
+        _halfDf = df / 2.0 {
     if (df <= 0)
       throw ArgumentError.value(df, "df", "Should be greater than 0");
   }
@@ -59,8 +59,16 @@ class StudentT extends ContinuousRV {
 
   @override
   double cdf(double x) {
-    double fac = math.sqrt(x * x + df);
-    return math.ibeta(this._halfDf, _halfDf, (x + fac) / (2 * fac));
+    if (x == 0) {
+      return 0.5;
+    } else {
+      double t = math.ibetaReg(this._halfDf, 0.5, df / (df + (x * x)));
+      if (x < 0) {
+        return 0.5 * t;
+      } else {
+        return 1 - 0.5 * t;
+      }
+    }
   }
 
   double ppf(double q) {

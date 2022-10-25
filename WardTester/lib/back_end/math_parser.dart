@@ -22,7 +22,7 @@ void inverseTCDF_parser() {
 
 void tDistCDF_parser() {
   p.addFunction(
-      'tcdf', (List<double> args) => tDistCDF(args[1], args[2], args[0]));
+      'tcdf', (List<double> args) => tDistCDF(args[0], args[1], args[2]));
 }
 
 void chiSquaredCDF_parser() {
