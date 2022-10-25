@@ -33,9 +33,21 @@ class Normal extends ContinuousRV {
     return math.exp(expo) / denom;
   }
 
-  double cdf(double x) {
-    final double inner = 1 + math.erf((x - mu) / (sigma * math.sqrt(2)));
-    return inner.abs() / 2.0;
+  double _zpdf(num x) => math.exp(-x * x / 2) / math.sqrt(2 * math.pi);
+
+  double cdf(num x) {
+    final standardDeviation = sigma,
+        z0 = (x - mu) / standardDeviation,
+        z = z0.abs(),
+        p = 0.2316419,
+        t = 1 / (1 + p * z),
+        tps = List<num>.generate((5), (i) => math.pow(t, i + 1)),
+        b = [0.319381530, -0.356563782, 1.781477937, -1.821255978, 1.330274429],
+        c = _zpdf(z) *
+            List<int>.generate(5, (i) => i)
+                .map((i) => b[i] * tps[i])
+                .fold(0, (a, b) => a + b);
+    return z0 < 0 ? c : 1 - c;
   }
 
   double ppf(double q) => math.normalInv(q);
