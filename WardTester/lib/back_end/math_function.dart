@@ -38,7 +38,7 @@ double chiSquaredCDF(double degrees, double lb, double ub) {
 /// returns the probability of a given binomial event
 double binomialPDF(double trials, double prob, double k) {
   return factorial(trials) /
-      (factorial(k) * factorial(k - trials)) *
+      (factorial(k) * factorial(trials - k)) *
       pow(prob, k) *
       pow(1 - prob, trials - k);
 }
