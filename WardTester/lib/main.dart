@@ -177,6 +177,7 @@ void main() async {
     });
   } else {
     completeRecordFile.create();
+    completeTestList = <Test>[];
   }
 
   importMathParser();
