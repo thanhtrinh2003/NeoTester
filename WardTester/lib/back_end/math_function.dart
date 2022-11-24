@@ -7,7 +7,6 @@ import 'distuv.dart';
 
 ///returns the probabilty below or between the bounds in the normal distribution
 double normCDF(double mean, double sd, double lb, double ub) {
-  print("mean: ${mean} sd: $sd  lb: $lb  ub: $ub");
   Normal n = Normal(mean, sd);
   return n.cdf(ub) - n.cdf(lb);
 }

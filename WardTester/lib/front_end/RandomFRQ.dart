@@ -15,7 +15,7 @@ class RandomFRQ extends StatefulWidget {
 }
 
 class _RandomFRQState extends State<RandomFRQ> {
-  final myController = TextEditingController();
+  final submittedAnswerText = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -32,7 +32,7 @@ class _RandomFRQState extends State<RandomFRQ> {
           ])),
       TextField(
           autofocus: true,
-          controller: myController,
+          controller: submittedAnswerText,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             hintText: "Enter the answer to 3 decimal places",
@@ -55,8 +55,10 @@ class _RandomFRQState extends State<RandomFRQ> {
                 if (stateButton == 1) {
                   //control the progress stats for the current question
                   setState(() {
-                    resultDisplay = checkAnswerRandomFRQ(
-                        myController, currentQ.getAnswer());
+                    resultDisplay = checkRandomFRQ(submittedAnswerText,
+                        currentQ.getAnswer(), currentQ.getAnswerEquation());
+                    //resultDisplay = checkAnswerRandomFRQ(
+                    //  submittedAnswerText, currentQ.getAnswer());
                     if (resultDisplay == "This is correct!") {
                       questionOrder.removeFirst();
                       currentTest.incrementAttempt();
@@ -66,8 +68,6 @@ class _RandomFRQState extends State<RandomFRQ> {
                       currentTest.incrementAttempt();
                     }
                   });
-                  //answerDisplay = checkAnswerFRQ(
-                  //textListController, currentQ.getAnswer()),
                   if (resultDisplay != "Please input your answer!") {
                     setState(() {
                       buttonQuestionText = "Next";

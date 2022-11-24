@@ -31,104 +31,79 @@ Question getQuestionInfo(var data, int cur) {
   }
 
   if (type == 0) {
+    // MC Question
     var question = data[currentQuestion]["Question"];
     var answer = data[currentQuestion]["Answer"];
     var choice = data[currentQuestion]["Choices"];
+    print("MC Answer: $answer");
 
     return new Question0(question, type, answer, choice, topic, imagePath);
   } else if (type == 1) {
+    // FR Question
     var question = data[currentQuestion]["Question"];
     var answer = data[currentQuestion]["Answers"];
+    print("FR Answer: $answer");
 
     return new Question1(question, type, answer, topic, imagePath);
-    // Customized Free Response Question
   } else {
+    // Random Free Response Question
     var questionRaw = data[currentQuestion]["Question"];
     var variables = data[currentQuestion]["Variables"];
     var equations = data[currentQuestion]["Equations"];
-    var answer = data[currentQuestion]["Answers"][0];
+    var answerRaw = data[currentQuestion]["Answers"][0];
 
     var question = '';
     var varSave = new Map();
-    List<String> answerList =
-        []; //  for the different value for different equations
+    //  for the different value for different equations
+    List<String> answerList = [];
 
-    // Stage 1: Randomize value for different variables and save them to varSave
-    int currentID = 0;
-    while (currentID < questionRaw.length) {
-      var currentChar = questionRaw[currentID];
-      if (currentChar != '~') {
-        question += currentChar;
+    // Stage 0: Get random values for variables
+    for (int i = 0; i < variables.length; i++) {
+      double current = generateRandom(
+          variables[i]["LowerBound"].toDouble(),
+          variables[i]["UpperBound"].toDouble(),
+          variables[i]["Step"].toDouble());
+      if (variables[i]["Step"].toDouble() ==
+          variables[i]["Step"].toDouble().roundToDouble()) {
+        varSave[variables[i]["VarName"]] = floor(current).toInt();
       } else {
-        for (int i = 0; i < variables.length; i++) {
-          String currentProcess = "";
-          for (int j = 0; j < variables[i]["VarName"].length; j++) {
-            currentProcess = currentProcess + questionRaw[currentID + 1 + j];
-          }
-          if (variables[i]["VarName"] == currentProcess) {
-            if (!varSave.containsKey(variables[i]["VarName"])) {
-              double current = generateRandom(
-                  variables[i]["LowerBound"].toDouble(),
-                  variables[i]["UpperBound"].toDouble(),
-                  variables[i]["Step"].toDouble());
-              if (variables[i]["Step"].toDouble() ==
-                  variables[i]["Step"].toDouble().roundToDouble()) {
-                varSave[variables[i]["VarName"]] = floor(current).toInt();
-              } else {
-                varSave[variables[i]["VarName"]] = double.parse(current
-                    .toStringAsFixed(
-                        logBase(variables[i]["Step"].toDouble(), 0.1).toInt())
-                    .toString());
-              }
-            }
-
-            question += varSave[variables[i]["VarName"]].toString();
-            int length = variables[i]["VarName"].length;
-            currentID = currentID + length;
-            break;
-          }
-        }
+        varSave[variables[i]["VarName"]] = double.parse(current
+            .toStringAsFixed(
+                logBase(variables[i]["Step"].toDouble(), 0.1).toInt())
+            .toString());
       }
-      currentID++;
     }
 
-    print(varSave);
+    // Stage 1: Put values into question
+    question = questionRaw;
+    while (question.contains("~")) {
+      for (int i = 0; i < varSave.length; i++) {
+        var curVariable = varSave.keys.elementAt(i);
+        while (question.contains("~$curVariable")) {
+          question = question.replaceAll(
+              "~$curVariable", varSave[curVariable].toString());
+        }
+      }
+    }
 
     int i = 0;
     for (i = 0; i < equations.length; i++) {
-      //Stage 2: Start to replace variable with their corresponding variables
-
-      String currentRawEquation = equations[
-          i]; // take the current Equation, which contains the variable name
-      String currentEquation = "";
-      int curEqId =
-          0; // use to process the String, to take out all of the String variable and replace with numerical value
-
-      while (curEqId < currentRawEquation.length) {
-        if (currentRawEquation[curEqId] == "~") {
-          for (int j = 0; j < varSave.keys.length; j++) {
-            String curProcess = "";
-            for (int k = 0; k < varSave.keys.elementAt(j).length; k++) {
-              curProcess = curProcess + currentRawEquation[curEqId + k + 1];
-            }
-            if (curProcess == varSave.keys.elementAt(j)) {
-              currentEquation =
-                  currentEquation + varSave[curProcess].toString();
-              curEqId = curEqId + curProcess.length;
-              break;
-            }
+      //Stage 2: Start to replace variable with their corresponding values
+      String currentEquation = equations[i];
+      while (currentEquation.contains("~")) {
+        for (int i = 0; i < varSave.length; i++) {
+          var curVariable = varSave.keys.elementAt(i);
+          while (currentEquation.contains("~$curVariable")) {
+            currentEquation = currentEquation.replaceAll(
+                "~$curVariable", varSave[curVariable].toString());
           }
-        } else {
-          currentEquation = currentEquation + currentRawEquation[curEqId];
         }
-        curEqId = curEqId + 1;
       }
 
-      //Stage 3: Evaluabte the equation
+      //Stage 3: Evaluate the equation
       if (currentEquation.length > 2) {
         if (currentEquation.substring(0, 2) == "!!") {
           String res = nonMathParser(currentEquation).toString();
-          print(res);
           answerList.add(res);
         } else {
           ContextModel cm = ContextModel();
@@ -158,249 +133,92 @@ Question getQuestionInfo(var data, int cur) {
       }
     }
 
-    String curAnswer = ""; //answer including the value (already replace ~^~)
-    var curValueID = 0; //current ID of the list answerList - storing the
-
-    i = 0; //id processing for the answer String
-    while (i < answer.length) {
-      if (i + 2 >= answer.length) {
-        curAnswer = curAnswer + answer[i];
-        i++;
-      } else {
-        String checkString = ""; //string to help process the current Answer;
-        for (int j = i; j <= i + 2; j++) {
-          checkString = checkString + answer[j];
-        }
-        if (checkString == "~^~") {
-          curAnswer = curAnswer + answerList[curValueID];
-          curValueID++;
-          i = i + 3;
-        } else {
-          curAnswer = curAnswer + answer[i];
-          i++;
-        }
-      }
+    var correctAnswer = answerRaw;
+    for (int i = 0; i < answerList.length; i++) {
+      correctAnswer = correctAnswer.replaceFirst("~^~", answerList[i]);
     }
 
     //TODO: delete later
-    print("Answer is " + curAnswer);
-    print("Answer variable is: ");
-    print(answerList);
+    print("FRQ Answer: $correctAnswer");
 
     //end: we will get the answer value, with all the Value and string in it already
 
-    return new Question2(question, type, equations, answer, curAnswer,
+    return new Question2(question, type, equations, answerRaw, correctAnswer,
         answerList, varSave, topic, imagePath);
   }
 }
 
-/// Alaternating ways to check the answer
-String checkAnswerRandomFRQ_2(
-    var submit, var answer, var answerVar, var equation) {
-  equation = equation.trim().replaceAll(" ", "");
-  answer = answer.trim().replaceAll(" ", "");
-  submit = submit.text.trim().replaceAll(" ", "");
+String checkRandomFRQ(var submittedAnswer, var correctAnswer, var rawAnswer) {
+  var correctString = "This is correct!";
+  var incorrectString =
+      "That is not the correct answer! The answer should be: $correctAnswer";
 
-  print(submit);
-  print(answer);
-  print(equation);
+  // Remove all whitespace from correct, submitted, and raw answers
+  submittedAnswer = submittedAnswer.text.trim().replaceAll(" ", "");
+  correctAnswer = correctAnswer.trim().replaceAll(" ", "");
+  rawAnswer = rawAnswer.trim().replaceAll(" ", "");
 
-  List<double> valueList = [];
+  // Get string literals which need to be in the answer
+  List answerStrings = rawAnswer.split("~^~");
+  answerStrings.remove("");
 
-  // compare the non_numerical part of the submitted answer to equation
-  int equationId = 0;
-  int submitId = 0;
+  // See if all string literals are in submitted answer
+  // If they are replace them with commas
+  for (int i = 0; i < answerStrings.length; i++) {
+    var curLiteral = answerStrings[i];
+    if (submittedAnswer.contains(curLiteral)) {
+      submittedAnswer = submittedAnswer.replaceFirst(curLiteral, ",");
+      correctAnswer = correctAnswer.replaceFirst(curLiteral, ",");
+    } else {
+      return incorrectString;
+    }
+  }
 
-  while (equationId < equation.length) {
-    if (equation.length - 1 - (equationId + 2) > 0) {
-      if (equation.substring(equationId, equationId + 3) == "~^~") {
-        equationId = equationId + 3;
-        String currentNumericalValue = "";
-        while (submit[submitId] != equation[equationId]) {
-          currentNumericalValue = currentNumericalValue + submit[submitId];
-          submitId++;
-        }
-        print("numberical value: " + currentNumericalValue);
-        valueList.add(double.parse(currentNumericalValue));
-      } else {
-        if (equation[equationId] == submit[submitId]) {
-          equationId++;
-          submitId++;
-        } else {
-          return "That is not the correct answer! The answer should be: " +
-              answer;
-        }
-      }
-    } else if (equation.length - 1 - (equationId + 2) == 0) {
-      if (equation.substring(equationId, equationId + 3) == "~^~") {
-        equationId = equationId + 3;
-        String currentNumericalValue = submit.substring(submitId);
-        if (isNumeric(equation)) {
-          valueList.add(double.parse(currentNumericalValue));
-        } else {
-          return "That is not the correct answer! The answer should be: " +
-              answer;
-        }
-      } else {
-        if (equation[equationId] == submit[submitId]) {
-          equationId++;
-          submitId++;
-        } else {
-          print(equation[equationId]);
-          print(submit[submitId]);
-          return "That is not the correct answer! The answer should be: " +
-              answer;
-        }
+  // Get all numeric values for comparison
+  List submittedNumbers = submittedAnswer.split(",");
+  while (submittedNumbers.remove("")) {}
+  List correctNumbers = correctAnswer.split(",");
+  while (correctNumbers.remove("")) {}
+
+  for (int i = 0; i < correctNumbers.length; i++) {
+    var curSubmittedNum = submittedNumbers[i];
+    var curCorrectNum = correctNumbers[i];
+    if (double.tryParse(curSubmittedNum) != null) {
+      var dif = double.parse(curSubmittedNum) - double.parse(curCorrectNum);
+      if (dif.abs() >= 0.001) {
+        return incorrectString;
       }
     } else {
-      if (equation[equationId] == submit[submitId]) {
-        equationId++;
-        submitId++;
-      } else {
-        print("here");
-        print(equation[equationId]);
-        print(answer[submitId]);
-        return "That is not the correct answer! The answer should be: " +
-            answer;
-      }
+      return incorrectString;
     }
   }
 
-  if (submitId < submit.length - 1) {
-    print("diff");
-    return "That is not the correct answer! The answer should be: " + answer;
-  } else {
-    int i = 0;
-    for (int i = 0; i < answerVar.length; i++) {
-      double currentAnswerVar = double.parse(answerVar[i]);
-      print("var");
-      print(currentAnswerVar);
-      print(valueList[i]);
-      print(currentAnswerVar.compareTo(valueList[i]));
-      if (currentAnswerVar.compareTo(valueList[i]) == 0) {
-        i++;
-      } else {
-        print(answerVar[i]);
-        print(valueList[i]);
-        return "That is not the correct answer! The answer should be: " +
-            answer;
-      }
-    }
-  }
-
-  return "This is correct!";
-}
-
-/// Function to check and return the result after checking answer for RandomFRQ, a is submitting answer from student
-String checkAnswerRandomFRQ(var a, var answer) {
-  if (a.text.trim().isEmpty) {
-    return "Please input your answer!";
-  } else {
-    var submit = a.text.trim().replaceAll(" ", "");
-
-    String formattedAnswer = answer;
-    answer = answer.trim().replaceAll(" ", "");
-
-    print('answer: ' + answer);
-    print('submit: ' + submit);
-
-    int answerID = 0; //used to process the string answer
-    int submitID = 0; //used to process the string submit
-
-    var currentAnswer = "";
-    var currentSubmit = "";
-
-    print(answer[0]);
-    print(submit[0]);
-
-    var isNumAnswer = isNumeric(answer[0]);
-    var isNumSubmit = isNumeric(submit[0]);
-
-    if (isNumAnswer != isNumSubmit) {
-      return "That is not the correct answer! The answer should be: " +
-          formattedAnswer;
-    }
-
-    int i = 0;
-    while (answerID < answer.length) {
-      i++;
-
-      while (answerID < answer.length) {
-        if (isNumAnswer == isNumeric(answer[answerID])) {
-          currentAnswer = currentAnswer + answer[answerID];
-          answerID = answerID + 1;
-        } else {
-          break;
-        }
-      }
-
-      while (submitID < submit.length) {
-        if (isNumSubmit == isNumeric(submit[submitID])) {
-          currentSubmit = currentSubmit + submit[submitID];
-          submitID = submitID + 1;
-        } else {
-          break;
-        }
-      }
-
-      print("current answer: " + currentAnswer);
-      print("current submit: " + currentSubmit);
-
-      if (isNumAnswer == false) {
-        if (currentAnswer != currentSubmit) {
-          return "That is not the correct answer! The answer should be: " +
-              formattedAnswer;
-        }
-      } else {
-        if ((double.parse(currentAnswer) - double.parse(currentSubmit)).abs() >=
-            0.001) {
-          print("here");
-          return "That is not the correct answer! The answer should be: " +
-              formattedAnswer;
-        }
-      }
-
-      isNumAnswer = turnTrueFalse(isNumAnswer);
-      isNumSubmit = turnTrueFalse(isNumSubmit);
-      currentAnswer = "";
-      currentSubmit = "";
-    }
-
-    print(submitID);
-    print(submit.length);
-
-    if (submitID < (submit.length - 1)) {
-      print("here");
-      return "That is not the correct answer! The answer should be: " +
-          formattedAnswer;
-    }
-
-    return "This is correct!";
-  }
+  return correctString;
 }
 
 ///Function helps check the correctness of ht e
-String checkAnswerFRQ(var a, var answer) {
-  int num = a.length;
+String checkAnswerFRQ(var submittedAnswers, var correctAnswers) {
+  int num = correctAnswers.length;
   var answerDisplay = "The answer is not correct, it should be ";
-  for (int i = 0; i < a.length - 1; i++) {
-    answerDisplay = answerDisplay + answer.elementAt(i)[0] + ", ";
+  for (int i = 0; i < correctAnswers.length - 1; i++) {
+    answerDisplay = answerDisplay + correctAnswers.elementAt(i)[0] + ", ";
   }
-  answerDisplay = answerDisplay + answer.elementAt(a.length - 1)[0];
+  answerDisplay =
+      answerDisplay + correctAnswers.elementAt(correctAnswers.length - 1)[0];
 
-  print("wronng answer :" + answerDisplay);
-
-  for (int i = 1; i <= a.length; i++) {
-    var current = answer.elementAt(i - 1);
+  for (int i = 0; i < submittedAnswers.length; i++) {
+    var current = new List.from(correctAnswers.elementAt(i));
     for (int k = 0; k < current.length; k++) {
       current[k] = current[k].trim().toLowerCase().replaceAll(" ", "");
     }
 
-    for (int j = 0; j < a.length; j++) {
-      print(current);
-      print(a.elementAt(j).text.trim().toLowerCase().replaceAll(" ", ""));
-      if (current.contains(
-          a.elementAt(j).text.trim().toLowerCase().replaceAll(" ", ""))) {
+    for (int j = 0; j < submittedAnswers.length; j++) {
+      if (current.contains(submittedAnswers
+          .elementAt(j)
+          .text
+          .trim()
+          .toLowerCase()
+          .replaceAll(" ", ""))) {
         num = num - 1;
         break;
       }
@@ -529,12 +347,8 @@ Future<List<Test>> removeProgress(var currentTest, var currentTestList) async {
   Directory appDocDir = await getApplicationDocumentsDirectory();
   String appDocPath = appDocDir.path;
   final progressFile = File('$appDocPath/progress.txt');
-  print("removing");
-  print(currentTestList);
   currentTestList
       .removeWhere((element) => element.getName() == currentTest.getName());
-
-  print(currentTestList);
   progressFile.writeAsStringSync(jsonEncode(currentTestList));
 
   return currentTestList;
@@ -562,7 +376,6 @@ Future<bool> checkFirstTime() async {
   if (progressFile.existsSync()) {
     return false;
   } else {
-    print("here");
     return true;
   }
 }

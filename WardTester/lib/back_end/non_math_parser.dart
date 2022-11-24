@@ -1,18 +1,13 @@
 import 'math_function.dart';
 
 String nonMathParser(String equationString) {
-  print(equationString);
   String equation = equationString.substring(2, equationString.length);
-  print(equation);
   //name of equation
   String name = equation.substring(0, equation.indexOf('('));
-  print(name);
   //parameter of equation
   String parameter =
       equation.substring(equation.indexOf('(') + 1, equation.indexOf(')'));
   List<String> paraList = parameter.split(',');
-  print(parameter);
-  print(paraList);
 
   if (name == "binaryToHexadecimal") {
     return binaryToHex(int.parse(paraList[0]));
