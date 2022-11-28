@@ -158,6 +158,12 @@ String checkRandomFRQ(var submittedAnswer, var correctAnswer, var rawAnswer) {
   correctAnswer = correctAnswer.trim().replaceAll(" ", "");
   rawAnswer = rawAnswer.trim().replaceAll(" ", "");
 
+  // Do an initial simple check of whole string of submitted and correct
+  // Mostly for CS questions
+  if (submittedAnswer == correctAnswer) {
+    return correctString;
+  }
+
   // Get string literals which need to be in the answer
   List answerStrings = rawAnswer.split("~^~");
   answerStrings.remove("");
