@@ -66,10 +66,6 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                 ),
                 onPressed: () async {
                   //pull out correspsonding question file after selection
-                  Directory appDocDir =
-                      await getApplicationDocumentsDirectory();
-                  String appDocPath = appDocDir.path;
-
                   //getting corresponding test file (consistings of questions)
                   var questionFile = File('$appDocPath/' +
                       widget.course +
@@ -118,7 +114,7 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
 
                       // set the first question
                       currentQ =
-                          getQuestionInfo(test_file, questionOrder.first);
+                          getNextQuestion(test_file, questionOrder.first);
 
                       //add the deivice directories for image , if null no need to add
                       if (currentQ.getImagePath() != "") {
@@ -130,7 +126,7 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                     } else {
                       questionOrder = currentTest.getQuestionOrder();
                       currentQ =
-                          getQuestionInfo(test_file, questionOrder.first);
+                          getNextQuestion(test_file, questionOrder.first);
 
                       //add the deivice directories for image , if null no need to add
                       if (currentQ.getImagePath() != "") {
@@ -147,7 +143,7 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                       questionOrder.add(list.elementAt(i));
                     }
                     // set the first question
-                    currentQ = getQuestionInfo(test_file, questionOrder.first);
+                    currentQ = getNextQuestion(test_file, questionOrder.first);
                     //add the deivice directories for image , if null no need to add
                     if (currentQ.getImagePath() != "") {
                       currentQ.setImagePath(

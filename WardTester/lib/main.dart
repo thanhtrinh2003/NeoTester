@@ -40,8 +40,6 @@ var courseList;
 /// stores unit list for SelectUnitPage
 var unitList;
 
-const String correctString = "This is correct!";
-
 /// current question test file
 var test_file;
 
@@ -51,18 +49,15 @@ var currentQ;
 //TODO: check what this is
 var t = 1;
 
-/// send out if the answer is correct or not
+/// Give feedback about answer after submitting
 var resultDisplay = " ";
 
 ///button submit or next
-var buttonQuestionText = "Submit";
+var submitButtonText = "Submit";
 
-///1: submit (choosing an answer for a question)
-///-1: next (already submit, waiting for the next question)
-var stateButton = 1;
-
-///student answer for question Type 0
-var studentChoice;
+///false: submit (choosing an answer for a question)
+///true: next (already submit, waiting for the next question)
+var hasSubmitted = false;
 
 /// A map saving all the variable and its corresponding value
 var varSave = new Map();
@@ -99,6 +94,9 @@ var initialPage;
 
 /// student name;
 var studentName = "";
+
+/// Document directory
+var appDocPath;
 
 Random random = new Random();
 
@@ -148,7 +146,7 @@ void main() async {
 
   //setting up application directory
   Directory appDocDir = await getApplicationDocumentsDirectory();
-  String appDocPath = appDocDir.path;
+  appDocPath = appDocDir.path;
 
   //Read in the progress file
   final progressFile = File('$appDocPath/progress.txt');

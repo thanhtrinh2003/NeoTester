@@ -5,6 +5,7 @@ import '../main.dart';
 import '../back_end/utils.dart';
 import "dart:io";
 import 'package:path_provider/path_provider.dart';
+import '../main.dart';
 
 class SelectCoursePage extends StatefulWidget {
   final Set<String>? courseList;
@@ -58,9 +59,6 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
                 ),
                 onPressed: () async {
                   //update unit list
-                  Directory appDocDir =
-                      await getApplicationDocumentsDirectory();
-                  String appDocPath = appDocDir.path;
                   var unitFile = File('$appDocPath/' +
                       widget.courseList!.elementAt(index) +
                       "/unit.txt");

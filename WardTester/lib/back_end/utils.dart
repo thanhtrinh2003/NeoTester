@@ -15,13 +15,14 @@ import 'Test.dart';
 import 'Question.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:http/http.dart' as http;
+import '../main.dart';
 
 Future<LinkedHashMap<String, dynamic>> readFile(String question_file) async {
   final String response = await rootBundle.loadString(question_file);
   return json.decode(response);
 }
 
-Question getQuestionInfo(var data, int cur) {
+Question getNextQuestion(var data, int cur) {
   var currentQuestion = data.keys.elementAt(cur);
   var type = data[currentQuestion]["QuestionType"];
   var topic = data[currentQuestion]["Topic"];
@@ -145,6 +146,61 @@ Question getQuestionInfo(var data, int cur) {
   }
 }
 
+void submitPressed(bool isCorrect) {
+  if (isCorrect) {
+    resultDisplay = "This is correct!";
+    questionOrder.removeFirst();
+    currentTest.incrementAttempt();
+  } else {
+    resultDisplay = "The correct answer is: ${currentQ.getAnswerString()}";
+    questionOrder.add(questionOrder.first);
+    questionOrder.removeFirst();
+    currentTest.incrementAttempt();
+  }
+  submitButtonText = "Next";
+  hasSubmitted = !hasSubmitted;
+}
+
+bool nextPressedIsMoreQuestions() {
+  cur = cur + 1;
+  resultDisplay = "";
+  submitButtonText = "Submit";
+  hasSubmitted = !hasSubmitted;
+
+  if (questionOrder.isNotEmpty) {
+    currentQ = getNextQuestion(test_file, questionOrder.first);
+
+    //add the imagepath for next question display
+    if (currentQ.getImagePath() != "") {
+      currentQ.setImagePath("$appDocPath/Image/" + currentQ.getImagePath());
+    }
+
+    //save the progress
+    currentTest.setQuestionOrder(questionOrder);
+    saveProgress(currentTest, testList).then((List<Test> value) {
+      testList = value;
+    });
+
+    return true;
+  } else {
+    // set the end time for the test + save progress
+    currentTest.setTimeEnd(DateTime.now());
+    currentTest.setQuestionOrder(questionOrder);
+
+    saveCompleteTest(currentTest, completeTestList).then((List<Test> value) {
+      completeTestList = value;
+    });
+
+    removeProgress(currentTest, testList).then((List<Test> value) {
+      testList = value;
+    });
+
+    //Reset the index of current quesion for the next test
+    cur = 0;
+    return false;
+  }
+}
+
 List shuffle(List items) {
   var random = new Random();
 
@@ -189,8 +245,7 @@ String getDeviceType() {
 
 //downloadFile and store it in a correct directories using Dio
 Future<File?> downloadFileImage(String url, String name) async {
-  final appStorage = await getApplicationDocumentsDirectory();
-  final file = File('${appStorage.path}/Image/$name');
+  final file = File('$appDocPath/Image/$name');
 
   final response = await Dio().get(url,
       options: Options(
@@ -207,8 +262,6 @@ Future<File?> downloadFileImage(String url, String name) async {
 /// Save the progress to the current file
 Future<List<Test>> saveProgress(var currentTest, var currentTestList) async {
   //initialize file path
-  Directory appDocDir = await getApplicationDocumentsDirectory();
-  String appDocPath = appDocDir.path;
   final progressFile = File('$appDocPath/progress.txt');
 
   //add the new test progress into the current testList
@@ -230,8 +283,6 @@ Future<List<Test>> saveProgress(var currentTest, var currentTestList) async {
 ///This function is used when a test is completed and needed to be remove from current test.
 Future<List<Test>> removeProgress(var currentTest, var currentTestList) async {
   //initialize file path
-  Directory appDocDir = await getApplicationDocumentsDirectory();
-  String appDocPath = appDocDir.path;
   final progressFile = File('$appDocPath/progress.txt');
   currentTestList
       .removeWhere((element) => element.getName() == currentTest.getName());
@@ -243,8 +294,6 @@ Future<List<Test>> removeProgress(var currentTest, var currentTestList) async {
 Future<List<Test>> saveCompleteTest(
     var completeTest, var completeTestList) async {
   //initialize file path
-  Directory appDocDir = await getApplicationDocumentsDirectory();
-  String appDocPath = appDocDir.path;
   final completeFile = File('$appDocPath/complete.txt');
 
   //add the new test progress into the current testList
@@ -255,8 +304,6 @@ Future<List<Test>> saveCompleteTest(
 }
 
 Future<bool> checkFirstTime() async {
-  Directory appDocDir = await getApplicationDocumentsDirectory();
-  String appDocPath = appDocDir.path;
   final progressFile = File('$appDocPath/progress.txt');
 
   if (progressFile.existsSync()) {
@@ -268,8 +315,6 @@ Future<bool> checkFirstTime() async {
 
 //read the progress from the file and update the test
 Future<List<Test>> readProgress() async {
-  Directory appDocDir = await getApplicationDocumentsDirectory();
-  String appDocPath = appDocDir.path;
   final progressFile = File('$appDocPath/progress.txt');
 
   String progressString = progressFile.readAsStringSync();
@@ -287,8 +332,6 @@ Future<List<Test>> readProgress() async {
 
 //read the progress from the file and update the test
 Future<List<Test>> loadCompleteTest() async {
-  Directory appDocDir = await getApplicationDocumentsDirectory();
-  String appDocPath = appDocDir.path;
   final completeRecordFile = File('$appDocPath/complete.txt');
 
   String completeString = completeRecordFile.readAsStringSync();
@@ -307,9 +350,6 @@ Future<List<Test>> loadCompleteTest() async {
 // return course name and current list name
 Future<Set<String>> updateTestFile() async {
   //setting up application directory
-  Directory appDocDir = await getApplicationDocumentsDirectory();
-  String appDocPath = appDocDir.path;
-
   final courseFile = File('$appDocPath/course.txt');
   print("Path for this device: " + appDocPath); // printing our the directory
 
@@ -426,9 +466,6 @@ Future<Set<String>> updateTestFile() async {
 /// Function called in the main file when first start the program
 /// Check if there is student name yet
 Future<String> loadNameFile() async {
-  Directory appDocDir = await getApplicationDocumentsDirectory();
-  String appDocPath = appDocDir.path;
-
   final nameFile = File("$appDocPath/name.txt");
   if (nameFile.existsSync()) {
     return nameFile.readAsStringSync();
@@ -440,9 +477,6 @@ Future<String> loadNameFile() async {
 /// Check for new version of Image File and and nver worked for the new wokring places
 void loadImageFile() async {
   //setting up application directory
-  Directory appDocDir = await getApplicationDocumentsDirectory();
-  String appDocPath = appDocDir.path;
-
   final courseFile = File('$appDocPath/course.txt');
   print("Path for this device: " + appDocPath); // printing our the directory
 

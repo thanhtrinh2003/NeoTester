@@ -15,6 +15,8 @@ class MultipleChoice extends StatefulWidget {
 }
 
 class _MultipleChoiceState extends State<MultipleChoice> {
+  var studentChoice;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -44,14 +46,8 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                 onPressed: () => setState(() {
                       studentChoice = index;
                       resultDisplay =
-                          "Answer is: " + currentQ.getChoice()[index];
+                          "Selected Answer: " + currentQ.getChoice()[index];
                     }));
-            // return TextField(
-            //     controller: textListController?.elementAt(index),
-            //     decoration: InputDecoration(
-            //       border: OutlineInputBorder(),
-            //       hintText: 'Enter the answer',
-            //     ));
           },
           separatorBuilder: (BuildContext context, int index) {
             return Divider();
@@ -69,83 +65,23 @@ class _MultipleChoiceState extends State<MultipleChoice> {
             alignment: Alignment.center,
             child: ElevatedButton(
                 onPressed: () async {
-                  Directory appDocDir =
-                      await getApplicationDocumentsDirectory();
-                  String appDocPath = appDocDir.path;
-
-                  if (stateButton == 1) {
-                    // if (currentQ.isCorrect(studentChoice)) {
-                    //   resultDisplay = "This is correct!";
-                    // } else {
-                    //   resultDisplay = currentQ.getAnswerString();
-                    // }
+                  if (!hasSubmitted) {
                     setState(() {
-                      if (currentQ.isCorrect(studentChoice)) {
-                        resultDisplay = "This is correct!";
-                        questionOrder.removeFirst();
-                        currentTest.incrementAttempt();
-                      } else {
-                        // question answer wrong, so add the same question back to the end of the queue
-                        // remove it at first
-                        resultDisplay = currentQ.getAnswerString();
-                        questionOrder.add(questionOrder.first);
-                        questionOrder.removeFirst();
-                        currentTest.incrementAttempt();
-                      }
-                      buttonQuestionText = "Next";
-                      stateButton = -stateButton;
+                      submitPressed(currentQ.isCorrect(studentChoice));
                     });
                   } else {
-                    cur = cur + 1;
-                    resultDisplay = "";
-                    buttonQuestionText = "Submit";
-                    stateButton = -stateButton;
-
-                    if (questionOrder.isNotEmpty) {
-                      currentQ =
-                          getQuestionInfo(test_file, questionOrder.first);
-
-                      //add the imagepath for next question display
-                      if (currentQ.getImagePath() != "") {
-                        currentQ.setImagePath(
-                            "$appDocPath/Image/" + currentQ.getImagePath());
-                      }
-
-                      //save the progress
-                      currentTest.setQuestionOrder(questionOrder);
-                      saveProgress(currentTest, testList)
-                          .then((List<Test> value) {
-                        testList = value;
-                      });
-
-                      //go to the next question page
+                    if (nextPressedIsMoreQuestions()) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => QuestionPage()));
                     } else {
-                      cur = 0;
-
-                      // set the end time for the test + save progress
-                      currentTest.setTimeEnd(DateTime.now());
-                      currentTest.setQuestionOrder(questionOrder);
-
-                      saveCompleteTest(currentTest, completeTestList)
-                          .then((List<Test> value) {
-                        completeTestList = value;
-                      });
-
-                      removeProgress(currentTest, testList)
-                          .then((List<Test> value) {
-                        testList = value;
-                      });
-
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => HomePage()));
                     }
                   }
                 },
-                child: Text(buttonQuestionText),
+                child: Text(submitButtonText),
                 style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF))))
       ],
     );

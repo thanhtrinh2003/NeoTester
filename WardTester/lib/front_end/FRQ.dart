@@ -15,10 +15,10 @@ class FRQ extends StatefulWidget {
 }
 
 class _FRQState extends State<FRQ> {
-  @override
   List<TextEditingController>? textListController = List.generate(
       currentQ.getAnswer().length, (index) => TextEditingController());
 
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -65,75 +65,23 @@ class _FRQState extends State<FRQ> {
             alignment: Alignment.center,
             child: ElevatedButton(
                 onPressed: () async {
-                  Directory appDocDir =
-                      await getApplicationDocumentsDirectory();
-                  String appDocPath = appDocDir.path;
-
-                  if (stateButton == 1) {
+                  if (!hasSubmitted) {
                     setState(() {
-                      if (currentQ.isCorrect(textListController)) {
-                        resultDisplay = "This is correct!";
-                        questionOrder.removeFirst();
-                        currentTest.incrementAttempt();
-                      } else {
-                        resultDisplay = currentQ.getAnswerString();
-                        questionOrder.add(questionOrder.first);
-                        questionOrder.removeFirst();
-                        currentTest.incrementAttempt();
-                      }
-                      buttonQuestionText = "Next";
-                      stateButton = -stateButton;
+                      submitPressed(currentQ.isCorrect(textListController));
                     });
                   } else {
-                    cur = cur + 1;
-                    buttonQuestionText = "Submit";
-                    resultDisplay = "";
-                    stateButton = -stateButton;
-                    if (questionOrder.isNotEmpty) {
-                      currentQ =
-                          getQuestionInfo(test_file, questionOrder.first);
-
-                      //add the imagepath for next question display
-                      if (currentQ.getImagePath() != "") {
-                        currentQ.setImagePath(
-                            "$appDocPath/Image/" + currentQ.getImagePath());
-                      }
-
-                      //save the progress
-                      currentTest.setQuestionOrder(questionOrder);
-
-                      saveProgress(currentTest, testList)
-                          .then((List<Test> value) {
-                        testList = value;
-                      });
-
+                    if (nextPressedIsMoreQuestions()) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => QuestionPage()));
                     } else {
-                      cur = 0;
-
-                      // set the end time for the test + save progress
-                      currentTest.setTimeEnd(DateTime.now());
-                      currentTest.setQuestionOrder(questionOrder);
-
-                      saveCompleteTest(currentTest, completeTestList)
-                          .then((List<Test> value) {
-                        completeTestList = value;
-                      });
-
-                      removeProgress(currentTest, testList)
-                          .then((List<Test> value) {
-                        testList = value;
-                      });
-
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => HomePage()));
                     }
                   }
                 },
-                child: Text(buttonQuestionText),
+                child: Text(submitButtonText),
                 style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF))))
       ],
     );

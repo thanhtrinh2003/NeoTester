@@ -35,8 +35,7 @@ class _RandomFRQState extends State<RandomFRQ> {
           controller: submittedAnswerText,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            hintText:
-                "Enter the answer to at least 3 decimal places, if needed",
+            hintText: "If needed, use at least 3 decimal places",
           )),
       RichText(
           text: TextSpan(
@@ -50,83 +49,24 @@ class _RandomFRQState extends State<RandomFRQ> {
           alignment: Alignment.center,
           child: ElevatedButton(
               onPressed: () async {
-                Directory appDocDir = await getApplicationDocumentsDirectory();
-                String appDocPath = appDocDir.path;
-
-                if (stateButton == 1) {
+                if (!hasSubmitted) {
                   //control the progress stats for the current question
                   setState(() {
-                    if (currentQ.isCorrect(submittedAnswerText)) {
-                      resultDisplay = "This is correct!";
-                      questionOrder.removeFirst();
-                      currentTest.incrementAttempt();
-                    } else {
-                      resultDisplay = currentQ.getAnswerString();
-                      questionOrder.add(questionOrder.first);
-                      questionOrder.removeFirst();
-                      currentTest.incrementAttempt();
-                    }
+                    submitPressed(currentQ.isCorrect(submittedAnswerText));
                   });
-                  if (resultDisplay != "Please input your answer!") {
-                    setState(() {
-                      buttonQuestionText = "Next";
-                      stateButton = -stateButton;
-                    });
-                  }
                 } else {
-                  resultDisplay = "";
-                  cur = cur + 1;
-                  setState(() {
-                    buttonQuestionText = "Submit";
-                    stateButton = -stateButton;
-                  });
-                  //Case: Still there is question
-                  if (questionOrder.isNotEmpty) {
-                    currentQ = getQuestionInfo(test_file, questionOrder.first);
-
-                    //add the imagepath for next question display
-                    if (currentQ.getImagePath() != "") {
-                      currentQ.setImagePath(
-                          "$appDocPath/Image/" + currentQ.getImagePath());
-                    }
-
-                    //save the progress
-                    currentTest.setQuestionOrder(questionOrder);
-                    saveProgress(currentTest, testList)
-                        .then((List<Test> value) {
-                      testList = value;
-                    });
-
-                    //go to the next question page
+                  if (nextPressedIsMoreQuestions()) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => QuestionPage()));
-                  }
-                  //Case: No more question
-                  else {
-                    cur = 0;
-
-                    // set the end time for the test + save progress
-                    currentTest.setTimeEnd(DateTime.now());
-                    currentTest.setQuestionOrder(questionOrder);
-
-                    saveCompleteTest(currentTest, completeTestList)
-                        .then((List<Test> value) {
-                      completeTestList = value;
-                    });
-
-                    removeProgress(currentTest, testList)
-                        .then((List<Test> value) {
-                      testList = value;
-                    });
-
+                  } else {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomePage()));
                   }
                 }
               },
-              child: Text(buttonQuestionText),
+              child: Text(submitButtonText),
               style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF))))
     ]);
   }

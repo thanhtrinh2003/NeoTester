@@ -66,9 +66,6 @@ class NameSetPageState extends State<NameSetPage> {
                     studentName = firstNameController.text +
                         " " +
                         lastNameController.text;
-                    Directory appDocDir =
-                        await getApplicationDocumentsDirectory();
-                    String appDocPath = appDocDir.path;
                     final nameFile = File("$appDocPath/name.txt");
                     nameFile.writeAsStringSync(studentName);
                     final progressFile = File("$appDocPath/progress.txt");

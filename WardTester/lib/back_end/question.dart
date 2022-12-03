@@ -31,8 +31,7 @@ class Question0 extends Question {
   }
 
   String getAnswerString() {
-    return "That is not the correct answer! The answer should be: " +
-        choice[answers];
+    return choice[answers];
   }
 
   //getter +setter
@@ -104,7 +103,7 @@ class Question1 extends Question {
   }
 
   String getAnswerString() {
-    var answerDisplay = "The answer is not correct, it should be ";
+    var answerDisplay = "";
     for (int i = 0; i < answers.length - 1; i++) {
       answerDisplay = answerDisplay + answers.elementAt(i)[0] + ", ";
     }
@@ -164,10 +163,6 @@ class Question2 extends Question {
   }
 
   bool isCorrect(var submittedAnswer) {
-    var correctString = "This is correct!";
-    var incorrectString =
-        "That is not the correct answer! The answer should be: $answers";
-
     // Remove all whitespace from correct, submitted, and raw answers
     submittedAnswer = submittedAnswer.text.trim().replaceAll(" ", "");
     var correctAnswer = answers.trim().replaceAll(" ", "");
@@ -177,6 +172,9 @@ class Question2 extends Question {
     // Mostly for CS questions
     if (submittedAnswer == correctAnswer) {
       return true;
+    }
+    if (submittedAnswer == "") {
+      return false;
     }
 
     // Get string literals which need to be in the answer
@@ -218,9 +216,7 @@ class Question2 extends Question {
   }
 
   String getAnswerString() {
-    var answerString =
-        "That is not the correct answer! The answer should be: $answers";
-    return answerString;
+    return answers;
   }
 
   List<dynamic> getEquation() {
