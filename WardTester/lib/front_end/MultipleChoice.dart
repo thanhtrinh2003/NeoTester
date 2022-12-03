@@ -74,15 +74,20 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                   String appDocPath = appDocDir.path;
 
                   if (stateButton == 1) {
-                    resultDisplay = checkMultipleChoice(currentQ.getChoice(),
-                        studentChoice, currentQ.getAnswer());
+                    // if (currentQ.isCorrect(studentChoice)) {
+                    //   resultDisplay = "This is correct!";
+                    // } else {
+                    //   resultDisplay = currentQ.getAnswerString();
+                    // }
                     setState(() {
-                      if (resultDisplay == "This is correct!") {
+                      if (currentQ.isCorrect(studentChoice)) {
+                        resultDisplay = "This is correct!";
                         questionOrder.removeFirst();
                         currentTest.incrementAttempt();
                       } else {
                         // question answer wrong, so add the same question back to the end of the queue
                         // remove it at first
+                        resultDisplay = currentQ.getAnswerString();
                         questionOrder.add(questionOrder.first);
                         questionOrder.removeFirst();
                         currentTest.incrementAttempt();

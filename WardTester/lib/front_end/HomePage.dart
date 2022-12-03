@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trying/front_end/NameSetPage.dart';
 import '../main.dart';
 import 'SelectCoursePage.dart';
 import 'ProgressPage.dart';
@@ -38,45 +39,99 @@ class HomePageState extends State<HomePage> {
                 Image.asset(
                   'assets/LaunchImageHR.png',
                   width: MediaQuery.of(context).size.width * 0.8,
-                  height: MediaQuery.of(context).size.height * 0.5,
+                  height: MediaQuery.of(context).size.height * 0.45,
                   fit: BoxFit.scaleDown,
                 ),
-                Align(
-                  alignment: AlignmentDirectional(0, -0.05),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              SelectCoursePage(courseList: courseList),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF2979FF),
-                    ),
-                    child: Text("Start Test",
-                        style: TextStyle(color: Color(0xFFFAFAFA))),
+                ElevatedButton(
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            SelectCoursePage(courseList: courseList),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFF2979FF),
                   ),
+                  child: Text("Start Test",
+                      style: TextStyle(color: Color(0xFFFAFAFA))),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RecordPage(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFF2979FF),
+                  ),
+                  child: Text("Progress",
+                      style: TextStyle(color: Color(0xFFFAFAFA))),
                 ),
                 Align(
-                  alignment: AlignmentDirectional(0, -0.05),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RecordPage(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF2979FF),
-                    ),
-                    child: Text("Progress",
-                        style: TextStyle(color: Color(0xFFFAFAFA))),
-                  ),
+                  alignment: AlignmentDirectional(-0.9, 0),
+                  child: IconButton(
+                      splashRadius: 40,
+                      iconSize: 50,
+                      icon: Image.asset('assets/settingsCog.png'),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                                  title:
+                                      Center(child: const Text("Change Name")),
+                                  content: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: Text(
+                                          "WARNING!!\nChanging name will delete all progress",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  actions: <Widget>[
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Color(0xFF2979FF),
+                                      ),
+                                      child: Text("Continue",
+                                          style: TextStyle(
+                                              color: Color(0xFFFAFAFA))),
+                                      onPressed: () async {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => NameSetPage(),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    ElevatedButton(
+                                      child: Text("Cancel",
+                                          style: TextStyle(
+                                              color: Color(0xFFFAFAFA))),
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Color(0xFF2979FF),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(ctx).pop();
+                                      },
+                                    ),
+                                  ],
+                                ));
+                      }),
                 ),
               ],
             ),

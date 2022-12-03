@@ -1,11 +1,13 @@
 abstract class Question {
   var type;
   var question;
-  var answer;
+  var answers;
   var topic;
   var imagePath;
 
   String getQuestion();
+  bool isCorrect(var submittedAnswer);
+  String getAnswerString();
 }
 
 //Multiple Choice
@@ -18,10 +20,19 @@ class Question0 extends Question {
       var imagePath) {
     this.question = question;
     this.type = type;
-    this.answer = answer;
+    this.answers = answer;
     this.choice = choice;
     this.topic = topic;
     this.imagePath = imagePath;
+  }
+
+  bool isCorrect(var submittedAnswer) {
+    return (submittedAnswer == answers);
+  }
+
+  String getAnswerString() {
+    return "That is not the correct answer! The answer should be: " +
+        choice[answers];
   }
 
   //getter +setter
@@ -34,7 +45,7 @@ class Question0 extends Question {
   }
 
   int getAnswer() {
-    return answer;
+    return answers;
   }
 
   List<dynamic> getChoice() {
@@ -55,12 +66,50 @@ class Question1 extends Question {
   //variables
 
   //constructors
-  Question1(var question, var type, var answer, var topic, var imagePath) {
+  Question1(var question, var type, var answers, var topic, var imagePath) {
     this.question = question;
     this.type = type;
-    this.answer = answer;
+    this.answers = answers;
     this.topic = topic;
     this.imagePath = imagePath;
+  }
+
+  bool isCorrect(var submittedAnswers) {
+    int num = answers.length;
+
+    for (int i = 0; i < submittedAnswers.length; i++) {
+      var current = new List.from(answers.elementAt(i));
+      for (int k = 0; k < current.length; k++) {
+        current[k] = current[k].trim().toLowerCase().replaceAll(" ", "");
+      }
+
+      for (int j = 0; j < submittedAnswers.length; j++) {
+        if (current.contains(submittedAnswers
+            .elementAt(j)
+            .text
+            .trim()
+            .toLowerCase()
+            .replaceAll(" ", ""))) {
+          num = num - 1;
+          break;
+        }
+      }
+    }
+
+    if (num == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  String getAnswerString() {
+    var answerDisplay = "The answer is not correct, it should be ";
+    for (int i = 0; i < answers.length - 1; i++) {
+      answerDisplay = answerDisplay + answers.elementAt(i)[0] + ", ";
+    }
+    answerDisplay = answerDisplay + answers.elementAt(answers.length - 1)[0];
+    return answerDisplay;
   }
 
   //getter +setter
@@ -73,7 +122,7 @@ class Question1 extends Question {
   }
 
   List getAnswer() {
-    return answer;
+    return answers;
   }
 
   String getTopic() {
@@ -102,16 +151,76 @@ class Question2 extends Question {
 
   //constructors
   Question2(var question, var type, var equation, var answerEquation,
-      var answer, var answerVar, var variable, var topic, var imagePath) {
+      var answers, var answerVar, var variable, var topic, var imagePath) {
     this.question = question;
     this.type = type;
     this.equation = equation;
     this.answerEquation = answerEquation;
-    this.answer = answer;
+    this.answers = answers;
     this.answerVar = answerVar;
     this.variable = variable;
     this.topic = topic;
     this.imagePath = imagePath;
+  }
+
+  bool isCorrect(var submittedAnswer) {
+    var correctString = "This is correct!";
+    var incorrectString =
+        "That is not the correct answer! The answer should be: $answers";
+
+    // Remove all whitespace from correct, submitted, and raw answers
+    submittedAnswer = submittedAnswer.text.trim().replaceAll(" ", "");
+    var correctAnswer = answers.trim().replaceAll(" ", "");
+    var rawAnswer = answerEquation.trim().replaceAll(" ", "");
+
+    // Do an initial simple check of whole string of submitted and correct answers
+    // Mostly for CS questions
+    if (submittedAnswer == correctAnswer) {
+      return true;
+    }
+
+    // Get string literals which need to be in the answer
+    List answerStrings = rawAnswer.split("~^~");
+    answerStrings.remove("");
+
+    // See if all string literals are in submitted answer
+    // If they are replace them with commas
+    for (int i = 0; i < answerStrings.length; i++) {
+      var curLiteral = answerStrings[i];
+      if (submittedAnswer.contains(curLiteral)) {
+        submittedAnswer = submittedAnswer.replaceFirst(curLiteral, ",");
+        correctAnswer = correctAnswer.replaceFirst(curLiteral, ",");
+      } else {
+        return false;
+      }
+    }
+
+    // Get all numeric values for comparison
+    List submittedNumbers = submittedAnswer.split(",");
+    while (submittedNumbers.remove("")) {}
+    List correctNumbers = correctAnswer.split(",");
+    while (correctNumbers.remove("")) {}
+
+    for (int i = 0; i < correctNumbers.length; i++) {
+      var curSubmittedNum = submittedNumbers[i];
+      var curCorrectNum = correctNumbers[i];
+      if (double.tryParse(curSubmittedNum) != null) {
+        var dif = double.parse(curSubmittedNum) - double.parse(curCorrectNum);
+        if (dif.abs() >= 0.001) {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  String getAnswerString() {
+    var answerString =
+        "That is not the correct answer! The answer should be: $answers";
+    return answerString;
   }
 
   List<dynamic> getEquation() {

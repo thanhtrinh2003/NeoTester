@@ -35,15 +35,15 @@ Question getQuestionInfo(var data, int cur) {
     var question = data[currentQuestion]["Question"];
     var answer = data[currentQuestion]["Answer"];
     var choice = data[currentQuestion]["Choices"];
-    print("MC Answer: $answer");
 
+    print("MC Answer: $answer");
     return new Question0(question, type, answer, choice, topic, imagePath);
   } else if (type == 1) {
     // FR Question
     var question = data[currentQuestion]["Question"];
     var answer = data[currentQuestion]["Answers"];
-    print("FR Answer: $answer");
 
+    print("FR Answer: $answer");
     return new Question1(question, type, answer, topic, imagePath);
   } else {
     // Random Free Response Question
@@ -140,110 +140,8 @@ Question getQuestionInfo(var data, int cur) {
 
     //TODO: delete later
     print("FRQ Answer: $correctAnswer");
-
-    //end: we will get the answer value, with all the Value and string in it already
-
     return new Question2(question, type, equations, answerRaw, correctAnswer,
         answerList, varSave, topic, imagePath);
-  }
-}
-
-String checkRandomFRQ(var submittedAnswer, var correctAnswer, var rawAnswer) {
-  var correctString = "This is correct!";
-  var incorrectString =
-      "That is not the correct answer! The answer should be: $correctAnswer";
-
-  // Remove all whitespace from correct, submitted, and raw answers
-  submittedAnswer = submittedAnswer.text.trim().replaceAll(" ", "");
-  correctAnswer = correctAnswer.trim().replaceAll(" ", "");
-  rawAnswer = rawAnswer.trim().replaceAll(" ", "");
-
-  // Do an initial simple check of whole string of submitted and correct
-  // Mostly for CS questions
-  if (submittedAnswer == correctAnswer) {
-    return correctString;
-  }
-
-  // Get string literals which need to be in the answer
-  List answerStrings = rawAnswer.split("~^~");
-  answerStrings.remove("");
-
-  // See if all string literals are in submitted answer
-  // If they are replace them with commas
-  for (int i = 0; i < answerStrings.length; i++) {
-    var curLiteral = answerStrings[i];
-    if (submittedAnswer.contains(curLiteral)) {
-      submittedAnswer = submittedAnswer.replaceFirst(curLiteral, ",");
-      correctAnswer = correctAnswer.replaceFirst(curLiteral, ",");
-    } else {
-      return incorrectString;
-    }
-  }
-
-  // Get all numeric values for comparison
-  List submittedNumbers = submittedAnswer.split(",");
-  while (submittedNumbers.remove("")) {}
-  List correctNumbers = correctAnswer.split(",");
-  while (correctNumbers.remove("")) {}
-
-  for (int i = 0; i < correctNumbers.length; i++) {
-    var curSubmittedNum = submittedNumbers[i];
-    var curCorrectNum = correctNumbers[i];
-    if (double.tryParse(curSubmittedNum) != null) {
-      var dif = double.parse(curSubmittedNum) - double.parse(curCorrectNum);
-      if (dif.abs() >= 0.001) {
-        return incorrectString;
-      }
-    } else {
-      return incorrectString;
-    }
-  }
-
-  return correctString;
-}
-
-///Function helps check the correctness of ht e
-String checkAnswerFRQ(var submittedAnswers, var correctAnswers) {
-  int num = correctAnswers.length;
-  var answerDisplay = "The answer is not correct, it should be ";
-  for (int i = 0; i < correctAnswers.length - 1; i++) {
-    answerDisplay = answerDisplay + correctAnswers.elementAt(i)[0] + ", ";
-  }
-  answerDisplay =
-      answerDisplay + correctAnswers.elementAt(correctAnswers.length - 1)[0];
-
-  for (int i = 0; i < submittedAnswers.length; i++) {
-    var current = new List.from(correctAnswers.elementAt(i));
-    for (int k = 0; k < current.length; k++) {
-      current[k] = current[k].trim().toLowerCase().replaceAll(" ", "");
-    }
-
-    for (int j = 0; j < submittedAnswers.length; j++) {
-      if (current.contains(submittedAnswers
-          .elementAt(j)
-          .text
-          .trim()
-          .toLowerCase()
-          .replaceAll(" ", ""))) {
-        num = num - 1;
-        break;
-      }
-    }
-  }
-
-  if (num == 0) {
-    return "This is correct!";
-  } else {
-    return answerDisplay;
-  }
-}
-
-String checkMultipleChoice(var choice, var student_choice, var answer) {
-  if (student_choice == answer) {
-    return "This is correct!";
-  } else {
-    return "That is not the correct answer! The answer should be: " +
-        choice[answer];
   }
 }
 
@@ -261,24 +159,6 @@ List shuffle(List items) {
   }
 
   return items;
-}
-
-bool turnTrueFalse(bool a) {
-  if (a == true) {
-    return false;
-  } else {
-    return true;
-  }
-}
-
-bool isNumeric(String s) {
-  if (s == ".") {
-    return true;
-  }
-  if (s == null) {
-    return false;
-  }
-  return double.tryParse(s) != null;
 }
 
 Future<List> downloadQuestion() async {
@@ -463,7 +343,7 @@ Future<Set<String>> updateTestFile() async {
     print("version is different!");
     Queue courseList1 = new Queue<String>();
 
-    //looping over all of the items to find the names for the course and potentially unnits
+    //looping over all of the items to find the names for the course and potentially units
     for (var o in jsonResponse.results as List<ParseObject>) {
       String? currentCourse = o.get<String>('Course');
       if (!courseList1.contains(currentCourse)) {
@@ -471,8 +351,8 @@ Future<Set<String>> updateTestFile() async {
       }
     }
 
-    //courseList2 isa duplicate of courseList1, in order to loop over and adjust
-    // the unit file.
+    //courseList2 is a duplicate of courseList1, in order to loop over and adjust
+    //the unit file.
     Queue courseList2 = new Queue.from(courseList1);
     courseFile.writeAsStringSync(courseList1
         .toString()

@@ -35,7 +35,8 @@ class _RandomFRQState extends State<RandomFRQ> {
           controller: submittedAnswerText,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            hintText: "Enter the answer to 3 decimal places",
+            hintText:
+                "Enter the answer to at least 3 decimal places, if needed",
           )),
       RichText(
           text: TextSpan(
@@ -55,14 +56,12 @@ class _RandomFRQState extends State<RandomFRQ> {
                 if (stateButton == 1) {
                   //control the progress stats for the current question
                   setState(() {
-                    resultDisplay = checkRandomFRQ(submittedAnswerText,
-                        currentQ.getAnswer(), currentQ.getAnswerEquation());
-                    //resultDisplay = checkAnswerRandomFRQ(
-                    //  submittedAnswerText, currentQ.getAnswer());
-                    if (resultDisplay == "This is correct!") {
+                    if (currentQ.isCorrect(submittedAnswerText)) {
+                      resultDisplay = "This is correct!";
                       questionOrder.removeFirst();
                       currentTest.incrementAttempt();
                     } else {
+                      resultDisplay = currentQ.getAnswerString();
                       questionOrder.add(questionOrder.first);
                       questionOrder.removeFirst();
                       currentTest.incrementAttempt();

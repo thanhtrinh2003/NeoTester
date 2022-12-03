@@ -70,17 +70,15 @@ class _FRQState extends State<FRQ> {
                   String appDocPath = appDocDir.path;
 
                   if (stateButton == 1) {
-                    resultDisplay = checkAnswerFRQ(
-                        textListController, currentQ.getAnswer());
                     setState(() {
-                      if (resultDisplay == "This is correct!") {
+                      if (currentQ.isCorrect(textListController)) {
+                        resultDisplay = "This is correct!";
                         questionOrder.removeFirst();
-
                         currentTest.incrementAttempt();
                       } else {
+                        resultDisplay = currentQ.getAnswerString();
                         questionOrder.add(questionOrder.first);
                         questionOrder.removeFirst();
-
                         currentTest.incrementAttempt();
                       }
                       buttonQuestionText = "Next";

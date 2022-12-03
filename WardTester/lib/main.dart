@@ -146,12 +146,6 @@ void main() async {
     print(initialPage);
   });
 
-  //update test file
-  // updateTestFile().then((Set<String> result) {
-  //   courseList = result;
-  // });
-  //updateImageFile();
-
   //setting up application directory
   Directory appDocDir = await getApplicationDocumentsDirectory();
   String appDocPath = appDocDir.path;

@@ -13,7 +13,9 @@ class NameSetPage extends StatefulWidget {
 }
 
 class NameSetPageState extends State<NameSetPage> {
-  final myController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,9 +43,19 @@ class NameSetPageState extends State<NameSetPage> {
           SizedBox(
               width: MediaQuery.of(context).size.width * 0.8,
               child: TextField(
-                controller: myController,
+                textAlign: TextAlign.center,
+                controller: firstNameController,
                 decoration: InputDecoration(
-                  hintText: "Please input your name!",
+                  hintText: "Enter your first name",
+                ),
+              )),
+          SizedBox(
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: TextField(
+                textAlign: TextAlign.center,
+                controller: lastNameController,
+                decoration: InputDecoration(
+                  hintText: "Enter your last name",
                 ),
               )),
           SizedBox(height: 10),
@@ -51,12 +63,20 @@ class NameSetPageState extends State<NameSetPage> {
               alignment: Alignment.center,
               child: ElevatedButton(
                   onPressed: () async {
-                    studentName = myController.text;
+                    studentName = firstNameController.text +
+                        " " +
+                        lastNameController.text;
                     Directory appDocDir =
                         await getApplicationDocumentsDirectory();
                     String appDocPath = appDocDir.path;
                     final nameFile = File("$appDocPath/name.txt");
                     nameFile.writeAsStringSync(studentName);
+                    final progressFile = File("$appDocPath/progress.txt");
+                    progressFile.writeAsStringSync("[]");
+                    final completeFile = File("$appDocPath/complete.txt");
+                    completeFile.writeAsStringSync("[]");
+                    testList = [];
+                    completeTestList = [];
 
                     await Navigator.push(
                       context,
