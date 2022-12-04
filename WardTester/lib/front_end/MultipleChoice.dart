@@ -3,9 +3,6 @@ import '../main.dart';
 import '../back_end/utils.dart';
 import 'QuestionPage.dart';
 import 'HomePage.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
-import '../back_end/Test.dart';
 
 class MultipleChoice extends StatefulWidget {
   const MultipleChoice({Key? key}) : super(key: key);
@@ -42,7 +39,8 @@ class _MultipleChoiceState extends State<MultipleChoice> {
           itemBuilder: (BuildContext context, int index) {
             return ElevatedButton(
                 child: Text(currentQ.getChoice()[index]),
-                style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF)),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF2979FF)),
                 onPressed: () => setState(() {
                       studentChoice = index;
                       resultDisplay =
@@ -82,7 +80,8 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                   }
                 },
                 child: Text(submitButtonText),
-                style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF))))
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF2979FF))))
       ],
     );
   }

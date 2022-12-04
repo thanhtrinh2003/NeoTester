@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'SelectUnitPage.dart';
 import '../main.dart';
-import '../back_end/utils.dart';
-import "dart:io";
-import 'package:path_provider/path_provider.dart';
 
 //test
 
@@ -49,7 +45,6 @@ class _CompleteRecordPageState extends State<CompleteRecordPage> {
               index -= 1;
 
               //return row
-              var row = completeTestList[index];
               return ListTile(
                 onTap: null,
                 title: Row(
@@ -95,7 +90,6 @@ class _CompleteRecordPageState extends State<CompleteRecordPage> {
                 visualDensity: VisualDensity(vertical: -4),
               );
             }
-            ;
           },
           separatorBuilder: (BuildContext context, int index) {
             return Divider();

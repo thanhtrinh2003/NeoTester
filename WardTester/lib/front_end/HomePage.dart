@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:trying/front_end/NameSetPage.dart';
 import '../main.dart';
 import 'SelectCoursePage.dart';
-import 'ProgressPage.dart';
 import 'RecordPage.dart';
 
 class HomePage extends StatefulWidget {
@@ -53,7 +52,7 @@ class HomePageState extends State<HomePage> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF2979FF),
+                    backgroundColor: Color(0xFF2979FF),
                   ),
                   child: Text("Start Test",
                       style: TextStyle(color: Color(0xFFFAFAFA))),
@@ -68,7 +67,7 @@ class HomePageState extends State<HomePage> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF2979FF),
+                    backgroundColor: Color(0xFF2979FF),
                   ),
                   child: Text("Progress",
                       style: TextStyle(color: Color(0xFFFAFAFA))),
@@ -104,7 +103,7 @@ class HomePageState extends State<HomePage> {
                                   actions: <Widget>[
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        primary: Color(0xFF2979FF),
+                                        backgroundColor: Color(0xFF2979FF),
                                       ),
                                       child: Text("Continue",
                                           style: TextStyle(
@@ -123,7 +122,7 @@ class HomePageState extends State<HomePage> {
                                           style: TextStyle(
                                               color: Color(0xFFFAFAFA))),
                                       style: ElevatedButton.styleFrom(
-                                        primary: Color(0xFF2979FF),
+                                        backgroundColor: Color(0xFF2979FF),
                                       ),
                                       onPressed: () {
                                         Navigator.of(ctx).pop();

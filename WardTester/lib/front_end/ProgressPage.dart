@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'SelectUnitPage.dart';
 import '../main.dart';
-import '../back_end/utils.dart';
-import "dart:io";
-import 'package:path_provider/path_provider.dart';
 
 class ProgressPage extends StatefulWidget {
   const ProgressPage({Key? key}) : super(key: key);
@@ -47,7 +43,6 @@ class _ProgressPageState extends State<ProgressPage> {
               index -= 1;
 
               //return row
-              var row = testList[index];
               return ListTile(
                 onTap: null,
                 title: Row(
@@ -91,7 +86,6 @@ class _ProgressPageState extends State<ProgressPage> {
                 visualDensity: VisualDensity(vertical: -4),
               );
             }
-            ;
           },
           separatorBuilder: (BuildContext context, int index) {
             return Divider();

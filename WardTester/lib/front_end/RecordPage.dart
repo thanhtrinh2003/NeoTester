@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'ProgressPage.dart';
 import 'HomePage.dart';
-import 'ProgressPage.dart';
 import 'CompleteRecordPage.dart';
 import '../main.dart';
-import '../back_end/utils.dart';
-import "dart:io";
-import 'package:path_provider/path_provider.dart';
 
 class RecordPage extends StatefulWidget {
   const RecordPage({Key? key}) : super(key: key);

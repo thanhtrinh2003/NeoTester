@@ -5,16 +5,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'dart:convert';
-import 'back_end/math_parser.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'back_end/utils.dart';
 import 'back_end/Test.dart';
-import 'front_end/HomePage.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'dart:collection';
 import 'package:path_provider/path_provider.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'front_end/DirectionPage.dart';
 
@@ -45,9 +39,6 @@ var test_file;
 
 /// a Question object that stores the current question of the test
 var currentQ;
-
-//TODO: check what this is
-var t = 1;
 
 /// Give feedback about answer after submitting
 var resultDisplay = " ";

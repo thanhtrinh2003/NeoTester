@@ -3,9 +3,6 @@ import '../back_end/utils.dart';
 import '../main.dart';
 import 'QuestionPage.dart';
 import 'HomePage.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
-import '../back_end/Test.dart';
 
 class FRQ extends StatefulWidget {
   const FRQ({Key? key}) : super(key: key);
@@ -82,7 +79,8 @@ class _FRQState extends State<FRQ> {
                   }
                 },
                 child: Text(submitButtonText),
-                style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF))))
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF2979FF))))
       ],
     );
   }

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import '../main.dart';
-import 'SelectCoursePage.dart';
-import 'ProgressPage.dart';
 
 class ReconnectPage extends StatefulWidget {
   const ReconnectPage({Key? key}) : super(key: key);

@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:trying/front_end/FRQ.dart';
-import 'MultipleChoice.dart';
-import 'FRQ.dart';
-import 'RandomFRQ.dart';
 import 'LoadingPage.dart';
 import 'ReconnectPage.dart';
 import 'HomePage.dart';

@@ -3,9 +3,6 @@ import '../main.dart';
 import '../back_end/utils.dart';
 import 'QuestionPage.dart';
 import 'HomePage.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
-import '../back_end/Test.dart';
 
 class RandomFRQ extends StatefulWidget {
   const RandomFRQ({Key? key}) : super(key: key);
@@ -67,7 +64,8 @@ class _RandomFRQState extends State<RandomFRQ> {
                 }
               },
               child: Text(submitButtonText),
-              style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF))))
+              style:
+                  ElevatedButton.styleFrom(backgroundColor: Color(0xFF2979FF))))
     ]);
   }
 }

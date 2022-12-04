@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../main.dart';
 import 'QuestionPage.dart';
-import 'package:path_provider/path_provider.dart';
 import "dart:io";
 import "dart:core";
 import '../back_end/utils.dart';
@@ -62,7 +60,7 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                         style: TextStyle(color: Colors.white, fontSize: 18))),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(8),
-                  primary: Color(0xFF2979FF),
+                  backgroundColor: Color(0xFF2979FF),
                 ),
                 onPressed: () async {
                   //pull out correspsonding question file after selection
@@ -162,10 +160,6 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                     testList = List<Test>.empty(growable: true);
                     saveProgress(currentTest, testList);
                   }
-
-                  //TODO: delete this later
-                  print(await currentQ.getQuestion());
-                  print(questionFile);
 
                   await Navigator.push(
                     context,

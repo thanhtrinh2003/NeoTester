@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:math_expressions/math_expressions.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:trying/back_end/non_math_parser.dart';
 import 'math_function.dart';
 import 'dart:convert';
@@ -139,7 +138,6 @@ Question getNextQuestion(var data, int cur) {
       correctAnswer = correctAnswer.replaceFirst("~^~", answerList[i]);
     }
 
-    //TODO: delete later
     print("FRQ Answer: $correctAnswer");
     return new Question2(question, type, equations, answerRaw, correctAnswer,
         answerList, varSave, topic, imagePath);
@@ -257,6 +255,8 @@ Future<File?> downloadFileImage(String url, String name) async {
   final raf = file.openSync(mode: FileMode.write);
   raf.writeFromSync(response.data);
   await raf.close();
+
+  return file;
 }
 
 /// Save the progress to the current file
@@ -267,17 +267,17 @@ Future<List<Test>> saveProgress(var currentTest, var currentTestList) async {
   //add the new test progress into the current testList
   currentTestList.add(currentTest);
 
-  //remove the two test with the same name
+  //remove the second test with the same name
   //TODO: think of a better efficient way
   var seen = Set<String>();
-  List<Test> uniqueTest =
+  List<dynamic> uniqueTest =
       currentTestList.where((test) => seen.add(test.getName())).toList();
-  //currentTestList = uniqueTest;
+  List<Test> list = uniqueTest.cast<Test>();
 
   //log down the progress file
   progressFile.writeAsStringSync(jsonEncode(uniqueTest));
 
-  return uniqueTest;
+  return list;
 }
 
 ///This function is used when a test is completed and needed to be remove from current test.
@@ -423,7 +423,7 @@ Future<Set<String>> updateTestFile() async {
             unitList1.first.substring(0, unitList1.first.indexOf('.'));
 
         //String to pass in for the file is stored in unitList File
-        var directory = await Directory('$appDocPath/' + courseList2.first)
+        await Directory('$appDocPath/' + courseList2.first)
             .create(recursive: true);
         var unitFile = File('$appDocPath/' + courseList2.first + "/unit.txt");
         unitFile.writeAsStringSync(unitListFile);
@@ -477,7 +477,6 @@ Future<String> loadNameFile() async {
 /// Check for new version of Image File and and nver worked for the new wokring places
 void loadImageFile() async {
   //setting up application directory
-  final courseFile = File('$appDocPath/course.txt');
   print("Path for this device: " + appDocPath); // printing our the directory
 
   //setting up back4app ID address
@@ -503,8 +502,7 @@ void loadImageFile() async {
               imageVersionList[imageVersionList.length - 1]["date"]) ||
       !imageVersionFile.existsSync()) {
     // add an image directory:
-    var imageDirectory =
-        await Directory('$appDocPath/Image').create(recursive: true);
+    await Directory('$appDocPath/Image').create(recursive: true);
 
     //setting up Image File for question file through Back4App Connection
     QueryBuilder<ParseObject> imageParse =
@@ -517,7 +515,7 @@ void loadImageFile() async {
       String? currentImageName = o.get<String>("FileName");
       String? imageURL = currentImageFile["url"];
 
-      var localImage = downloadFileImage(imageURL!, currentImageName!);
+      downloadFileImage(imageURL!, currentImageName!);
     }
 
     // update the date in image version file

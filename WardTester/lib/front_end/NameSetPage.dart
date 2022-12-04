@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'HomePage.dart';
-import 'package:path_provider/path_provider.dart';
 import '../main.dart';
 
 class NameSetPage extends StatefulWidget {
@@ -83,7 +81,8 @@ class NameSetPageState extends State<NameSetPage> {
                     );
                   },
                   child: Text("Submit"),
-                  style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF))))
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF2979FF))))
         ],
       ),
     );

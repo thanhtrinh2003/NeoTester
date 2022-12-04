@@ -1,12 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:math_expressions/math_expressions.dart';
-import '../back_end/math_function.dart';
-import 'dart:convert';
 import '../back_end/math_parser.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'dart:async';
-import 'dart:io';
 
 Random random = new Random();
 

@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'SelectUnitPage.dart';
 import 'HomePage.dart';
 import '../main.dart';
-import '../back_end/utils.dart';
 import "dart:io";
-import 'package:path_provider/path_provider.dart';
-import '../main.dart';
 
 class SelectCoursePage extends StatefulWidget {
   final Set<String>? courseList;
@@ -55,7 +52,7 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
                         style: TextStyle(color: Colors.white, fontSize: 18))),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(8),
-                  primary: Color(0xFF2979FF),
+                  backgroundColor: Color(0xFF2979FF),
                 ),
                 onPressed: () async {
                   //update unit list

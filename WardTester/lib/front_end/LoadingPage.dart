@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
-import 'SelectCoursePage.dart';
-import 'ProgressPage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../back_end/utils.dart';
 import 'HomePage.dart';

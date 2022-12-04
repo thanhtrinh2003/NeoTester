@@ -1,7 +1,5 @@
 import 'package:math_expressions/math_expressions.dart';
 import 'math_function.dart';
-import 'math.dart';
-import 'distuv.dart';
 import 'dart:math';
 
 Parser p = Parser();
