@@ -19,6 +19,64 @@ class HomePageState extends State<HomePage> {
         backgroundColor: Color(0xFF2979FF),
         elevation: 4,
         automaticallyImplyLeading: false,
+        title: Text('WardTester'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                        title: Center(child: const Text("Change Name")),
+                        content: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Expanded(
+                              child: Text(
+                                "WARNING!!\nChanging name will delete all progress",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.red,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        actions: <Widget>[
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFF2979FF),
+                            ),
+                            child: Text("Continue",
+                                style: TextStyle(color: Color(0xFFFAFAFA))),
+                            onPressed: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => NameSetPage(),
+                                ),
+                              );
+                            },
+                          ),
+                          ElevatedButton(
+                            child: Text("Cancel",
+                                style: TextStyle(color: Color(0xFFFAFAFA))),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFF2979FF),
+                            ),
+                            onPressed: () {
+                              Navigator.of(ctx).pop();
+                            },
+                          ),
+                        ],
+                      )); // do something
+            },
+          )
+        ],
       ),
       backgroundColor: Color(0xFFF5F5F5),
       body: SafeArea(
@@ -71,66 +129,6 @@ class HomePageState extends State<HomePage> {
                   ),
                   child: Text("Progress",
                       style: TextStyle(color: Color(0xFFFAFAFA))),
-                ),
-                Align(
-                  alignment: AlignmentDirectional(-0.9, 0),
-                  child: IconButton(
-                      splashRadius: 40,
-                      iconSize: 50,
-                      icon: Image.asset('assets/settingsCog.png'),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (ctx) => AlertDialog(
-                                  title:
-                                      Center(child: const Text("Change Name")),
-                                  content: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Text(
-                                          "WARNING!!\nChanging name will delete all progress",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: Colors.red,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  actions: <Widget>[
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(0xFF2979FF),
-                                      ),
-                                      child: Text("Continue",
-                                          style: TextStyle(
-                                              color: Color(0xFFFAFAFA))),
-                                      onPressed: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => NameSetPage(),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                    ElevatedButton(
-                                      child: Text("Cancel",
-                                          style: TextStyle(
-                                              color: Color(0xFFFAFAFA))),
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(0xFF2979FF),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.of(ctx).pop();
-                                      },
-                                    ),
-                                  ],
-                                ));
-                      }),
                 ),
               ],
             ),
