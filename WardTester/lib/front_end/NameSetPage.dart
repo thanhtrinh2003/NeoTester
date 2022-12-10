@@ -81,8 +81,7 @@ class NameSetPageState extends State<NameSetPage> {
                     );
                   },
                   child: Text("Submit"),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF2979FF))))
+                  style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF))))
         ],
       ),
     );

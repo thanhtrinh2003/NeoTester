@@ -52,7 +52,7 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
                         style: TextStyle(color: Colors.white, fontSize: 18))),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(8),
-                  backgroundColor: Color(0xFF2979FF),
+                  primary: Color(0xFF2979FF),
                 ),
                 onPressed: () async {
                   //update unit list

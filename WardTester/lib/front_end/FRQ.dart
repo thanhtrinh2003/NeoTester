@@ -79,8 +79,7 @@ class _FRQState extends State<FRQ> {
                   }
                 },
                 child: Text(submitButtonText),
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF2979FF))))
+                style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF))))
       ],
     );
   }

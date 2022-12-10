@@ -64,8 +64,7 @@ class _RandomFRQState extends State<RandomFRQ> {
                 }
               },
               child: Text(submitButtonText),
-              style:
-                  ElevatedButton.styleFrom(backgroundColor: Color(0xFF2979FF))))
+              style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF))))
     ]);
   }
 }
