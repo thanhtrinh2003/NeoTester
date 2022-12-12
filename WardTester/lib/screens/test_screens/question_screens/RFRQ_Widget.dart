@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import '../main.dart';
-import '../back_end/utils.dart';
-import 'QuestionPage.dart';
-import 'HomePage.dart';
+import '../../../main.dart';
+import '../../../back_end/utils.dart';
+import '../QuestionPage.dart';
+import '../../HomePage.dart';
 
-class RandomFRQ extends StatefulWidget {
-  const RandomFRQ({Key? key}) : super(key: key);
+class RFRQ_Widget extends StatefulWidget {
+  const RFRQ_Widget({Key? key}) : super(key: key);
 
   @override
-  State<RandomFRQ> createState() => _RandomFRQState();
+  State<RFRQ_Widget> createState() => _RFRQ_WidgetState();
 }
 
-class _RandomFRQState extends State<RandomFRQ> {
+class _RFRQ_WidgetState extends State<RFRQ_Widget> {
   final submittedAnswerText = TextEditingController();
   @override
   Widget build(BuildContext context) {

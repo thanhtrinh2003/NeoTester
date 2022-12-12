@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'LoadingPage.dart';
 import 'ReconnectPage.dart';
-import 'HomePage.dart';
-import '../main.dart';
+import '../HomePage.dart';
+import '../../main.dart';
 
 class DirectionPage extends StatefulWidget {
   const DirectionPage({Key? key}) : super(key: key);

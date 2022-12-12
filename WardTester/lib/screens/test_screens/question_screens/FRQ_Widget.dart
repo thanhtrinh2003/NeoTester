@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import '../main.dart';
-import '../back_end/utils.dart';
-import 'QuestionPage.dart';
-import 'HomePage.dart';
+import '../../../main.dart';
+import '../../../back_end/utils.dart';
+import '../QuestionPage.dart';
+import '../../HomePage.dart';
 
-class MultipleChoice extends StatefulWidget {
-  const MultipleChoice({Key? key}) : super(key: key);
+class FRQ_Widget extends StatefulWidget {
+  const FRQ_Widget({Key? key}) : super(key: key);
 
   @override
-  State<MultipleChoice> createState() => _MultipleChoiceState();
+  State<FRQ_Widget> createState() => _FRQ_WidgetState();
 }
 
-class _MultipleChoiceState extends State<MultipleChoice> {
-  var studentChoice;
+class _FRQ_WidgetState extends State<FRQ_Widget> {
+  List<TextEditingController>? textListController = List.generate(
+      currentQ.getAnswer().length, (index) => TextEditingController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,16 +36,15 @@ class _MultipleChoiceState extends State<MultipleChoice> {
         ListView.separated(
           shrinkWrap: true,
           padding: const EdgeInsets.all(8),
-          itemCount: currentQ.getChoice().length,
+          itemCount: currentQ.getAnswer().length,
           itemBuilder: (BuildContext context, int index) {
-            return ElevatedButton(
-                child: Text(currentQ.getChoice()[index]),
-                style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF)),
-                onPressed: () => setState(() {
-                      studentChoice = index;
-                      resultDisplay =
-                          "Selected Answer: " + currentQ.getChoice()[index];
-                    }));
+            return TextField(
+                autofocus: true,
+                controller: textListController?.elementAt(index),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter the answer',
+                ));
           },
           separatorBuilder: (BuildContext context, int index) {
             return Divider();
@@ -64,7 +64,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                 onPressed: () async {
                   if (!hasSubmitted) {
                     setState(() {
-                      submitPressed(currentQ.isCorrect(studentChoice));
+                      submitPressed(currentQ.isCorrect(textListController));
                     });
                   } else {
                     if (nextPressedIsMoreQuestions()) {

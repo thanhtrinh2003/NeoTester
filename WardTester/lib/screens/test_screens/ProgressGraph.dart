@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import '../main.dart';
+import '../../main.dart';
 
-class ProgressBar extends StatefulWidget {
-  const ProgressBar({Key? key}) : super(key: key);
+class ProgressGraph extends StatefulWidget {
+  const ProgressGraph({Key? key}) : super(key: key);
 
   @override
-  State<ProgressBar> createState() => _ProgressBarState();
+  State<ProgressGraph> createState() => _ProgressGraphState();
 }
 
-class _ProgressBarState extends State<ProgressBar> {
+class _ProgressGraphState extends State<ProgressGraph> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,17 +25,6 @@ class _ProgressBarState extends State<ProgressBar> {
                         style: TextStyle(fontSize: 30, color: Colors.black),
                       ),
                     ]),
-
-                // Padding(
-                //           padding: EdgeInsets.all(15.0),
-                //           child: new CircularPercentIndicator(
-                //             radius: 60.0,
-                //             lineWidth: 5.0,
-                //             percent: 1.0,
-                //             center: new Text("100%"),
-                //             progressColor: Colors.green,
-                //           ),
-                //         ),
               ),
               SizedBox(height: 80),
               CircularProgressIndicator(
@@ -78,17 +67,6 @@ class _ProgressBarState extends State<ProgressBar> {
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ]),
-
-                // Padding(
-                //           padding: EdgeInsets.all(15.0),
-                //           child: new CircularPercentIndicator(
-                //             radius: 60.0,
-                //             lineWidth: 5.0,
-                //             percent: 1.0,
-                //             center: new Text("100%"),
-                //             progressColor: Colors.green,
-                //           ),
-                //         ),
               ),
             ])),
         alignment: Alignment.topCenter);

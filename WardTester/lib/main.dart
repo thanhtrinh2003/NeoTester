@@ -10,7 +10,7 @@ import 'back_end/Test.dart';
 import 'dart:collection';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart';
-import 'front_end/DirectionPage.dart';
+import 'screens/helper_screens/DirectionPage.dart';
 
 //flutter run --no-sound-null-safety
 // variables
@@ -19,7 +19,7 @@ const double e = 2.718281828459045;
 
 String result = ""; // True or False with Real Answer
 String eval = ""; // result of
-var data; //storing the current question file under the JASON format
+var curTestJSON; //storing the current question file under the JASON format
 int cur = 0; // current question ID
 var q;
 var choice; // array of multiple choices value for question Type 0
@@ -57,7 +57,7 @@ var varSave = new Map();
 var questionNum;
 
 /// A list that keeps track of progress of all tests
-var testList;
+var testProgressList;
 
 /// a list that keeps track of progress of all comm=pleted test
 var completeTestList;
@@ -146,10 +146,11 @@ void main() async {
   if (progressFile.existsSync()) {
     //read the progress file + change from Future<Test<List>> to Test<List>
     readProgress().then((List<Test> value) {
-      testList = value;
+      testProgressList = value;
     });
   } else {
     progressFile.create();
+    testProgressList = List<Test>.empty(growable: true);
   }
 
   // update completed test file (no need for first time)

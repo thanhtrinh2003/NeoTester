@@ -8,6 +8,7 @@ class Test {
   var timeEnd; //DateTime
   var totalNumQuestion; //int
   var totalAttempt; //int
+  var questionsMap; //all questions
 
   // test which hasnt done was not doing anything
   Test(var name, var questionOrder, var timeStart, var timeEnd,
@@ -20,17 +21,8 @@ class Test {
     this.totalAttempt = totalAttempt;
   }
 
-  //Test(this.name, this.questionOrder, this.timeStart, this.timeEnd,
-  //    this.totalNumQuestion, this.totalAttempt);
-
-  //Car.withoutABS(this.make, this.model, this.yearMade): this(make, model, yearMade, false);
-
   Test.nullOne()
       : this("null", new Queue<int>(), DateTime.now(), DateTime.now(), 0, 0);
-
-  // factory Test.nullOne(var name, var questionOrder, var timeStart, var timeEnd, var totalNumQuestion, var totalAttempt) {
-  //   	return NullTest(name, questionOrder, timeStart, timeEnd, totalNumQuestion, totalAttempt);
-  //   }
 
   Test.fromJson(Map json)
       : name = json['name'],
@@ -125,23 +117,4 @@ Queue<int> turnStringToQueue(String listString) {
     }
   }
   return listInt;
-}
-
-// class FordCar extends Car {
-// 	FordCar(String model, String yearMade, bool hasABS): super("Ford", model, yearMade, hasABS);
-
-// }
-
-class NullTest extends Test {
-  var name = null; //String
-  var questionOrder = new Queue<int>(); //Queue<int>
-  var timeStart = DateTime.now(); //DateTime
-  var timeEnd = DateTime.now(); //DateTime
-  var totalNumQuestion = 0; //int
-  var totalAttempt = 0; //int
-
-  NullTest(var name, var questionOrder, var timeStart, var timeEnd,
-      var totalNumQuestion, var totalAttempt)
-      : super(name, questionOrder, timeStart, timeEnd, totalNumQuestion,
-            totalAttempt);
 }

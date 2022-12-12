@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../main.dart';
+import '../../main.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import '../back_end/utils.dart';
-import 'HomePage.dart';
+import '../../back_end/utils.dart';
+import '../HomePage.dart';
 import 'NameSetPage.dart';
 
 class LoadingPage extends StatefulWidget {

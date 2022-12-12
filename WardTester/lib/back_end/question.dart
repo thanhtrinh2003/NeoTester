@@ -11,12 +11,12 @@ abstract class Question {
 }
 
 //Multiple Choice
-class Question0 extends Question {
+class MCQuestion extends Question {
   //veariables
   var choice;
 
   //constructors
-  Question0(var question, var type, var answer, var choice, var topic,
+  MCQuestion(var question, var type, var answer, var choice, var topic,
       var imagePath) {
     this.question = question;
     this.type = type;
@@ -61,11 +61,11 @@ class Question0 extends Question {
 }
 
 //FRQ
-class Question1 extends Question {
+class FRQuestion extends Question {
   //variables
 
   //constructors
-  Question1(var question, var type, var answers, var topic, var imagePath) {
+  FRQuestion(var question, var type, var answers, var topic, var imagePath) {
     this.question = question;
     this.type = type;
     this.answers = answers;
@@ -138,7 +138,7 @@ class Question1 extends Question {
 }
 
 // Randomized FRQ
-class Question2 extends Question {
+class RFRQuestion extends Question {
   //variables
   var question;
   var equation; // equation to calculate variable to fill in answer equation
@@ -149,7 +149,7 @@ class Question2 extends Question {
   var variable;
 
   //constructors
-  Question2(var question, var type, var equation, var answerEquation,
+  RFRQuestion(var question, var type, var equation, var answerEquation,
       var answers, var answerVar, var variable, var topic, var imagePath) {
     this.question = question;
     this.type = type;

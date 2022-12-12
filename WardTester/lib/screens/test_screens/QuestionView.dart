@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:trying/front_end/FRQ.dart';
-import 'MultipleChoice.dart';
-import 'RandomFRQ.dart';
-import '../main.dart';
+import '../test_screens/question_screens/RFRQ_Widget.dart';
+import '../test_screens/question_screens/MCQ_Widget.dart';
+import '../test_screens/question_screens/FRQ_Widget.dart';
+import '../../main.dart';
 
 class QuestionView extends StatefulWidget {
   const QuestionView({Key? key}) : super(key: key);
@@ -12,21 +12,21 @@ class QuestionView extends StatefulWidget {
 }
 
 class _QuestionViewState extends State<QuestionView> {
-  var t;
+  var questionType;
 
   @override
   Widget build(BuildContext context) {
     print(currentQ.getType());
     setState(() {
-      t = currentQ.getType();
+      questionType = currentQ.getType();
     });
     return Container(
       child: SingleChildScrollView(
-          child: t == 0
-              ? MultipleChoice()
-              : t == 1
-                  ? FRQ()
-                  : RandomFRQ()),
+          child: questionType == 0
+              ? MCQ_Widget()
+              : questionType == 1
+                  ? FRQ_Widget()
+                  : RFRQ_Widget()),
       alignment: Alignment.topCenter,
     );
   }

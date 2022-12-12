@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'HomePage.dart';
-import '../main.dart';
+import '../HomePage.dart';
+import '../../main.dart';
 
 class NameSetPage extends StatefulWidget {
   const NameSetPage({Key? key}) : super(key: key);
@@ -70,7 +70,7 @@ class NameSetPageState extends State<NameSetPage> {
                     progressFile.writeAsStringSync("[]");
                     final completeFile = File("$appDocPath/complete.txt");
                     completeFile.writeAsStringSync("[]");
-                    testList = [];
+                    testProgressList = [];
                     completeTestList = [];
 
                     await Navigator.push(

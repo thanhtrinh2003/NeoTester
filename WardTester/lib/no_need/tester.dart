@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:math_expressions/math_expressions.dart';
-import '../back_end/math_parser.dart';
+import '../back_end/parsers/math_parser.dart';
 
 Random random = new Random();
 

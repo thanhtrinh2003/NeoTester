@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import '../back_end/utils.dart';
-import '../main.dart';
-import 'QuestionPage.dart';
-import 'HomePage.dart';
+import '../../../main.dart';
+import '../../../back_end/utils.dart';
+import '../QuestionPage.dart';
+import '../../HomePage.dart';
 
-class FRQ extends StatefulWidget {
-  const FRQ({Key? key}) : super(key: key);
+class MCQ_Widget extends StatefulWidget {
+  const MCQ_Widget({Key? key}) : super(key: key);
 
   @override
-  State<FRQ> createState() => _FRQState();
+  State<MCQ_Widget> createState() => _MCQ_WidgetState();
 }
 
-class _FRQState extends State<FRQ> {
-  List<TextEditingController>? textListController = List.generate(
-      currentQ.getAnswer().length, (index) => TextEditingController());
+class _MCQ_WidgetState extends State<MCQ_Widget> {
+  var studentChoice;
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +35,16 @@ class _FRQState extends State<FRQ> {
         ListView.separated(
           shrinkWrap: true,
           padding: const EdgeInsets.all(8),
-          itemCount: currentQ.getAnswer().length,
+          itemCount: currentQ.getChoice().length,
           itemBuilder: (BuildContext context, int index) {
-            return TextField(
-                autofocus: true,
-                controller: textListController?.elementAt(index),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter the answer',
-                ));
+            return ElevatedButton(
+                child: Text(currentQ.getChoice()[index]),
+                style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF)),
+                onPressed: () => setState(() {
+                      studentChoice = index;
+                      resultDisplay =
+                          "Selected Answer: " + currentQ.getChoice()[index];
+                    }));
           },
           separatorBuilder: (BuildContext context, int index) {
             return Divider();
@@ -64,7 +64,7 @@ class _FRQState extends State<FRQ> {
                 onPressed: () async {
                   if (!hasSubmitted) {
                     setState(() {
-                      submitPressed(currentQ.isCorrect(textListController));
+                      submitPressed(currentQ.isCorrect(studentChoice));
                     });
                   } else {
                     if (nextPressedIsMoreQuestions()) {

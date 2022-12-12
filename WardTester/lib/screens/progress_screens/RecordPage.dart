@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'ProgressPage.dart';
-import 'HomePage.dart';
+import '../HomePage.dart';
 import 'CompleteRecordPage.dart';
-import '../main.dart';
+import '../../main.dart';
 
 class RecordPage extends StatefulWidget {
   const RecordPage({Key? key}) : super(key: key);
@@ -50,11 +50,5 @@ class _RecordPageState extends State<RecordPage> {
     );
   }
 }
-
-// textAlign: TextAlign.center,
-//                     style: TextStyle(
-//                         fontWeight: FontWeight.bold,
-//                         color: Color(0xFF2979FF),
-//                         fontSize: 30.0)
 
 TextStyle header = new TextStyle(fontWeight: FontWeight.bold);

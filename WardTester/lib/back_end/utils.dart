@@ -3,18 +3,20 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:math_expressions/math_expressions.dart';
-import 'package:trying/back_end/non_math_parser.dart';
-import 'math_function.dart';
+import 'package:trying/back_end/parsers/non_math_parser.dart';
+import 'package:trying/back_end/Question.dart';
+import 'parsers/math_function.dart';
 import 'dart:convert';
-import 'math_parser.dart';
+import 'parsers/math_parser.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async';
 import 'dart:io';
 import 'Test.dart';
-import 'Question.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:http/http.dart' as http;
 import '../main.dart';
+
+enum QuesType { MC, FR, RFR }
 
 Future<LinkedHashMap<String, dynamic>> readFile(String question_file) async {
   final String response = await rootBundle.loadString(question_file);
@@ -30,21 +32,21 @@ Question getNextQuestion(var data, int cur) {
     imagePath = data[currentQuestion]["ImagePath"];
   }
 
-  if (type == 0) {
+  if (type == QuesType.MC.index) {
     // MC Question
     var question = data[currentQuestion]["Question"];
     var answer = data[currentQuestion]["Answer"];
     var choice = data[currentQuestion]["Choices"];
 
     print("MC Answer: $answer");
-    return new Question0(question, type, answer, choice, topic, imagePath);
-  } else if (type == 1) {
+    return new MCQuestion(question, type, answer, choice, topic, imagePath);
+  } else if (type == QuesType.FR.index) {
     // FR Question
     var question = data[currentQuestion]["Question"];
     var answer = data[currentQuestion]["Answers"];
 
     print("FR Answer: $answer");
-    return new Question1(question, type, answer, topic, imagePath);
+    return new FRQuestion(question, type, answer, topic, imagePath);
   } else {
     // Random Free Response Question
     var questionRaw = data[currentQuestion]["Question"];
@@ -139,7 +141,7 @@ Question getNextQuestion(var data, int cur) {
     }
 
     print("FRQ Answer: $correctAnswer");
-    return new Question2(question, type, equations, answerRaw, correctAnswer,
+    return new RFRQuestion(question, type, equations, answerRaw, correctAnswer,
         answerList, varSave, topic, imagePath);
   }
 }
@@ -159,6 +161,69 @@ void submitPressed(bool isCorrect) {
   hasSubmitted = !hasSubmitted;
 }
 
+Future startTest(String course, String unit) async {
+  String currentTestName = "${course}:${unit}";
+
+  /// Use the string to see if the test exists in the progress list
+  /// If it does not exist make a new test.
+  Test findTest(String name) =>
+      testProgressList.firstWhere((test) => (test.getName() == name),
+          orElse: () => Test.nullOne());
+  currentTest = findTest(currentTestName);
+
+  // New test started
+  if (currentTest.getName() == "null") {
+    String filePath = "$appDocPath/${course}/${unit}.txt";
+    var questionFile = File(filePath);
+    String questionString = await questionFile.readAsString();
+    test_file = jsonDecode(questionString);
+
+    // Write test file to progress folder create new test progress
+    writeProgressTestFile(course, unit);
+    newTestProgress(unit);
+  }
+  // Resume test in progress (pull saved file in case new file is updated and different)
+  else {
+    String progressFilePath = "$appDocPath/Progress/${course}/${unit}.txt";
+    var questionFile = File(progressFilePath);
+    String questionString = await questionFile.readAsString();
+    test_file = jsonDecode(questionString);
+
+    questionOrder = currentTest.getQuestionOrder();
+  }
+
+  // set the first question
+  currentQ = getNextQuestion(test_file, questionOrder.first);
+  //add the deivice directories for image , if null no need to add
+  if (currentQ.getImagePath() != "") {
+    currentQ.setImagePath('$appDocPath/Image/' + currentQ.getImagePath());
+  }
+}
+
+void newTestProgress(String unit) {
+  //create a random question order based on the number of question in the test
+  questionOrder = new Queue();
+
+  //total number of question
+  questionNum = test_file.keys.length;
+  print("Num Questions: " + questionNum.toString());
+
+  var list = new List<dynamic>.generate(questionNum, (i) => i);
+  list = shuffle(list);
+  for (int i = 0; i < questionNum; i++) {
+    questionOrder.add(list.elementAt(i));
+  }
+
+  //create a new Test Object
+  String currentTestName = "${currentCourse}:${unit}";
+  DateTime now = DateTime.now();
+  currentTest =
+      new Test(currentTestName, questionOrder, now, now, questionNum, 0);
+
+  //update progress
+  saveProgress(currentTest, testProgressList);
+}
+
 bool nextPressedIsMoreQuestions() {
   cur = cur + 1;
   resultDisplay = "";
@@ -175,8 +240,8 @@ bool nextPressedIsMoreQuestions() {
 
     //save the progress
     currentTest.setQuestionOrder(questionOrder);
-    saveProgress(currentTest, testList).then((List<Test> value) {
-      testList = value;
+    saveProgress(currentTest, testProgressList).then((List<Test> value) {
+      testProgressList = value;
     });
 
     return true;
@@ -189,8 +254,8 @@ bool nextPressedIsMoreQuestions() {
       completeTestList = value;
     });
 
-    removeProgress(currentTest, testList).then((List<Test> value) {
-      testList = value;
+    removeProgress(currentTest, testProgressList).then((List<Test> value) {
+      testProgressList = value;
     });
 
     //Reset the index of current quesion for the next test
@@ -441,13 +506,11 @@ Future<Set<String>> updateTestFile() async {
       print(url);
       var json_response = await http.get(url);
       var data = jsonDecode(json_response.body);
-      var file = File('$appDocPath/' +
-          o.get<String>("Course")! +
-          '/' +
-          o
-              .get<String>("Unit")!
-              .substring(0, o.get<String>("Unit")!.indexOf('.')) +
-          '.txt');
+      String course = o.get<String>("Course")!;
+      String unit = o
+          .get<String>("Unit")!
+          .substring(0, o.get<String>("Unit")!.indexOf('.'));
+      var file = File('$appDocPath/${course}/${unit}.txt');
       file.writeAsStringSync(jsonEncode(data));
     }
 
@@ -461,6 +524,12 @@ Future<Set<String>> updateTestFile() async {
 
   loadImageFile();
   return courseSet;
+}
+
+void writeProgressTestFile(String course, String unit) async {
+  await Directory('$appDocPath/Progress/${course}').create(recursive: true);
+  var file = File('$appDocPath/Progress/${course}/${unit}.txt');
+  file.writeAsStringSync(jsonEncode(test_file));
 }
 
 /// Function called in the main file when first start the program

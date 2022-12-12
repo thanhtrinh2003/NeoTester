@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import "QuestionView.dart";
-import "ProgressBar.dart";
-import "SelectUnitPage.dart";
-import '../main.dart';
+import 'QuestionView.dart';
+import 'ProgressGraph.dart';
+import '../SelectUnitPage.dart';
+import '../../main.dart';
 
 class QuestionPage extends StatefulWidget {
   final String setName;
@@ -50,7 +50,7 @@ class _QuestionPageState extends State<QuestionPage> {
               child: QuestionView(),
             ),
             Center(
-              child: ProgressBar(),
+              child: ProgressGraph(),
             ),
           ],
         ),

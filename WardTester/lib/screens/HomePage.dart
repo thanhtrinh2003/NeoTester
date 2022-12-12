@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:trying/front_end/NameSetPage.dart';
+import 'package:trying/screens/helper_screens/NameSetPage.dart';
 import '../main.dart';
 import 'SelectCoursePage.dart';
-import 'RecordPage.dart';
+import 'progress_screens/RecordPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
