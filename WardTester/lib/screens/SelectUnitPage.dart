@@ -56,7 +56,7 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                         style: TextStyle(color: Colors.white, fontSize: 18))),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(8),
-                  primary: Color(0xFF2979FF),
+                  backgroundColor: Color(0xFF2979FF),
                 ),
                 onPressed: () async {
                   String course = widget.course;

@@ -49,7 +49,7 @@ class HomePageState extends State<HomePage> {
                         actions: <Widget>[
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Color(0xFF2979FF),
+                              backgroundColor: Color(0xFF2979FF),
                             ),
                             child: Text("Continue",
                                 style: TextStyle(color: Color(0xFFFAFAFA))),
@@ -66,7 +66,7 @@ class HomePageState extends State<HomePage> {
                             child: Text("Cancel",
                                 style: TextStyle(color: Color(0xFFFAFAFA))),
                             style: ElevatedButton.styleFrom(
-                              primary: Color(0xFF2979FF),
+                              backgroundColor: Color(0xFF2979FF),
                             ),
                             onPressed: () {
                               Navigator.of(ctx).pop();
@@ -110,7 +110,7 @@ class HomePageState extends State<HomePage> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF2979FF),
+                    backgroundColor: Color(0xFF2979FF),
                   ),
                   child: Text("Start Test",
                       style: TextStyle(color: Color(0xFFFAFAFA))),
@@ -125,7 +125,7 @@ class HomePageState extends State<HomePage> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF2979FF),
+                    backgroundColor: Color(0xFF2979FF),
                   ),
                   child: Text("Progress",
                       style: TextStyle(color: Color(0xFFFAFAFA))),

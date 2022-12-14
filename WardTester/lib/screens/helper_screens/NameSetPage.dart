@@ -64,6 +64,7 @@ class NameSetPageState extends State<NameSetPage> {
                     studentName = firstNameController.text +
                         " " +
                         lastNameController.text;
+                    // Set name and clear data
                     final nameFile = File("$appDocPath/name.txt");
                     nameFile.writeAsStringSync(studentName);
                     final progressFile = File("$appDocPath/progress.txt");
@@ -81,7 +82,8 @@ class NameSetPageState extends State<NameSetPage> {
                     );
                   },
                   child: Text("Submit"),
-                  style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF))))
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF2979FF))))
         ],
       ),
     );

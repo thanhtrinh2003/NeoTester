@@ -83,6 +83,9 @@ var isFirstTime;
 ///
 var initialPage;
 
+/// Test DIrectory
+var testDirectory = '/Tests';
+
 /// student name;
 var studentName = "";
 

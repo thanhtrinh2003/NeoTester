@@ -52,13 +52,18 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
                         style: TextStyle(color: Colors.white, fontSize: 18))),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(8),
-                  primary: Color(0xFF2979FF),
+                  backgroundColor: Color(0xFF2979FF),
                 ),
                 onPressed: () async {
                   //update unit list
-                  var unitFile = File('$appDocPath/' +
-                      widget.courseList!.elementAt(index) +
-                      "/unit.txt");
+                  var course = widget.courseList!.elementAt(index);
+                  var unitFile;
+                  if (!File('$appDocPath${testDirectory}/$course/unit.txt')
+                      .existsSync()) {
+                    testDirectory = '';
+                  }
+                  unitFile =
+                      File('$appDocPath${testDirectory}/$course/unit.txt');
                   String unitListContent = await unitFile.readAsString();
                   List<String> unitListNew = unitListContent.split(",");
                   unitList = unitListNew.toSet();

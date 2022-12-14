@@ -173,7 +173,7 @@ Future startTest(String course, String unit) async {
 
   // New test started
   if (currentTest.getName() == "null") {
-    String filePath = "$appDocPath/${course}/${unit}.txt";
+    String filePath = "$appDocPath${testDirectory}/${course}/${unit}.txt";
     var questionFile = File(filePath);
     String questionString = await questionFile.readAsString();
     test_file = jsonDecode(questionString);
@@ -215,13 +215,31 @@ void newTestProgress(String unit) {
   }
 
   //create a new Test Object
-  String currentTestName = "${currentCourse}:${unit}";
+  String currentTestName;
+  if (unit != '') {
+    currentTestName = "${currentCourse}:${unit}";
+  } else {
+    currentTestName = currentTest.getName();
+  }
   DateTime now = DateTime.now();
   currentTest =
       new Test(currentTestName, questionOrder, now, now, questionNum, 0);
 
   //update progress
   saveProgress(currentTest, testProgressList);
+}
+
+Future restartUnit() async {
+  removeProgress(currentTest, testProgressList).then((List<Test> value) {
+    testProgressList = value;
+  });
+  newTestProgress('');
+  // set the first question
+  currentQ = getNextQuestion(test_file, questionOrder.first);
+  //add the deivice directories for image , if null no need to add
+  if (currentQ.getImagePath() != "") {
+    currentQ.setImagePath('$appDocPath/Image/' + currentQ.getImagePath());
+  }
 }
 
 bool nextPressedIsMoreQuestions() {
@@ -280,7 +298,7 @@ List shuffle(List items) {
   return items;
 }
 
-Future<List> downloadQuestion() async {
+Future<List> downloadTests() async {
   WidgetsFlutterBinding.ensureInitialized();
   final keyApplicationId = 'Jkk0zBewPQACbqAYHeL2C4rVFSvj1WXlTQtPRaQD';
   final keyClientKey = '9iTzK49uR12cJHM9qn3fiFsnVEYBqseYjZC18tqw';
@@ -488,9 +506,10 @@ Future<Set<String>> updateTestFile() async {
             unitList1.first.substring(0, unitList1.first.indexOf('.'));
 
         //String to pass in for the file is stored in unitList File
-        await Directory('$appDocPath/' + courseList2.first)
+        await Directory('$appDocPath${testDirectory}/' + courseList2.first)
             .create(recursive: true);
-        var unitFile = File('$appDocPath/' + courseList2.first + "/unit.txt");
+        var unitFile = File(
+            '$appDocPath${testDirectory}/' + courseList2.first + "/unit.txt");
         unitFile.writeAsStringSync(unitListFile);
 
         courseList2.removeFirst();
@@ -501,16 +520,21 @@ Future<Set<String>> updateTestFile() async {
     jsonQuestionParse = QueryBuilder<ParseObject>(ParseObject("JSON"));
     final fileResponse = await jsonQuestionParse.query();
 
-    for (var o in fileResponse.results as List<ParseObject>) {
-      var url = Uri.parse(o["QuestionFile"]["url"]);
+    for (var parseMap in fileResponse.results as List<ParseObject>) {
+      var url = Uri.parse(parseMap["QuestionFile"]["url"]);
       print(url);
       var json_response = await http.get(url);
       var data = jsonDecode(json_response.body);
-      String course = o.get<String>("Course")!;
-      String unit = o
-          .get<String>("Unit")!
-          .substring(0, o.get<String>("Unit")!.indexOf('.'));
-      var file = File('$appDocPath/${course}/${unit}.txt');
+      String course = parseMap.get<String>("Course")!;
+      String unit;
+      if (parseMap.get<String>("Unit")!.indexOf('.') != -1) {
+        unit = parseMap
+            .get<String>("Unit")!
+            .substring(0, parseMap.get<String>("Unit")!.indexOf('.'));
+      } else {
+        unit = parseMap.get<String>("Unit")!;
+      }
+      var file = File('$appDocPath${testDirectory}/${course}/${unit}.txt');
       file.writeAsStringSync(jsonEncode(data));
     }
 

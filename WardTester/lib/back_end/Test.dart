@@ -49,6 +49,10 @@ class Test {
     return name;
   }
 
+  String getUnit() {
+    return name.substring(name.indexOf(':') + 1);
+  }
+
   double getAccuracy() {
     if (totalAttempt != 0) {
       return this.getTotalCorrect() / totalAttempt;

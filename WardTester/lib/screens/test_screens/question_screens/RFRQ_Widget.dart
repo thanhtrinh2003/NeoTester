@@ -64,7 +64,8 @@ class _RFRQ_WidgetState extends State<RFRQ_Widget> {
                 }
               },
               child: Text(submitButtonText),
-              style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF))))
+              style:
+                  ElevatedButton.styleFrom(backgroundColor: Color(0xFF2979FF))))
     ]);
   }
 }

@@ -21,8 +21,7 @@ class LoadingPageState extends State<LoadingPage> {
     });
 
     return FutureBuilder(
-        future:
-            updateTestFile(), // the function to get your data from firebase or firestore
+        future: updateTestFile(), // the function to get your data from server
         builder: (BuildContext context, AsyncSnapshot snap) {
           if (snap.data == null) {
             return Scaffold(

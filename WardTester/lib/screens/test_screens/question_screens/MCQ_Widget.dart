@@ -39,7 +39,8 @@ class _MCQ_WidgetState extends State<MCQ_Widget> {
           itemBuilder: (BuildContext context, int index) {
             return ElevatedButton(
                 child: Text(currentQ.getChoice()[index]),
-                style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF)),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF2979FF)),
                 onPressed: () => setState(() {
                       studentChoice = index;
                       resultDisplay =
@@ -79,7 +80,8 @@ class _MCQ_WidgetState extends State<MCQ_Widget> {
                   }
                 },
                 child: Text(submitButtonText),
-                style: ElevatedButton.styleFrom(primary: Color(0xFF2979FF))))
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF2979FF))))
       ],
     );
   }
