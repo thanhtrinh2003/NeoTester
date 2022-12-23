@@ -15,6 +15,7 @@ import 'Test.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:http/http.dart' as http;
 import '../main.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 enum QuesType { MC, FR, RFR }
 
@@ -300,11 +301,16 @@ List shuffle(List items) {
 
 Future<List> downloadTests() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final keyApplicationId = 'Jkk0zBewPQACbqAYHeL2C4rVFSvj1WXlTQtPRaQD';
-  final keyClientKey = '9iTzK49uR12cJHM9qn3fiFsnVEYBqseYjZC18tqw';
+  await dotenv.load(fileName: ".env");
+
+  //setting up back4app ID address
+  await dotenv.load(fileName: "../.env");
+  final keyApplicationId = dotenv.env['KEY_APPLICATION_ID'];
+  final keyClientKey = dotenv.env['KEY_CLIENT_KEY'];
+
   final keyParseServerUrl = 'https://parseapi.back4app.com';
 
-  await Parse().initialize(keyApplicationId, keyParseServerUrl,
+  await Parse().initialize(keyApplicationId!, keyParseServerUrl,
       clientKey: keyClientKey, autoSendSessionId: true);
 
   QueryBuilder<ParseObject> queryFile =
@@ -437,11 +443,13 @@ Future<Set<String>> updateTestFile() async {
   print("Path for this device: " + appDocPath); // printing our the directory
 
   //setting up back4app ID address
-  final keyApplicationId = 'Jkk0zBewPQACbqAYHeL2C4rVFSvj1WXlTQtPRaQD';
-  final keyClientKey = '9iTzK49uR12cJHM9qn3fiFsnVEYBqseYjZC18tqw';
+  await dotenv.load(fileName: "../.env");
+  final keyApplicationId = dotenv.env['KEY_APPLICATION_ID'];
+  final keyClientKey = dotenv.env['KEY_CLIENT_KEY'];
+
   final keyParseServerUrl = 'https://parseapi.back4app.com';
 
-  await Parse().initialize(keyApplicationId, keyParseServerUrl,
+  await Parse().initialize(keyApplicationId!, keyParseServerUrl,
       clientKey: keyClientKey, autoSendSessionId: true);
 
   //setting up JSON File for VERSION JSON file through Back4App Connection
@@ -573,11 +581,13 @@ void loadImageFile() async {
   print("Path for this device: " + appDocPath); // printing our the directory
 
   //setting up back4app ID address
-  final keyApplicationId = 'Jkk0zBewPQACbqAYHeL2C4rVFSvj1WXlTQtPRaQD';
-  final keyClientKey = '9iTzK49uR12cJHM9qn3fiFsnVEYBqseYjZC18tqw';
+  await dotenv.load(fileName: "../.env");
+  final keyApplicationId = dotenv.env['KEY_APPLICATION_ID'];
+  final keyClientKey = dotenv.env['KEY_CLIENT_KEY'];
+
   final keyParseServerUrl = 'https://parseapi.back4app.com';
 
-  await Parse().initialize(keyApplicationId, keyParseServerUrl,
+  await Parse().initialize(keyApplicationId!, keyParseServerUrl,
       clientKey: keyClientKey, autoSendSessionId: true);
 
   //setting up JSON File for VERSION JSON file through Back4App Connection
