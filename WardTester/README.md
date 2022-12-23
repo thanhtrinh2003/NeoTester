@@ -1,16 +1,12 @@
-# trying
+# NeoTester
+ new version of Ward Tester based on Flutter and Dart
+ 
+ 
+- Flutter and Dart mobile app for my high school that allows students to practice their AP Exams, including Statistics, Computer Science A, Computer Science Princples, which can be extended to other new subjects.
 
-A new Flutter project.
+- Questions can be modified, added, and customized with randomization feature by teachers through test writer, allowing students to practice similar question with different numbers and get graded automatically. 
 
-## Getting Started
+- All question set are managed through Back4App server and can be automatically downloaded and updated on user app whenever a teacher publishes a new version.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+ 
+ Link to app store:  https://apps.apple.com/us/app/wardtest/id1644707715 
