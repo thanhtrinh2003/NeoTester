@@ -35,16 +35,16 @@ class _MCQ_WidgetState extends State<MCQ_Widget> {
         ListView.separated(
           shrinkWrap: true,
           padding: const EdgeInsets.all(8),
-          itemCount: currentQ.getChoice().length,
+          itemCount: currentQ.getChoices().length,
           itemBuilder: (BuildContext context, int index) {
             return ElevatedButton(
-                child: Text(currentQ.getChoice()[index]),
+                child: Text(currentQ.getChoices()[index]),
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF2979FF)),
                 onPressed: () => setState(() {
                       studentChoice = index;
                       resultDisplay =
-                          "Selected Answer: " + currentQ.getChoice()[index];
+                          "Selected Answer: " + currentQ.getChoices()[index];
                     }));
           },
           separatorBuilder: (BuildContext context, int index) {

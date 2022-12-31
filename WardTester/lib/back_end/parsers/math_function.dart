@@ -170,38 +170,22 @@ double combination(double n, double r) {
   return factorial(n) / (factorial(r) * factorial(n - r));
 }
 
-Random random = new Random();
-
 T getRandomElement<T>(List<T> list) {
   final random = new Random();
   var i = random.nextInt(list.length);
   return list[i];
 }
 
-bool isInteger(num value) => value is int || value == value.roundToDouble();
-
-double generateRandom(double lb, double rb, double steps) {
-  var list = [lb];
-  for (double i = lb + steps; i <= rb; i = i + steps) {
-    list.add(i);
+double generateRandom(double lowerBound, double upperBound, double step) {
+  var list = [lowerBound];
+  double nextValue = lowerBound;
+  while (nextValue < upperBound) {
+    nextValue = nextValue + step;
+    nextValue = double.parse((nextValue).toStringAsFixed(5));
+    list.add(nextValue);
   }
   return getRandomElement(list);
 }
-
-double generateRandomNoStep(double lb, double rb) {
-  int track = 1;
-  while (!isInteger(lb)) {
-    lb = lb * 10;
-    rb = rb * 10;
-    track *= 10;
-  }
-  int lbInt = lb.toInt();
-  int rbInt = rb.toInt();
-  int randomNumber = random.nextInt(rbInt - lbInt + 1) + lbInt;
-  return randomNumber.toDouble() / track;
-}
-
-double logBase(num x, num base) => log(x) / log(base);
 
 int binaryToDecimal(int a) {
   return int.parse(a.toString(), radix: 2);

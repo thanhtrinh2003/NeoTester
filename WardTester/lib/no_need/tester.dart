@@ -15,7 +15,7 @@ void main() {
   //Context Model
   ContextModel cm = ContextModel();
 
-  Expression exp = p.parse('normalCDF(mean, sd, lb, ub)');
+  Expression exp = mathParser.parse('normalCDF(mean, sd, lb, ub)');
   print('normalCDF(mean, sd, lb, ub) = $exp');
   cm.bindVariable(mean, Number(0));
   cm.bindVariable(sd, Number(1));
@@ -27,7 +27,7 @@ void main() {
 
   //inverseNormalCDF
   //inverseNormalCDF_parser();
-  exp = p.parse('invNormCDF(mean, sd, pc)');
+  exp = mathParser.parse('invNormCDF(mean, sd, pc)');
   print('invNormCDF(mean, sd, pc) = $exp');
   cm.bindVariable(mean, Number(0));
   cm.bindVariable(sd, Number(1));

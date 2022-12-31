@@ -2,10 +2,7 @@ import 'dart:collection';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'package:math_expressions/math_expressions.dart';
-import 'package:trying/back_end/parsers/non_math_parser.dart';
-import 'package:trying/back_end/Question.dart';
-import 'parsers/math_function.dart';
+import 'package:trying/back_end/question.dart';
 import 'dart:convert';
 import 'parsers/math_parser.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -16,7 +13,10 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:http/http.dart' as http;
 import '../main.dart';
 
-enum QuesType { MC, FR, RFR }
+var MC = 0;
+var FR = 1;
+var RFR = 2;
+var questionType = ["MC", "FR", "RFR"];
 
 Future<LinkedHashMap<String, dynamic>> readFile(String question_file) async {
   final String response = await rootBundle.loadString(question_file);
@@ -25,124 +25,40 @@ Future<LinkedHashMap<String, dynamic>> readFile(String question_file) async {
 
 Question getNextQuestion(var data, int cur) {
   var currentQuestion = data.keys.elementAt(cur);
+  var id = data[currentQuestion]["questionID"];
   var type = data[currentQuestion]["QuestionType"];
-  var topic = data[currentQuestion]["Topic"];
+  var topic = data[currentQuestion]["QuestionTopic"];
+  var question = data[currentQuestion]["Question"];
   var imagePath = "";
   if (data[currentQuestion]["ImagePath"] != null) {
     imagePath = data[currentQuestion]["ImagePath"];
   }
 
-  if (type == QuesType.MC.index) {
+  if (type == MC) {
     // MC Question
-    var question = data[currentQuestion]["Question"];
     var answer = data[currentQuestion]["Answer"];
-    var choice = data[currentQuestion]["Choices"];
+    var choices = data[currentQuestion]["Choices"];
 
     print("MC Answer: $answer");
-    return new MCQuestion(question, type, answer, choice, topic, imagePath);
-  } else if (type == QuesType.FR.index) {
+    return new MCQuestion(
+        id, type, topic, question, choices, answer, imagePath);
+  } else if (type == FR) {
     // FR Question
-    var question = data[currentQuestion]["Question"];
-    var answer = data[currentQuestion]["Answers"];
+    var answers = data[currentQuestion]["Answers"];
 
-    print("FR Answer: $answer");
-    return new FRQuestion(question, type, answer, topic, imagePath);
+    print("FR Answer: $answers");
+    return new FRQuestion(id, type, topic, question, answers, imagePath);
   } else {
     // Random Free Response Question
-    var questionRaw = data[currentQuestion]["Question"];
     var variables = data[currentQuestion]["Variables"];
     var equations = data[currentQuestion]["Equations"];
-    var answerRaw = data[currentQuestion]["Answers"][0];
+    var answerEquation = data[currentQuestion]["Answers"][0];
 
-    var question = '';
-    var varSave = new Map();
-    //  for the different value for different equations
-    List<String> answerList = [];
+    RFRQuestion ques = new RFRQuestion(id, type, topic, question, variables,
+        equations, answerEquation, imagePath);
+    print("FRQ Answer: ${ques.getAnswerString()}");
 
-    // Stage 0: Get random values for variables
-    for (int i = 0; i < variables.length; i++) {
-      double current = generateRandom(
-          variables[i]["LowerBound"].toDouble(),
-          variables[i]["UpperBound"].toDouble(),
-          variables[i]["Step"].toDouble());
-      if (variables[i]["Step"].toDouble() ==
-          variables[i]["Step"].toDouble().roundToDouble()) {
-        varSave[variables[i]["VarName"]] = floor(current).toInt();
-      } else {
-        varSave[variables[i]["VarName"]] = double.parse(current
-            .toStringAsFixed(
-                logBase(variables[i]["Step"].toDouble(), 0.1).toInt())
-            .toString());
-      }
-    }
-
-    // Stage 1: Put values into question
-    question = questionRaw;
-    while (question.contains("~")) {
-      for (int i = 0; i < varSave.length; i++) {
-        var curVariable = varSave.keys.elementAt(i);
-        while (question.contains("~$curVariable")) {
-          question = question.replaceAll(
-              "~$curVariable", varSave[curVariable].toString());
-        }
-      }
-    }
-
-    int i = 0;
-    for (i = 0; i < equations.length; i++) {
-      //Stage 2: Start to replace variable with their corresponding values
-      String currentEquation = equations[i];
-      while (currentEquation.contains("~")) {
-        for (int i = 0; i < varSave.length; i++) {
-          var curVariable = varSave.keys.elementAt(i);
-          while (currentEquation.contains("~$curVariable")) {
-            currentEquation = currentEquation.replaceAll(
-                "~$curVariable", varSave[curVariable].toString());
-          }
-        }
-      }
-
-      //Stage 3: Evaluate the equation
-      if (currentEquation.length > 2) {
-        if (currentEquation.substring(0, 2) == "!!") {
-          String res = nonMathParser(currentEquation).toString();
-          answerList.add(res);
-        } else {
-          ContextModel cm = ContextModel();
-          print(currentEquation);
-          Expression exp = p.parse(currentEquation);
-
-          double res = exp.evaluate(EvaluationType.REAL, cm);
-
-          if (res == res.roundToDouble()) {
-            answerList.add(res.toInt().toString());
-          } else {
-            answerList.add(res.toStringAsFixed(3));
-          }
-        }
-      } else {
-        ContextModel cm = ContextModel();
-        print(currentEquation);
-        Expression exp = p.parse(currentEquation);
-
-        double res = exp.evaluate(EvaluationType.REAL, cm);
-
-        if (res == res.roundToDouble()) {
-          answerList.add(res.toInt().toString());
-        } else {
-          answerList.add(res.toStringAsFixed(3));
-        }
-      }
-    }
-
-    var correctAnswer = answerRaw;
-    for (int i = 0; i < answerList.length; i++) {
-      correctAnswer = correctAnswer.replaceFirst("~^~", answerList[i]);
-    }
-
-    print("FRQ Answer: $correctAnswer");
-    return new RFRQuestion(question, type, equations, answerRaw, correctAnswer,
-        answerList, varSave, topic, imagePath);
+    return ques;
   }
 }
 

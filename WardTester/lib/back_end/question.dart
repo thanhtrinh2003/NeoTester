@@ -1,75 +1,131 @@
+import 'package:math_expressions/math_expressions.dart';
+import 'package:trying/back_end/parsers/math_function.dart';
+import 'package:trying/back_end/parsers/math_parser.dart';
+import 'package:trying/back_end/parsers/non_math_parser.dart';
+import 'package:trying/back_end/utils.dart';
+import 'package:trying/main.dart';
+
 abstract class Question {
+  var id;
   var type;
   var question;
-  var answers;
   var topic;
   var imagePath;
 
-  String getQuestion();
-  bool isCorrect(var submittedAnswer);
-  String getAnswerString();
-}
-
-//Multiple Choice
-class MCQuestion extends Question {
-  //veariables
-  var choice;
-
-  //constructors
-  MCQuestion(var question, var type, var answer, var choice, var topic,
-      var imagePath) {
-    this.question = question;
-    this.type = type;
-    this.answers = answer;
-    this.choice = choice;
-    this.topic = topic;
-    this.imagePath = imagePath;
-  }
-
-  bool isCorrect(var submittedAnswer) {
-    return (submittedAnswer == answers);
-  }
-
-  String getAnswerString() {
-    return choice[answers];
-  }
-
-  //getter +setter
-  String getQuestion() {
-    return question;
+  int getID() {
+    return id;
   }
 
   int getType() {
     return type;
   }
 
-  int getAnswer() {
-    return answers;
+  String getQuestion() {
+    return question;
   }
 
-  List<dynamic> getChoice() {
-    return choice;
+  String getTopic() {
+    return topic;
   }
 
   String getImagePath() {
     return imagePath;
   }
 
+  String getAppImagePath(String appDocPath) {
+    return '$appDocPath/Image/$imagePath';
+  }
+
+  void setType(int type) {
+    this.type = type;
+  }
+
+  void setTopic(String topic) {
+    this.topic = topic;
+  }
+
+  void setQuestion(String question) {
+    this.question = question;
+  }
+
   void setImagePath(String path) {
     this.imagePath = path;
+  }
+
+  bool isCorrect(var submittedAnswer);
+  String getAnswerString();
+  void saveQuestion(var data);
+}
+
+//Multiple Choice
+class MCQuestion extends Question {
+  //veariables
+  var answer;
+  var choices;
+
+  //constructors
+  MCQuestion(var id, var type, var topic, var question, var choices, var answer,
+      var imagePath) {
+    this.id = id;
+    this.question = question;
+    this.type = type;
+    this.answer = answer;
+    this.choices = choices;
+    this.topic = topic;
+    this.imagePath = imagePath;
+  }
+
+  bool isCorrect(var submittedAnswer) {
+    return (submittedAnswer == answer);
+  }
+
+  void saveQuestion(var data) {
+    data["Item $id"]["questionID"] = id;
+    data["Item $id"]["QuestionType"] = type;
+    data["Item $id"]["QuestionTopic"] = topic;
+    data["Item $id"]["Question"] = question;
+    if (imagePath != "") {
+      data["Item $id"]["ImagePath"] = imagePath;
+    }
+    data["Item $id"]["Choices"] = choices;
+    data["Item $id"]["Answer"] = answer;
+    writeProgressTestFile(currentCourse, currentTest.getUnit());
+  }
+
+  String getAnswerString() {
+    return choices[answer];
+  }
+
+  int getAnswer() {
+    return answer;
+  }
+
+  List<dynamic> getChoices() {
+    return choices;
+  }
+
+  void setAnswer(int answer) {
+    this.answer = answer;
+  }
+
+  void setChoice(int index, var choice) {
+    this.choices[index] = choice;
   }
 }
 
 //FRQ
 class FRQuestion extends Question {
   //variables
+  var answers;
 
   //constructors
-  FRQuestion(var question, var type, var answers, var topic, var imagePath) {
-    this.question = question;
+  FRQuestion(
+      var id, var type, var topic, var question, var answers, var imagePath) {
+    this.id = id;
     this.type = type;
-    this.answers = answers;
     this.topic = topic;
+    this.question = question;
+    this.answers = answers;
     this.imagePath = imagePath;
   }
 
@@ -102,6 +158,26 @@ class FRQuestion extends Question {
     }
   }
 
+  void saveQuestion(var data) {
+    data["Item $id"]["questionID"] = id;
+    data["Item $id"]["QuestionType"] = type;
+    data["Item $id"]["QuestionTopic"] = topic;
+    data["Item $id"]["Question"] = question;
+    if (imagePath != "") {
+      data["Item $id"]["ImagePath"] = imagePath;
+    }
+    data["Item $id"]["Answers"] = answers;
+    writeProgressTestFile(currentCourse, currentTest.getUnit());
+  }
+
+  List getAnswer() {
+    return answers;
+  }
+
+  void setAnswer(var answers) {
+    this.answers = answers;
+  }
+
   String getAnswerString() {
     var answerDisplay = "";
     for (int i = 0; i < answers.length - 1; i++) {
@@ -110,62 +186,39 @@ class FRQuestion extends Question {
     answerDisplay = answerDisplay + answers.elementAt(answers.length - 1)[0];
     return answerDisplay;
   }
-
-  //getter +setter
-  String getQuestion() {
-    return question;
-  }
-
-  int getType() {
-    return type;
-  }
-
-  List getAnswer() {
-    return answers;
-  }
-
-  String getTopic() {
-    return topic;
-  }
-
-  String getImagePath() {
-    return imagePath;
-  }
-
-  void setImagePath(String path) {
-    this.imagePath = path;
-  }
 }
 
 // Randomized FRQ
 class RFRQuestion extends Question {
   //variables
-  var question;
-  var equation; // equation to calculate variable to fill in answer equation
+  var variables;
+  var equations;
   var answerEquation;
-  var answer;
-  var answerVar; // variables to fill out answer formula
-  var topic;
-  var variable;
+  // variables to fill out answer formula
+  var variableValues;
+  var finishedQuestion;
+  var answerString;
 
   //constructors
-  RFRQuestion(var question, var type, var equation, var answerEquation,
-      var answers, var answerVar, var variable, var topic, var imagePath) {
-    this.question = question;
+  RFRQuestion(var id, var type, var topic, var question, var variables,
+      var equations, var answerEquation, var imagePath) {
+    this.id = id;
     this.type = type;
-    this.equation = equation;
-    this.answerEquation = answerEquation;
-    this.answers = answers;
-    this.answerVar = answerVar;
-    this.variable = variable;
     this.topic = topic;
+    this.question = question;
+    this.variables = variables;
+    this.equations = equations;
+    this.answerEquation = answerEquation;
     this.imagePath = imagePath;
+    setRandomVariableValues();
+    setFinshedQuestion();
+    setAnswerString();
   }
 
   bool isCorrect(var submittedAnswer) {
     // Remove all whitespace from correct, submitted, and raw answers
     submittedAnswer = submittedAnswer.text.trim().replaceAll(" ", "");
-    var correctAnswer = answers.trim().replaceAll(" ", "");
+    var correctAnswer = answerString.trim().replaceAll(" ", "");
     var rawAnswer = answerEquation.trim().replaceAll(" ", "");
 
     // Do an initial simple check of whole string of submitted and correct answers
@@ -211,52 +264,158 @@ class RFRQuestion extends Question {
         return false;
       }
     }
-
     return true;
   }
 
-  String getAnswerString() {
-    return answers;
+  void saveQuestion(var data) {
+    data["Item $id"]["questionID"] = id;
+    data["Item $id"]["QuestionType"] = type;
+    data["Item $id"]["QuestionTopic"] = topic;
+    data["Item $id"]["Question"] = question;
+    if (imagePath != "") {
+      data["Item $id"]["ImagePath"] = imagePath;
+    }
+    data["Item $id"]["Variables"] = variables;
+    data["Item $id"]["Equations"] = equations;
+    data["Item $id"]["Answers"] = answerEquation;
+    writeProgressTestFile(currentCourse, currentTest.getUnit());
   }
 
-  List<dynamic> getEquation() {
-    return equation;
-  }
-
-  //getter +setter
   String getQuestion() {
+    return finishedQuestion;
+  }
+
+  String getRawQuestion() {
     return question;
   }
 
-  int getType() {
-    return type;
+  String getAnswerString() {
+    return answerString;
   }
 
-  Map getVariable() {
-    return variable;
+  List<dynamic> getEquations() {
+    return equations;
+  }
+
+  List getVariables() {
+    return variables;
   }
 
   String getAnswerEquation() {
     return answerEquation;
   }
 
-  String getAnswer() {
-    return answer;
-  }
-
   List<String> getAnswerVar() {
-    return answerVar;
+    return variableValues;
   }
 
-  String getTopic() {
-    return topic;
+  void setEquations(List<dynamic> equations) {
+    this.equations = equations;
   }
 
-  String getImagePath() {
-    return imagePath;
+  void setQuestion(String question) {
+    this.question = question;
   }
 
-  void setImagePath(String path) {
-    this.imagePath = path;
+  void setEquation(var equationIndex, var equation) {
+    this.equations[equationIndex] = equation;
+  }
+
+  void setVariable(var listIndex, var key, var value) {
+    this.variables[listIndex][key] = value;
+  }
+
+  void setAnswerEquation(String answerEquation) {
+    this.answerEquation = answerEquation;
+  }
+
+  void setAnswerVariables(List<String> variableValues) {
+    this.variableValues = variableValues;
+  }
+
+  int setRandomVariableValues() {
+    variableValues = new Map();
+
+    for (int i = 0; i < variables.length; i++) {
+      double current = generateRandom(
+          variables[i]["LowerBound"].toDouble(),
+          variables[i]["UpperBound"].toDouble(),
+          variables[i]["Step"].toDouble());
+      if (current == current.roundToDouble()) {
+        variableValues[variables[i]["VarName"]] = floor(current).toInt();
+      } else {
+        variableValues[variables[i]["VarName"]] = current;
+      }
+    }
+    return 0;
+  }
+
+  void setFinshedQuestion() {
+    finishedQuestion = question;
+    // Stage 1: Put values into question
+    while (finishedQuestion.contains("~")) {
+      for (int i = 0; i < variableValues.length; i++) {
+        var curVariable = variableValues.keys.elementAt(i);
+        while (finishedQuestion.contains("~$curVariable")) {
+          finishedQuestion = finishedQuestion.replaceAll(
+              "~$curVariable", variableValues[curVariable].toString());
+        }
+      }
+    }
+  }
+
+  void setAnswerString() {
+    List<String> answerList = [];
+    int i = 0;
+    for (i = 0; i < equations.length; i++) {
+      //Stage 1: Start to replace variable with their corresponding values
+      String currentEquation = equations[i];
+      while (currentEquation.contains("~")) {
+        for (int i = 0; i < variableValues.length; i++) {
+          var curVariable = variableValues.keys.elementAt(i);
+          while (currentEquation.contains("~$curVariable")) {
+            currentEquation = currentEquation.replaceAll(
+                "~$curVariable", variableValues[curVariable].toString());
+          }
+        }
+      }
+
+      //Stage 2: Evaluate the equation
+      if (currentEquation.length > 2) {
+        if (currentEquation.substring(0, 2) == "!!") {
+          String res = nonMathParser(currentEquation).toString();
+          answerList.add(res);
+        } else {
+          ContextModel cm = ContextModel();
+          print(currentEquation);
+          Expression exp = mathParser.parse(currentEquation);
+
+          double res = exp.evaluate(EvaluationType.REAL, cm);
+
+          if (res == res.roundToDouble()) {
+            answerList.add(res.toInt().toString());
+          } else {
+            answerList.add(res.toStringAsFixed(3));
+          }
+        }
+      } else {
+        ContextModel cm = ContextModel();
+        print(currentEquation);
+        Expression exp = mathParser.parse(currentEquation);
+
+        double res = exp.evaluate(EvaluationType.REAL, cm);
+
+        if (res == res.roundToDouble()) {
+          answerList.add(res.toInt().toString());
+        } else {
+          answerList.add(res.toStringAsFixed(3));
+        }
+      }
+    }
+
+    answerString = answerEquation;
+    for (int i = 0; i < answerList.length; i++) {
+      answerString = answerString.replaceFirst("~^~", answerList[i]);
+    }
   }
 }
