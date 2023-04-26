@@ -30,7 +30,12 @@ double invT(double df, double area) {
 ///returns the probabilty below or between the bounds in the chi-sqaured distribution
 double chiSquaredCDF(double degrees, double lb, double ub) {
   ChiSquared cs = ChiSquared(degrees);
-  return cs.cdf(ub) - cs.cdf(lb);
+  double lower = cs.cdf(lb);
+  double upper = cs.cdf(ub);
+  if (ub > 200) {
+    upper = 1;
+  }
+  return upper - lower;
 }
 
 /// returns the probability of a given binomial event

@@ -296,6 +296,12 @@ Future<List<Test>> removeProgress(var currentTest, var currentTestList) async {
   return currentTestList;
 }
 
+// Remove all progress
+Future removeAllProgress() async {
+  final progressFile = File('$appDocPath/progress.txt');
+  progressFile.writeAsStringSync('');
+}
+
 Future<List<Test>> saveCompleteTest(
     var completeTest, var completeTestList) async {
   //initialize file path
